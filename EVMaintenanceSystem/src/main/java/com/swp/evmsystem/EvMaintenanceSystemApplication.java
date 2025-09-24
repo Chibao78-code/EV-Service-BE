@@ -1,4 +1,4 @@
-package com.ev.maintenance;
+package com.swp.evmsystem;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

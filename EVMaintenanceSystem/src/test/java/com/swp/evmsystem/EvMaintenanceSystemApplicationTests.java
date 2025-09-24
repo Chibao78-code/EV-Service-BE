@@ -1,4 +1,4 @@
-package com.ev.maintenance;
+package com.swp.evmsystem;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
