@@ -34,6 +34,6 @@ Hệ thống **EV Service Center Maintenance Management System** hỗ trợ:
 ## Disclaimer
 
 Dự án này được phát triển trong khuôn khổ môn học **SWP391** và nhằm mục đích **học tập, nghiên cứu và thực hành lập trình**.  
-Mọi thông tin, dữ liệu hoặc tính năng trong phần mềm chỉ mang tính minh họa và **không được sử dụng trong môi trường sản xuất thực tế**.  
+Mọi thông tin, dữ liệu hoặc tính năng trong phần mềm chỉ mang tính minh họa và **không được sử dụng trong môi trường sản xuất thực tế**.
 
-Nhà phát triển **không chịu trách nhiệm về bất kỳ thiệt hại hoặc hậu quả nào** phát sinh từ việc sử dụng phần mềm ngoài mục đích học tập.  
+Nhóm phát triển **không chịu trách nhiệm về bất kỳ thiệt hại hoặc hậu quả nào** phát sinh từ việc sử dụng phần mềm ngoài mục đích học tập.  
