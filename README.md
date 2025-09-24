@@ -8,7 +8,7 @@
 
 Dự án này nằm trong khuôn của khổ môn học **SWP391** nhằm mục tiêu **ứng dụng kiến thức lập trình và vòng đời phát triển phần mềm (SDLC)**.  
 
-Hệ thống **EV Service Center Maintenance Management System** hỗ trợ:
+Hệ thống **EV Service Center Maintenance Management System** (gọi tắt **EVM System**) hỗ trợ:
 
 - Quản lý hồ sơ khách hàng và xe điện.
 - Theo dõi lịch bảo dưỡng, tình trạng sửa chữa và chi phí phát sinh.
