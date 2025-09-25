@@ -10,11 +10,17 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.40/lombok-1.18.40.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.40/lombok-1.18.40.jar" />
         </processorPath>
+<<<<<<< Updated upstream
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="evmaintenancesystem" target="21" />
     </bytecodeTargetLevel>
+=======
+        <module name="evmaintenancesystem" />
+      </profile>
+    </annotationProcessing>
+>>>>>>> Stashed changes
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
