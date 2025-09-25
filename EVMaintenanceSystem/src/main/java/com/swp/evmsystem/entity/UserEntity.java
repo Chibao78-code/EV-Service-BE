@@ -15,8 +15,6 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int id;
-    @Column(name = "full_name", length = 100, nullable = false)
-    private String fullName;
     @Column(name = "email", length = 100, unique = true, nullable = true)
     private String email;
     @Column(name = "phone", length = 10, unique = true, nullable = false)
@@ -24,8 +22,20 @@ public class UserEntity {
     @Column(name = "password", length = 100, nullable = false)
     private String password;
     @ManyToOne
-    @JoinColumn(name = "role_id")
+    @JoinColumn(name = "role_id", nullable = false)
     private RoleEntity role;
-    @Column(name = "status", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
-    private boolean status;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private UserStatus status;
+    @OneToOne
+    @JoinColumn(name = "customer_id", unique = true)
+    private CustomerEntity customer;
+    @OneToOne
+    @JoinColumn(name = "employee_id", unique = true)
+    private EmployeeEntity employee;
+
+    public enum UserStatus {
+        ACTIVE,
+        INACTIVE
+    }
 }

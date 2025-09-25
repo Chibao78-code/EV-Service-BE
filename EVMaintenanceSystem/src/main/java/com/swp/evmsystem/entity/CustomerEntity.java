@@ -15,4 +15,8 @@ public class CustomerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
     private int id;
+    @Column(name = "full_name", length = 100, nullable = false)
+    private String fullName;
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
+    private UserEntity user;
 }
