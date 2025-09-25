@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="762efb0b-0027-4338-b44d-c5917f0f56dd" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/0b1795be-7d0b-45c3-b0c1-78835238260e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/0b1795be-7d0b-45c3-b0c1-78835238260e.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/swp/evmsystem/entity/CustomerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/swp/evmsystem/entity/CustomerEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/swp/evmsystem/entity/EmployeeEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/swp/evmsystem/entity/EmployeeEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/swp/evmsystem/entity/ServiceCenterEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/swp/evmsystem/entity/ServiceCenterEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/swp/evmsystem/entity/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/swp/evmsystem/entity/UserEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/swp/evmsystem/entity/CustomerEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/swp/evmsystem/entity/CustomerEntity.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/swp/evmsystem/entity/EmployeeEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/swp/evmsystem/entity/EmployeeEntity.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/swp/evmsystem/entity/UserEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/swp/evmsystem/entity/UserEntity.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +80,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1758782361739</updated>
-      <workItem from="1758782363607" duration="4465000" />
+      <workItem from="1758782363607" duration="5877000" />
     </task>
     <servers />
   </component>
