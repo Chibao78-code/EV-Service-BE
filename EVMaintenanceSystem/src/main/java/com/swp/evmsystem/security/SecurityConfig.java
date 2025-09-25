@@ -39,13 +39,15 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable()) // tạm thời disable CSRF cho Swagger
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll() // cho phép Swagger
                         .anyRequest().authenticated()
                 )
-                .formLogin(login -> login.disable());
+                .formLogin(); // login mặc định nếu cần
         return http.build();
     }
+
 }
