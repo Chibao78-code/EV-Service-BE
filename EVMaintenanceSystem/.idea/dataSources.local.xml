@@ -16,7 +16,10 @@
               <node kind="schema" qname="@" />
             </node>
             <node kind="database" qname="EVMSystem">
-              <node kind="schema" qname="dbo" />
+              <node kind="schema">
+                <name qname="@" />
+                <name qname="dbo" />
+              </node>
             </node>
           </node>
         </introspection-scope>
