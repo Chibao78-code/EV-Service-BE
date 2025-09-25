@@ -12,13 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomerEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id")
-    private int id;
+public class CustomerEntity extends UserEntity {
     @Column(name = "full_name", length = 100, nullable = false)
     private String fullName;
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
-    private UserEntity user;
 }

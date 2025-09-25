@@ -12,7 +12,6 @@ public class JwtTokenProvider {
     private final Key key;
 
     public JwtTokenProvider() {
-        // tạo key tự động đảm bảo ≥ 512 bit cho HS512
         this.key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
     }
 

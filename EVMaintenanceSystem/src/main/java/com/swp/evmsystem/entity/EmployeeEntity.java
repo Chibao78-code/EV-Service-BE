@@ -9,16 +9,10 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmployeeEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "employee_id")
-    private int id;
+public class EmployeeEntity extends  UserEntity {
     @Column(name = "full_name", length = 100, nullable = false)
     private String fullName;
     @ManyToOne
     @JoinColumn(name = "center_id")
     private ServiceCenterEntity centerId;
-    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
-    private UserEntity user;
 }

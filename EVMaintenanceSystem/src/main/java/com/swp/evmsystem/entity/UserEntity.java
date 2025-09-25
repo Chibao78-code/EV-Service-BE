@@ -8,8 +8,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "nguoi_dung")
-public class UserEntity {
+public abstract class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -26,12 +27,6 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private UserStatus status;
-    @OneToOne
-    @JoinColumn(name = "customer_id", unique = true)
-    private CustomerEntity customer;
-    @OneToOne
-    @JoinColumn(name = "employee_id", unique = true)
-    private EmployeeEntity employee;
 
     public enum UserStatus {
         ACTIVE,
