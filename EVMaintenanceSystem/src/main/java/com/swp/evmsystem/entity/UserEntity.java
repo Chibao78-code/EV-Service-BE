@@ -21,8 +21,6 @@ public class UserEntity {
     private String phone;
     @Column(name = "password", length = 100, nullable = false)
     private String password;
-    @Column(name = "role", length = 10, nullable = false)
-    private String role;
     @Column(name = "status", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean status;
 }
