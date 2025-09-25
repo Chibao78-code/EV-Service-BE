@@ -5,13 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="762efb0b-0027-4338-b44d-c5917f0f56dd" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/0b1795be-7d0b-45c3-b0c1-78835238260e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/0b1795be-7d0b-45c3-b0c1-78835238260e.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/swp/evmsystem/dto/LoginRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/swp/evmsystem/dto/LoginRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/swp/evmsystem/dto/LoginResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/swp/evmsystem/dto/LoginResponse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/swp/evmsystem/entity/UserEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/swp/evmsystem/entity/UserEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/swp/evmsystem/entity/CustomerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/swp/evmsystem/entity/CustomerEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/swp/evmsystem/entity/EmployeeEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/swp/evmsystem/entity/EmployeeEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/swp/evmsystem/entity/RoleEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/swp/evmsystem/entity/RoleEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/swp/evmsystem/entity/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/swp/evmsystem/entity/UserEntity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +55,8 @@
     "git-widget-placeholder": "main",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
@@ -77,7 +77,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1758782361739</updated>
-      <workItem from="1758782363607" duration="151000" />
+      <workItem from="1758782363607" duration="2021000" />
     </task>
     <servers />
   </component>
