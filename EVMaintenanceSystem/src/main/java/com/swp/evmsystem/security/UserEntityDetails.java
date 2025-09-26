@@ -27,8 +27,11 @@ public class UserEntityDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        // login bằng phone, có thể mở rộng thêm email
-        return userEntity.getPhone();
+        if (userEntity.getPhone() != null) {
+            return userEntity.getPhone();
+        } else {
+            return userEntity.getEmail();
+        }
     }
 
     @Override
