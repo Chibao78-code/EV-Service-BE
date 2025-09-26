@@ -18,6 +18,8 @@ public class JwtTokenProvider {
     public String generateToken(UserEntityDetails userDetails) {
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 86400000)) //set token validity to 1 day
                 .signWith(key)
                 .compact();
     }
