@@ -5,6 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "khach_hang")
@@ -12,7 +16,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 public class CustomerEntity extends UserEntity {
-    @Column(name = "full_name", length = 100, nullable = false)
-    private String fullName;
+    @OneToMany(mappedBy = "owner")
+    List<ElectricVehicleEntity> vehicle = new ArrayList<ElectricVehicleEntity>();
 }
