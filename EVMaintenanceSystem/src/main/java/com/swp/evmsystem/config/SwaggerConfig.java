@@ -7,13 +7,16 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SwaggerConfig {
+    private String title = "API Documentation for EV Service Center Maintenance Management System (EVM System)";
+    private String version = "1.0";
+    private String description = "This documentation provides details about the RESTful APIs available in the EVM System, which is designed to manage and maintain electric vehicle service centers efficiently.";
 
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("API ")
-                        .version("1.0")
-                        .description("Spring Boot REST API với Swagger"));
+                        .title(title)
+                        .version(version)
+                        .description(description));
     }
 }

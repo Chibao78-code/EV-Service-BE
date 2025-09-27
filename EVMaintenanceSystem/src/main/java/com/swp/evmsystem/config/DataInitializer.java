@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DataInitializer {
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private RoleService roleService;
+//    @Autowired
+//    private UserService userService;
+//
+//    @Autowired
+//    private RoleService roleService;
 }
