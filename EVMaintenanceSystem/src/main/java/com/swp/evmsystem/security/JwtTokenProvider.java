@@ -1,6 +1,7 @@
 package com.swp.evmsystem.security;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
@@ -16,10 +17,12 @@ public class JwtTokenProvider {
     }
 
     public String generateToken(UserEntityDetails userDetails) {
+        // 1 day in milliseconds
+        long expiration = 86400000;
         return Jwts.builder()
-                .setSubject(userDetails.getUsername())
+                .setSubject(userDetails.getId())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 86400000)) //set token validity to 1 day
+                .setExpiration(new Date(System.currentTimeMillis() + expiration)) //set token validity to 1 day
                 .signWith(key)
                 .compact();
     }

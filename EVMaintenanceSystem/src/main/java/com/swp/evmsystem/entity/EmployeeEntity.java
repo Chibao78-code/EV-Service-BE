@@ -2,6 +2,7 @@ package com.swp.evmsystem.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "nhan_vien")
@@ -9,10 +10,9 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 public class EmployeeEntity extends  UserEntity {
-    @Column(name = "full_name", length = 100, nullable = false)
-    private String fullName;
     @ManyToOne
     @JoinColumn(name = "center_id")
-    private ServiceCenterEntity centerId;
+    ServiceCenterEntity centerId;
 }

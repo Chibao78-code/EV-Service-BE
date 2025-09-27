@@ -1,7 +1,11 @@
 package com.swp.evmsystem.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,19 +16,20 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 public class ServiceCenterEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "center_id")
-    private int id;
+    int id;
     @Column(name = "name", length = 100, nullable = false)
-    private String name;
+    String name;
     @Column(name = "address", length = 200, nullable = false)
-    private String address;
+    String address;
     @Column(name = "phone", length = 10, nullable = false)
-    private String phone;
+    String phone;
     @Column(name = "email", length = 100, unique = true, nullable = false)
-    private String email;
+    String email;
     @OneToMany(mappedBy = "centerId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<EmployeeEntity> employees = new ArrayList<EmployeeEntity>();
+    List<EmployeeEntity> employees = new ArrayList<EmployeeEntity>();
 }

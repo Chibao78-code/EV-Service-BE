@@ -34,6 +34,10 @@ public class UserEntityDetails implements UserDetails {
         }
     }
 
+    public String getId() {
+        return String.valueOf(userEntity.getId());
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

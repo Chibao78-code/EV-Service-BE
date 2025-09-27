@@ -1,12 +1,17 @@
 package com.swp.evmsystem.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "nguoi_dung")
@@ -14,19 +19,21 @@ public abstract class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private int id;
+    int id;
     @Column(name = "email", length = 100, unique = true, nullable = true)
-    private String email;
+    String email;
     @Column(name = "phone", length = 10, unique = true, nullable = false)
-    private String phone;
+    String phone;
+    @Column(name = "full_name", length = 100, nullable = false)
+    String fullName;
     @Column(name = "password", length = 100, nullable = false)
-    private String password;
+    String password;
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
-    private RoleEntity role;
+    RoleEntity role;
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private UserStatus status;
+    UserStatus status;
 
     public enum UserStatus {
         ACTIVE,

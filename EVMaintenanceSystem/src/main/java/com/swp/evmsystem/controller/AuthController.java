@@ -2,6 +2,7 @@ package com.swp.evmsystem.controller;
 
 import com.swp.evmsystem.dto.request.LoginRequest;
 import com.swp.evmsystem.dto.response.LoginResponse;
+import com.swp.evmsystem.dto.response.UserInfo;
 import com.swp.evmsystem.security.JwtTokenProvider;
 import com.swp.evmsystem.security.UserEntityDetails;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,8 +19,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-
+    @Autowired
     private final AuthenticationManager authenticationManager;
+    @Autowired
     private final JwtTokenProvider jwtTokenProvider;
 
     public AuthController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider) {
@@ -40,7 +43,7 @@ public class AuthController {
 
         UserEntityDetails userDetails = (UserEntityDetails) authentication.getPrincipal();
         String token = jwtTokenProvider.generateToken(userDetails);
-
-        return new LoginResponse(token, userDetails.getAuthorities().iterator().next().getAuthority());
+        UserInfo userInfo = new UserInfo();
+        return new LoginResponse(token, userInfo);
     }
 }
