@@ -33,6 +33,6 @@ public abstract class UserEntity {
     @JoinColumn(name = "role_id", nullable = false)
     RoleEntity role;
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
+    @Column(name = "status", nullable = false, length = 20)
     UserStatus status;
 }

@@ -1,5 +1,6 @@
 package com.swp.evmsystem.entity;
 
+import com.swp.evmsystem.enums.BookingStatus;
 import com.swp.evmsystem.enums.TimeSlot;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -31,9 +32,11 @@ public class BookingEntity {
     @JoinColumn(name = "center_id", referencedColumnName = "center_id")
     ServiceCenterEntity center;
     @Column(name = "booking_date", nullable = false)
+    @Enumerated(EnumType.STRING)
     LocalDate bookingDate;
     @Column(name = "time_slot", length = 20, nullable = false)
     TimeSlot timeSlot;
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 20, nullable = false)
-    String status;
+    BookingStatus status;
 }
