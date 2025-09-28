@@ -7,9 +7,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "xe_dien")
-@Getter @Setter
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
@@ -22,9 +26,11 @@ public class ElectricVehicleEntity {
     String model;
     @Column(name = "VIN", length = 17, unique = true, nullable = false)
     String VIN;
-    @Column(name = "license_plate",length = 10, nullable = false)
+    @Column(name = "license_plate", length = 10, nullable = false)
     String licensePlate;
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     CustomerEntity owner;
+    @OneToMany(mappedBy = "vehicle")
+    List<BookingEntity> bookings = new ArrayList<BookingEntity>();
 }

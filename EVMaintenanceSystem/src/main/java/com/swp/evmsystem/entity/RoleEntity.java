@@ -1,7 +1,11 @@
 package com.swp.evmsystem.entity;
 
+import com.swp.evmsystem.enums.RoleName;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
@@ -24,11 +28,4 @@ public class RoleEntity {
     RoleName name;
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<UserEntity> users = new ArrayList<UserEntity>();
-
-    public enum RoleName {
-        ADMIN,
-        STAFF,
-        TECHNICIAN,
-        CUSTOMER
-    }
 }
