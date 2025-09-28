@@ -1,6 +1,7 @@
 package com.swp.evmsystem.security;
 
 import com.swp.evmsystem.entity.UserEntity;
+import com.swp.evmsystem.enums.UserStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -45,7 +46,7 @@ public class UserEntityDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return userEntity.getStatus() == UserEntity.UserStatus.ACTIVE;
+        return userEntity.getStatus() == UserStatus.ACTIVE;
     }
 
     @Override
@@ -55,6 +56,6 @@ public class UserEntityDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return userEntity.getStatus() == UserEntity.UserStatus.ACTIVE;
+        return userEntity.getStatus() == UserStatus.ACTIVE;
     }
 }

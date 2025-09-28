@@ -1,5 +1,6 @@
 package com.swp.evmsystem.entity;
 
+import com.swp.evmsystem.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,9 +35,4 @@ public abstract class UserEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     UserStatus status;
-
-    public enum UserStatus {
-        ACTIVE,
-        INACTIVE
-    }
 }
