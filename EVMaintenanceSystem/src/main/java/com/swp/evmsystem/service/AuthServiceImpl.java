@@ -23,4 +23,18 @@ public class AuthServiceImpl implements AuthService {
         return jwtService.generateToken(user);
     }
 
+    public String loginWithEmail(String email, String password) {
+        UserEntity user = userRepository.findByEmail(email); // tìm user theo email
+        // kiểm tra user có tồn tại không
+        if (user.isEmpty()) {
+            throw new RuntimeException("Invalid email or password");
+        }
+        // kiểm tra mật khẩu
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new RuntimeException("Invalid email or password");
+        }
+        // trả về JWT token
+        return jwtService.generateToken(user);
+    }
+
 }
