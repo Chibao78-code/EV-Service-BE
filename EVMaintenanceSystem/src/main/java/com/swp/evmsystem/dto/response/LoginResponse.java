@@ -13,7 +13,7 @@ import lombok.experimental.FieldDefaults;
 public class LoginResponse {
     @Schema(description = "JWT token dùng để xác thực các request tiếp theo",
             example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")
-    String tokenAcess;
+    String accessToken;
     @Schema(description = "Thong tin người dùng",
             implementation = UserInfo.class)
     UserInfo user;
