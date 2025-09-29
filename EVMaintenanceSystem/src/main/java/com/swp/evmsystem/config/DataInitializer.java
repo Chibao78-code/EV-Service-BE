@@ -10,7 +10,9 @@ public class DataInitializer {
     //Define some initial data for testing
 //    @Autowired
 //    private UserService userService;
-//
+//    Khong biet
 //    @Autowired
 //    private RoleService roleService;
+
+    // Tram lam nha
 }
