@@ -1,0 +1,77 @@
+Index: EVMaintenanceSystem/src/main/java/com/swp/evmsystem/exception/LoginResponseException.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.swp.evmsystem.exception;\r\n\r\npublic class LoginResponseException {\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/EVMaintenanceSystem/src/main/java/com/swp/evmsystem/exception/LoginResponseException.java b/EVMaintenanceSystem/src/main/java/com/swp/evmsystem/exception/LoginResponseException.java
+--- a/EVMaintenanceSystem/src/main/java/com/swp/evmsystem/exception/LoginResponseException.java	(revision e7f2d497c3ea6961d976def63e70b83eb55ae483)
++++ b/EVMaintenanceSystem/src/main/java/com/swp/evmsystem/exception/LoginResponseException.java	(date 1759117756623)
+@@ -1,4 +1,11 @@
+ package com.swp.evmsystem.exception;
+ 
+-public class LoginResponseException {
++public class LoginResponseException extends RuntimeException {
++    public LoginResponseException(String message) {
++        super(message);
++    }
++
++    public LoginResponseException(String message, Throwable cause) {
++        super(message, cause);
++    }
+ }
+Index: EVMaintenanceSystem/src/main/java/com/swp/evmsystem/exception/GlobalExceptionHandler .java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/EVMaintenanceSystem/src/main/java/com/swp/evmsystem/exception/GlobalExceptionHandler .java b/EVMaintenanceSystem/src/main/java/com/swp/evmsystem/exception/GlobalExceptionHandler .java
+new file mode 100644
+--- /dev/null	(date 1759118455738)
++++ b/EVMaintenanceSystem/src/main/java/com/swp/evmsystem/exception/GlobalExceptionHandler .java	(date 1759118455738)
+@@ -0,0 +1,44 @@
++package com.swp.evmsystem.exception;
++
++public class GlobalExceptionHandler {
++    @ExceptionHandler(LoginResponseException.class)
++    public ResponseEntity<Object> handleLoginException(LoginResponseException ex) {
++        Map<String, Object> body = new HashMap<>();
++        body.put("timestamp", LocalDateTime.now().toString());
++        // Thời điểm xảy ra lỗi
++
++        body.put("status", HttpStatus.UNAUTHORIZED.value());
++        // Mã lỗi HTTP 401 (chưa xác thực)
++
++        body.put("error", "Unauthorized");
++        // Tên lỗi: Unauthorized
++
++        body.put("message", ex.getMessage());
++        // Lấy message từ exception (ví dụ: "Sai mật khẩu")
++
++        return new ResponseEntity<>(body, HttpStatus.UNAUTHORIZED);
++        // Trả JSON + status 401
++        }
++
++    @ExceptionHandler(Exception.class)
++    // Bắt mọi Exception không được handle riêng
++    public ResponseEntity<Object> handleGeneralException(Exception ex) {
++        Map<String, Object> body = new HashMap<>();
++        // JSON body chứa thông tin lỗi
++
++        body.put("timestamp", LocalDateTime.now().toString());
++        // Thời điểm xảy ra lỗi
++
++        body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
++        // Mã lỗi HTTP 500 (lỗi server)
++
++        body.put("error", "Internal Server Error");
++        // Tên lỗi: Internal Server Error
++
++        body.put("message", ex.getMessage());
++        // Thông điệp lỗi chi tiết
++
++        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
++        // Trả JSON + status 500
++    }
++    }
