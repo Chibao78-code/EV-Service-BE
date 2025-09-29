@@ -30,8 +30,8 @@ public class BookingEntity {
     @JoinColumn(name = "center_id", referencedColumnName = "center_id")
     ServiceCenterEntity center;
     @Column(name = "booking_date", nullable = false)
-    @Enumerated(EnumType.STRING)
     LocalDate bookingDate;
+    @Enumerated(EnumType.STRING)
     @Column(name = "time_slot", length = 20, nullable = false)
     TimeSlot timeSlot;
     @Enumerated(EnumType.STRING)

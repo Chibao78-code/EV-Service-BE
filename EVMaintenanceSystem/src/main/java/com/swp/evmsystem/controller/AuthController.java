@@ -3,6 +3,7 @@ package com.swp.evmsystem.controller;
 import com.swp.evmsystem.dto.request.LoginRequest;
 import com.swp.evmsystem.dto.response.LoginResponse;
 import com.swp.evmsystem.dto.response.UserInfo;
+import com.swp.evmsystem.entity.UserEntity;
 import com.swp.evmsystem.security.JwtTokenProvider;
 import com.swp.evmsystem.security.UserEntityDetails;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,7 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
@@ -42,8 +46,9 @@ public class AuthController {
         );
 
         UserEntityDetails userDetails = (UserEntityDetails) authentication.getPrincipal();
+        UserEntity user = userDetails.getUser();
         String token = jwtTokenProvider.generateToken(userDetails);
-        UserInfo userInfo = new UserInfo();
+        UserInfo userInfo = new UserInfo(user);
         return new LoginResponse(token, userInfo);
     }
 }
