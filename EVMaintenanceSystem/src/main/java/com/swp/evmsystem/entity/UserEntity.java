@@ -16,7 +16,7 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "nguoi_dung")
-public class UserEntity {
+public abstract class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")

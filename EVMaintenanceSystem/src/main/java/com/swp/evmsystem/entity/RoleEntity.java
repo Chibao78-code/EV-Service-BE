@@ -1,5 +1,6 @@
 package com.swp.evmsystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.swp.evmsystem.enums.RoleName;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,7 @@ public class RoleEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "role_name", length = 50, unique = true, nullable = false)
     RoleName name;
+    @JsonIgnore
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<UserEntity> users = new ArrayList<UserEntity>();
 }
