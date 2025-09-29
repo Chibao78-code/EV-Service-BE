@@ -1,5 +1,7 @@
 package com.swp.evmsystem.dto.response;
 
+import com.swp.evmsystem.entity.RoleEntity;
+import com.swp.evmsystem.entity.UserEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +14,13 @@ import lombok.experimental.FieldDefaults;
 @Schema(description = "Thông tin người dùng")
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 public class UserInfo {
-    String id;
+    int id;
     String name;
-    String role;
+    RoleEntity role;
+
+    public UserInfo(UserEntity user) {
+        this.id = user.getId();
+        this.name = user.getFullName();
+        this.role = user.getRole();
+    }
 }

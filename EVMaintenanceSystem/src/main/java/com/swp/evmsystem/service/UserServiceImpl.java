@@ -10,11 +10,6 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Override
     public boolean isCustomer(Integer userId) {
-        return userRepository.getRoleNameByUserId(userId).equals("CUSTOMER");
-    }
-
-    @Override
-    public String getNameByPhoneOrEmail(String phoneOrEmail) {
-        return userRepository.getNameByPhoneOrEmail(phoneOrEmail);
+        return userRepository.getRoleNameById(userId).equals("CUSTOMER");
     }
 }
