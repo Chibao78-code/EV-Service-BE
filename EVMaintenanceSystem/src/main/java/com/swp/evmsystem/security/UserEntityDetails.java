@@ -19,7 +19,7 @@ public class UserEntityDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + userEntity.getRole().getName()));
-    }
+    } // The "ROLE_" prefix is important in Spring Security, it distinguishes roles from other authorities.
 
     @Override
     public String getPassword() {
@@ -33,7 +33,7 @@ public class UserEntityDetails implements UserDetails {
         } else {
             return userEntity.getEmail();
         }
-    }
+    } // You can choose to use either phone or email as the username.
 
     public String getId() {
         return String.valueOf(userEntity.getId());
@@ -41,7 +41,7 @@ public class UserEntityDetails implements UserDetails {
 
     public UserEntity getUser() {
         return userEntity;
-    }
+    } 
 
     @Override
     public boolean isAccountNonExpired() {

@@ -15,7 +15,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-
     private final UserEntityDetailsService userDetailsService;
     private final JwtTokenProvider jwtTokenProvider = new JwtTokenProvider();
 
