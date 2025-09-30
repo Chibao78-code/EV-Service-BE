@@ -18,7 +18,7 @@ public class JwtTokenProvider {
 
     public JwtTokenProvider() {
         this.key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
-        System.out.println("Generated JWT Key: " + key.getEncoded());
+        System.out.println("Generated JWT Key: " + key.getEncoded());//
     }
 
     public String generateToken(UserEntityDetails userDetails) {
@@ -28,7 +28,7 @@ public class JwtTokenProvider {
                 .setSubject(userDetails.getId())
                 .claim("roles", userDetails.getAuthorities()
                         .stream()
-                        .map(GrantedAuthority::getAuthority)   // lấy "ROLE_CUSTOMER"
+                        .map(GrantedAuthority::getAuthority)   // get "ROLE_ADMIN" or "ROLE_USER"
                         .collect(Collectors.toList()))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expiration)) //set token validity to 1 day
@@ -36,7 +36,7 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    // 🔹 Parse token
+    // Parse token
     public Claims getClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
