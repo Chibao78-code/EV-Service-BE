@@ -1,6 +1,5 @@
 package com.swp.evmsystem.dto.response;
 
-import com.swp.evmsystem.entity.RoleEntity;
 import com.swp.evmsystem.entity.UserEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -20,7 +19,5 @@ public class UserInfo {
         this.id = user.getId();
         this.name = user.getFullName();
         this.role = user.getRole().getName().name();
-
     }
-
 }

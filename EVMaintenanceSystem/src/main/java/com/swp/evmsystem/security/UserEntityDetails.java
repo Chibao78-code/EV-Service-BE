@@ -33,10 +33,10 @@ public class UserEntityDetails implements UserDetails {
         } else {
             return userEntity.getEmail();
         }
-    } // You can choose to use either phone or email as the username.
+    }
 
-    public String getId() {
-        return String.valueOf(userEntity.getId());
+    public int getId() {
+        return userEntity.getId();
     }
 
     public UserEntity getUser() {

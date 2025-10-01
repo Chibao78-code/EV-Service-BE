@@ -1,5 +1,6 @@
 package com.swp.evmsystem.repository;
 
+import com.swp.evmsystem.entity.CustomerEntity;
 import com.swp.evmsystem.entity.UserEntity;
 import com.swp.evmsystem.enums.RoleName;
 import org.springframework.data.jpa.repository.JpaRepository;

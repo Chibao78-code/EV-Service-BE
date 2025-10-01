@@ -24,8 +24,9 @@ public class JwtTokenProvider {
     public String generateToken(UserEntityDetails userDetails) {
         // 1 day in milliseconds
         long expiration = 86400000;
+        String userId = String.valueOf(userDetails.getId());
         return Jwts.builder()
-                .setSubject(userDetails.getId())
+                .setSubject(userId) // Set user ID as subject
                 .claim("roles", userDetails.getAuthorities()
                         .stream()
                         .map(GrantedAuthority::getAuthority)   // get "ROLE_ADMIN" or "ROLE_USER"

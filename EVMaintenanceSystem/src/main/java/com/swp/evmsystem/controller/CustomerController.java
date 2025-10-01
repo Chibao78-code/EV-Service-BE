@@ -1,0 +1,13 @@
+package com.swp.evmsystem.controller;
+
+import com.swp.evmsystem.service.CustomerService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/customer")
+public class CustomerController {
+
+}
