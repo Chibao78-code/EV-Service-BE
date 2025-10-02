@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Date;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -18,13 +17,13 @@ public class JwtTokenProvider {
 
     public JwtTokenProvider() {
         this.key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
-        System.out.println("Generated JWT Key: " + key.getEncoded());//
     }
 
+    // Generate token
     public String generateToken(UserEntityDetails userDetails) {
-        // 1 day in milliseconds
-        long expiration = 86400000;
+        long expiration = 86400000L; // 1 day in milliseconds
         String userId = String.valueOf(userDetails.getId());
+
         return Jwts.builder()
                 .setSubject(userId) // Set user ID as subject
                 .claim("roles", userDetails.getAuthorities()
@@ -44,15 +43,5 @@ public class JwtTokenProvider {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
-    }
-
-    // 🔹 Lấy username từ token
-    public String getUsername(String token) {
-        return getClaims(token).getSubject();
-    }
-
-    // 🔹 Lấy roles từ token
-    public List<String> getRoles(String token) {
-        return getClaims(token).get("roles", List.class);
     }
 }
