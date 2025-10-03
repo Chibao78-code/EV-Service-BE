@@ -16,12 +16,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/vehicles")
+@RequestMapping("/api/me")
 public class ElectricVehicleController {
     @Autowired
     private ElectricVehicleService electricVehicleService;
 
-    @GetMapping("/my")
+    @GetMapping("/vehicles")
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<?> getMyVehicles(@AuthenticationPrincipal UserEntityDetails user) {
         if (user == null || !(user.getUser() instanceof CustomerEntity)) {

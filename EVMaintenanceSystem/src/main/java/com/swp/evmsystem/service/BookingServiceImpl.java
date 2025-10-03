@@ -2,7 +2,6 @@ package com.swp.evmsystem.service;
 
 import com.swp.evmsystem.dto.request.BookingRequest;
 import com.swp.evmsystem.entity.BookingEntity;
-import com.swp.evmsystem.entity.ElectricVehicleEntity;
 import com.swp.evmsystem.enums.BookingStatus;
 import com.swp.evmsystem.repository.BookingRepository;
 import com.swp.evmsystem.repository.ElectricVehicleRepository;
@@ -18,11 +17,6 @@ public class BookingServiceImpl implements BookingService {
     private ElectricVehicleRepository vehicleService;
     @Autowired
     private ServiceCenterRepository serviceCenterRepository;
-    @Override
-    public boolean createBooking(BookingEntity bookingEntity) {
-        return bookingRepository.save(bookingEntity) != null;
-    }
-
 
     @Override
     public boolean createBooking(BookingRequest request) {
@@ -34,4 +28,11 @@ public class BookingServiceImpl implements BookingService {
         bookingEntity.setTimeSlot(request.getTimeSlot());
         return bookingRepository.save(bookingEntity) != null;
     }
+
+    @Override
+    public BookingEntity getBookingById(Integer bookingId) {
+        return bookingRepository.findById(bookingId).orElse(null);
+    }
+
+
 }

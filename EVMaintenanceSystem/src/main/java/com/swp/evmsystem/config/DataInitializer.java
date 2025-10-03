@@ -7,5 +7,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DataInitializer {
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private UserService userService;
 
+    if (roleService.getAllRoles()== 0)
+
+
+    }
 }

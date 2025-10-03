@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface BookingService {
-    boolean createBooking(BookingEntity bookingEntity);
     boolean createBooking(BookingRequest request);
+    BookingEntity getBookingById(Integer bookingId);
 }
