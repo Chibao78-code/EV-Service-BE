@@ -1,30 +1,61 @@
 package com.swp.evmsystem.controller;
 
 import com.swp.evmsystem.dto.request.BookingRequest;
+import com.swp.evmsystem.dto.response.AvaibleTimeSlotDto;
+import com.swp.evmsystem.entity.TimeSlotAvailability;
 import com.swp.evmsystem.service.BookingService;
+import com.swp.evmsystem.service.ServiceCenterService;
+import com.swp.evmsystem.service.TimeSlotAvailabilityService;
+import com.swp.evmsystem.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/bookings")
+@RequestMapping("/api")
 public class BookingController {
     @Autowired
-    BookingService bookingService;
+    private BookingService bookingService;
+    @Autowired
+    private ServiceCenterService serviceCenterService;
+    @Autowired
+    private TimeSlotAvailabilityService timeSlotAvailabilityService;
 
-    @PostMapping("/create")
+    @PostMapping("/vehicles/{vehicleId}/bookings")
     @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<?> createBooking(@Valid @RequestBody BookingRequest request) {
-        boolean isCreated = bookingService.createBooking(request);
+    public ResponseEntity<?> createBooking(@Valid @RequestBody BookingRequest request,
+                                           @PathVariable("vehicleId") int vehicleId,
+                                           @AuthenticationPrincipal UserDetails userDetails) {
+
+
+        if (userDetails == null) {
+            return ResponseEntity.status(401).body("User not authenticated");
+        }
+
+        boolean isCreated = bookingService.createBooking(vehicleId, request);
+
+
         if (isCreated) {
             return ResponseEntity.ok("Booking created successfully");
         } else {
             return ResponseEntity.status(500).body("Failed to create booking");
         }
+    }
+
+    @GetMapping("bookings/{date}")
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public ResponseEntity<?> getAvailableTimeSlotByDate(@Valid
+                                                  @PathVariable("date")LocalDate date) {
+        List<AvaibleTimeSlotDto> timeSlotStatusList = new ArrayList<AvaibleTimeSlotDto>();
+        int availableTechnician = 5;
+
     }
 }

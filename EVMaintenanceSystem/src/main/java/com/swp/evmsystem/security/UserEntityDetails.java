@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class UserEntityDetails implements UserDetails {
-    private final UserEntity userEntity;
+    private UserEntity userEntity;
 
     public UserEntityDetails(UserEntity userEntity) {
         this.userEntity = userEntity;
@@ -19,7 +19,7 @@ public class UserEntityDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + userEntity.getRole().getName()));
-    } // The "ROLE_" prefix is important in Spring Security, it distinguishes roles from other authorities.
+    }
 
     @Override
     public String getPassword() {

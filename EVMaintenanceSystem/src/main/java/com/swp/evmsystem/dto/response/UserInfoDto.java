@@ -10,12 +10,12 @@ import lombok.experimental.FieldDefaults;
 @Schema(description = "Thông tin người dùng")
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 @Getter
-public class UserInfo {
+public class UserInfoDto {
     int id;
     String name;
     String role;
 
-    public UserInfo(UserEntity user) {
+    public UserInfoDto(UserEntity user) {
         this.id = user.getId();
         this.name = user.getFullName();
         this.role = user.getRole().getName().name();

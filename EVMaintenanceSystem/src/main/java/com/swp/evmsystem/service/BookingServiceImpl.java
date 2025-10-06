@@ -2,13 +2,16 @@ package com.swp.evmsystem.service;
 
 import com.swp.evmsystem.dto.request.BookingRequest;
 import com.swp.evmsystem.entity.BookingEntity;
-import com.swp.evmsystem.entity.ElectricVehicleEntity;
 import com.swp.evmsystem.enums.BookingStatus;
+import com.swp.evmsystem.enums.TimeSlot;
 import com.swp.evmsystem.repository.BookingRepository;
 import com.swp.evmsystem.repository.ElectricVehicleRepository;
 import com.swp.evmsystem.repository.ServiceCenterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -18,20 +21,25 @@ public class BookingServiceImpl implements BookingService {
     private ElectricVehicleRepository vehicleService;
     @Autowired
     private ServiceCenterRepository serviceCenterRepository;
-    @Override
-    public boolean createBooking(BookingEntity bookingEntity) {
-        return bookingRepository.save(bookingEntity) != null;
-    }
-
 
     @Override
-    public boolean createBooking(BookingRequest request) {
+    public boolean createBooking(Integer id ,BookingRequest request) {
         BookingEntity bookingEntity = new BookingEntity();
         bookingEntity.setBookingDate(request.getBookingDate());
         bookingEntity.setCenter(serviceCenterRepository.findById(request.getCenterId()).orElse(null));
-        bookingEntity.setVehicle(vehicleService.findById(request.getVehicleId()).orElse(null));
+        bookingEntity.setVehicle(vehicleService.findById(id).orElse(null));
         bookingEntity.setStatus(BookingStatus.PENDING);
         bookingEntity.setTimeSlot(request.getTimeSlot());
         return bookingRepository.save(bookingEntity) != null;
+    }
+
+    @Override
+    public BookingEntity getBookingById(Integer bookingId) {
+        return bookingRepository.findById(bookingId).orElse(null);
+    }
+
+    @Override
+    public int getBookingsByDateAndTimeSlot(LocalDate bookingDate, TimeSlot timeSlot) {
+        return bookingRepository.countAllByBookingDateAndTimeSlot( bookingDate,  timeSlot);
     }
 }
