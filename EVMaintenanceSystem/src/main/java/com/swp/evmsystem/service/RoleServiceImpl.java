@@ -21,7 +21,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public int getAllRoles() {
-        return (int) roleRepository.count();
+    public Integer getAllCount() {
+        return roleRepository.findAll().size();
     }
 }

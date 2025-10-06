@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service;
 public interface RoleService {
     boolean createRole(RoleEntity role);
     RoleEntity getRoleById(Integer roleId);
-    int getAllRoles();
+    Integer getAllCount();
 }

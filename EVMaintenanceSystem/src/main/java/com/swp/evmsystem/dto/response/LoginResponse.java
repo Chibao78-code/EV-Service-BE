@@ -15,6 +15,6 @@ public class LoginResponse {
             example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")
     String accessToken;
     @Schema(description = "Thong tin người dùng",
-            implementation = UserInfo.class)
-    UserInfo user;
+            implementation = UserInfoDto.class)
+    UserInfoDto user;
 }

@@ -2,9 +2,9 @@ package com.swp.evmsystem.controller;
 
 import com.swp.evmsystem.dto.request.LoginRequest;
 import com.swp.evmsystem.dto.response.LoginResponse;
-import com.swp.evmsystem.dto.response.UserInfo;
+import com.swp.evmsystem.dto.response.UserInfoDto;
 import com.swp.evmsystem.entity.UserEntity;
-import com.swp.evmsystem.security.JwtTokenProvider;
+import com.swp.evmsystem.security.JwtService;
 import com.swp.evmsystem.security.UserEntityDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -27,9 +27,9 @@ public class AuthController {
     @Autowired
     private final AuthenticationManager authenticationManager;
     @Autowired
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtService jwtTokenProvider;
 
-    public AuthController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider) {
+    public AuthController(AuthenticationManager authenticationManager, JwtService jwtTokenProvider) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
     }
@@ -45,11 +45,11 @@ public class AuthController {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
         );
-
+        
         UserEntityDetails userDetails = (UserEntityDetails) authentication.getPrincipal();
         UserEntity user = userDetails.getUser();
         String token = jwtTokenProvider.generateToken(userDetails);
-        UserInfo userInfo = new UserInfo(user);
+        UserInfoDto userInfo = new UserInfoDto(user);
 
         return new LoginResponse(token, userInfo);
     }

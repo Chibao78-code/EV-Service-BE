@@ -11,9 +11,10 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AvaibleTimeSlot {
+public class AvaibleTimeSlotDto {
     LocalDate date;
     TimeSlot timeSlot;
     boolean available;
+
 
 }
