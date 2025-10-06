@@ -1,5 +1,6 @@
 package com.swp.evmsystem.service;
 
+import com.swp.evmsystem.dto.request.BookingRequest;
 import com.swp.evmsystem.entity.TimeSlotAvailability;
 import org.springframework.stereotype.Service;
 
@@ -12,4 +13,6 @@ public interface TimeSlotAvailabilityService {
     List<TimeSlotAvailability> getTimeSlotByDate(LocalDate date);
 
     boolean addTimeSlotAvailabilityService(TimeSlotAvailability timeSlotAvailability);
+
+    boolean isTimeAvailable(BookingRequest bookingRequest);
 }

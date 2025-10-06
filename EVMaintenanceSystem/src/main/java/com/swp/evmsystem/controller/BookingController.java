@@ -6,7 +6,6 @@ import com.swp.evmsystem.entity.TimeSlotAvailability;
 import com.swp.evmsystem.service.BookingService;
 import com.swp.evmsystem.service.ServiceCenterService;
 import com.swp.evmsystem.service.TimeSlotAvailabilityService;
-import com.swp.evmsystem.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,11 +39,17 @@ public class BookingController {
             return ResponseEntity.status(401).body("User not authenticated");
         }
 
-        boolean isCreated = bookingService.createBooking(vehicleId, request);
+
+        boolean isTimeAvailable = timeSlotAvailabilityService.isTimeAvailable(request);
 
 
-        if (isCreated) {
-            return ResponseEntity.ok("Booking created successfully");
+        if (isTimeAvailable) {
+            boolean isCreated = bookingService.createBooking(vehicleId, request);
+            if (isCreated) {
+                return ResponseEntity.ok("Booking created successfully");
+            } else  {
+                return ResponseEntity.status(401).body("Booking creation failed");
+            }
         } else {
             return ResponseEntity.status(500).body("Failed to create booking");
         }
@@ -53,9 +58,12 @@ public class BookingController {
     @GetMapping("bookings/{date}")
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<?> getAvailableTimeSlotByDate(@Valid
-                                                  @PathVariable("date")LocalDate date) {
-        List<AvaibleTimeSlotDto> timeSlotStatusList = new ArrayList<AvaibleTimeSlotDto>();
-        int availableTechnician = 5;
-
+                                                        @PathVariable("date") LocalDate date) {
+        List<TimeSlotAvailability> timeSlotStatusList = timeSlotAvailabilityService.getTimeSlotByDate(date);
+        List<AvaibleTimeSlotDto> avaibleTimeSlotDtoList = new ArrayList<>();
+        for (TimeSlotAvailability timeSlotAvailability : timeSlotStatusList) {
+            avaibleTimeSlotDtoList.add(new AvaibleTimeSlotDto(timeSlotAvailability));
+        }
+        return ResponseEntity.ok(avaibleTimeSlotDtoList);
     }
 }
