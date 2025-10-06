@@ -29,7 +29,7 @@ Hệ thống **EV Service Center Maintenance Management System** (gọi tắt **
 - **Ngôn ngữ:** Java  
 - **Framework:** Spring Boot  
 - **Cơ sở dữ liệu:** SQL Server
-- **Công cụ khác:** Maven, Git, Postman (kiểm thử API)
+- **Công cụ khác:** Maven, Git, Postman (API Testing), Swagger (API Documenting)...
 
 ## Disclaimer
 
