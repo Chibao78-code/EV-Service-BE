@@ -31,8 +31,14 @@ public class TimeSlotAvailability {
     @ManyToOne
     @JoinColumn(name = "center_id")
     ServiceCenterEntity serviceCenter;
+    @Column(name =  "available_technician")
+    int availableTechnician;
     @Column(name = "booking_numbers")
     int bookingNumbers;
     @Column(name = "available")
     boolean available;
+
+    public void setAvailable() {
+        this.available = bookingNumbers <= availableTechnician;
+    }
 }

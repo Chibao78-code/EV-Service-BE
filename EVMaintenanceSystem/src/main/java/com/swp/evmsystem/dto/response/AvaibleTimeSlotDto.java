@@ -1,5 +1,6 @@
 package com.swp.evmsystem.dto.response;
 
+import com.swp.evmsystem.entity.TimeSlotAvailability;
 import com.swp.evmsystem.enums.TimeSlot;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -16,5 +17,9 @@ public class AvaibleTimeSlotDto {
     TimeSlot timeSlot;
     boolean available;
 
-
+    public AvaibleTimeSlotDto(TimeSlotAvailability timeSlot) {
+        this.date = timeSlot.getDate();
+        this.timeSlot = timeSlot.getTimeSlot();
+        this.available = timeSlot.isAvailable();
+    }
 }
