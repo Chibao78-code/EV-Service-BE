@@ -30,16 +30,23 @@ public class DataInitializer  implements CommandLineRunner {
         if (roleService.getAllCount() > 0) {
             return;
         }
+
         //Setup Role
         RoleEntity role = new RoleEntity();
         role.setName(RoleName.valueOf("ADMIN"));
         roleService.createRole(role);
-        role.setName(RoleName.valueOf("STAFF"));
-        roleService.createRole(role);
-        role.setName(RoleName.valueOf("TECHNICIAN"));
-        roleService.createRole(role);
-        role.setName(RoleName.valueOf("CUSTOMER"));
-        roleService.createRole(role);
+
+        RoleEntity role1 = new RoleEntity();
+        role1.setName(RoleName.valueOf("STAFF"));
+        roleService.createRole(role1);
+
+        RoleEntity role2 = new RoleEntity();
+        role2.setName(RoleName.valueOf("TECHNICIAN"));
+        roleService.createRole(role2);
+
+        RoleEntity role3 = new RoleEntity();
+        role3.setName(RoleName.valueOf("CUSTOMER"));
+        roleService.createRole(role3);
 
         //Setup User
         UserEntity user = new CustomerEntity();
@@ -58,11 +65,12 @@ public class DataInitializer  implements CommandLineRunner {
         ev.setLicensePlate("12345678A");
         electricVehicleService.create(ev);
 
-        ev.setModel("Electric Vehicle 1");
-        ev.setVIN("4568312afsa5462");
-        ev.setOwner((CustomerEntity) user);
-        ev.setLicensePlate("123456B8A");
-        electricVehicleService.create(ev);
+        ElectricVehicleEntity ev1 = new ElectricVehicleEntity();
+        ev1.setModel("Electric Vehicle 1");
+        ev1.setVIN("4568312afsa5462");
+        ev1.setOwner((CustomerEntity) user);
+        ev1.setLicensePlate("123456B8A");
+        electricVehicleService.create(ev1);
 
         //Setup Center
         ServiceCenterEntity svc = new ServiceCenterEntity();
@@ -78,10 +86,17 @@ public class DataInitializer  implements CommandLineRunner {
         tsav.setBookingNumbers(0);
         tsav.setAvailableTechnician(10);
         tsav.setServiceCenter(svc);
-        tsav.setTimeSlot(TimeSlot.SLOT_09_00);
+        tsav.setTimeSlot(TimeSlot.SLOT_08_00);
         tsav.setAvailable();
         timeSlotAvailabilityService.addTimeSlotAvailabilityService(tsav);
-        tsav.setTimeSlot(TimeSlot.SLOT_08_00);
-        timeSlotAvailabilityService.addTimeSlotAvailabilityService(tsav);
+
+        TimeSlotAvailability tsav1 = new TimeSlotAvailability();
+        tsav1.setDate(LocalDate.now());
+        tsav1.setBookingNumbers(0);
+        tsav1.setAvailableTechnician(10);
+        tsav1.setServiceCenter(svc);
+        tsav1.setTimeSlot(TimeSlot.SLOT_09_00);
+        tsav1.setAvailable();
+        timeSlotAvailabilityService.addTimeSlotAvailabilityService(tsav1);
     }
 }
