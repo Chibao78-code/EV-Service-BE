@@ -6,4 +6,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ServiceCenterService {
     ServiceCenterEntity getServiceCenterEntityById(int id);
+    boolean create(ServiceCenterEntity sve);
 }

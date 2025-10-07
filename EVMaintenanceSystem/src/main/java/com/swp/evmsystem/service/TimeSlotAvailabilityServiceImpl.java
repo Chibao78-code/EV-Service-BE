@@ -36,6 +36,14 @@ public class TimeSlotAvailabilityServiceImpl implements TimeSlotAvailabilityServ
         ServiceCenterEntity serviceCenter = serviceCenterRepository.findById(request.getCenterId()).orElse(null);
 
         TimeSlotAvailability timeSlotAvailability = timeSlotAvailabilityRepository.findTimeSlotAvailabilityByDateAndTimeSlotAndServiceCenter(date, timeSlot, serviceCenter);
+        if (timeSlotAvailability == null) {
+            timeSlotAvailability = new TimeSlotAvailability();
+            timeSlotAvailability.setTimeSlot(timeSlot);
+            timeSlotAvailability.setServiceCenter(serviceCenter);
+            timeSlotAvailability.setDate(date);
+            timeSlotAvailability.setAvailable();
+        }
+
         if (timeSlotAvailability.isAvailable()) {
             timeSlotAvailability.setBookingNumbers(timeSlotAvailability.getBookingNumbers() + 1);
             timeSlotAvailability.setAvailable();
@@ -45,5 +53,4 @@ public class TimeSlotAvailabilityServiceImpl implements TimeSlotAvailabilityServ
             return false;
         }
     }
-
 }

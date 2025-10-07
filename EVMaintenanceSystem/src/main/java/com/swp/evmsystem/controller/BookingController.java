@@ -39,7 +39,6 @@ public class BookingController {
             return ResponseEntity.status(401).body("User not authenticated");
         }
 
-
         boolean isTimeAvailable = timeSlotAvailabilityService.isTimeAvailable(request);
 
 
@@ -47,11 +46,11 @@ public class BookingController {
             boolean isCreated = bookingService.createBooking(vehicleId, request);
             if (isCreated) {
                 return ResponseEntity.ok("Booking created successfully");
-            } else  {
+            } else {
                 return ResponseEntity.status(401).body("Booking creation failed");
             }
         } else {
-            return ResponseEntity.status(500).body("Failed to create booking");
+            return ResponseEntity.status(500).body("Booking creation failed as time being full");
         }
     }
 
@@ -61,9 +60,11 @@ public class BookingController {
                                                         @PathVariable("date") LocalDate date) {
         List<TimeSlotAvailability> timeSlotStatusList = timeSlotAvailabilityService.getTimeSlotByDate(date);
         List<AvaibleTimeSlotDto> avaibleTimeSlotDtoList = new ArrayList<>();
+
         for (TimeSlotAvailability timeSlotAvailability : timeSlotStatusList) {
             avaibleTimeSlotDtoList.add(new AvaibleTimeSlotDto(timeSlotAvailability));
         }
+
         return ResponseEntity.ok(avaibleTimeSlotDtoList);
     }
 }
