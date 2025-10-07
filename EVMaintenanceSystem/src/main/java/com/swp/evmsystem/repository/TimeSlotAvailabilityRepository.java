@@ -16,4 +16,5 @@ public interface TimeSlotAvailabilityRepository extends JpaRepository<TimeSlotAv
     TimeSlotAvailability save(TimeSlotAvailability timeSlotAvailability);
 
     TimeSlotAvailability findTimeSlotAvailabilityByDateAndTimeSlotAndServiceCenter(LocalDate date, TimeSlot timeSlot, ServiceCenterEntity serviceCenter);
+    
 }

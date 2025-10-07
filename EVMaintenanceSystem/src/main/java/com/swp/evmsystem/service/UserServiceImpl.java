@@ -1,5 +1,6 @@
 package com.swp.evmsystem.service;
 
+import com.swp.evmsystem.entity.UserEntity;
 import com.swp.evmsystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,5 +12,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isCustomer(Integer userId) {
         return userRepository.getRoleNameById(userId).equals("CUSTOMER");
+    }
+
+    @Override
+    public boolean createUser(UserEntity user) {
+        return userRepository.save(user) != null;
     }
 }

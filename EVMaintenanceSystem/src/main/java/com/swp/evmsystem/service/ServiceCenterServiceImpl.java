@@ -14,4 +14,9 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
     public ServiceCenterEntity getServiceCenterEntityById(int id) {
         return serviceCenterRepository.findById(id);
     }
+
+    @Override
+    public boolean create(ServiceCenterEntity sve) {
+        return serviceCenterRepository.save(sve) != null;
+    }
 }

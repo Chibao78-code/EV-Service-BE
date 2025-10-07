@@ -39,6 +39,6 @@ public class TimeSlotAvailability {
     boolean available;
 
     public void setAvailable() {
-        this.available = bookingNumbers <= availableTechnician;
+        this.available = bookingNumbers < availableTechnician;
     }
 }

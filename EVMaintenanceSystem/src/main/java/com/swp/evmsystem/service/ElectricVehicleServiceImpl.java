@@ -17,4 +17,9 @@ public class ElectricVehicleServiceImpl implements ElectricVehicleService {
     public List<ElectricVehicleEntity> findByOwner(CustomerEntity owner) {
         return electricVehicleRepository.findByOwner(owner);
     }
+
+    @Override
+    public boolean create(ElectricVehicleEntity ev) {
+        return electricVehicleRepository.save(ev) != null;
+    }
 }

@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ServiceCenterRepository extends JpaRepository<ServiceCenterEntity, Integer> {
     ServiceCenterEntity findById(int id);
+    ServiceCenterEntity save(ServiceCenterEntity ev);
 }
