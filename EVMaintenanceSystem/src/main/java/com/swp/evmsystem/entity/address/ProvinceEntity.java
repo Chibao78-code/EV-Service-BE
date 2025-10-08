@@ -21,4 +21,9 @@ public class ProvinceEntity {
     Integer provinceId;
     @Column(name = "province_name", unique = true, length = 50, nullable = false)
     String provinceName;
+
+    @Override
+    public String toString() {
+        return  provinceName;
+    }
 }

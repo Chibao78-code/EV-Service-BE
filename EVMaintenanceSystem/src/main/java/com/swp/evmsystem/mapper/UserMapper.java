@@ -34,13 +34,10 @@ public interface UserMapper {
             throw new IllegalArgumentException("userType must not be null");
         }
 
-        switch (dto.getRoleName().toUpperCase()) {
-            case "CUSTOMER":
-                return new CustomerEntity();
-            case "EMPLOYEE":
-                return new EmployeeEntity();
-            default:
-                throw new IllegalArgumentException("Unknown user type: " + dto.getRoleName());
-        }
+        return switch (dto.getRoleName().toUpperCase()) {
+            case "CUSTOMER" -> new CustomerEntity();
+            case "EMPLOYEE" -> new EmployeeEntity();
+            default -> throw new IllegalArgumentException("Unknown user type: " + dto.getRoleName());
+        };
     }
 }

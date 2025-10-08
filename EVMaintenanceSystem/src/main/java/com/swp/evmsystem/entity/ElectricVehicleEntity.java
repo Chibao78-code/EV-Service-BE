@@ -22,10 +22,11 @@ public class ElectricVehicleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "vehicle_id")
     int id;
-    @Column(name = "model", length = 50, nullable = false)
-    String model;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "model")
+    EVModelEntity model;
     @Column(name = "VIN", length = 17, unique = true, nullable = false)
-    String VIN;
+    String vIN;
     @Column(name = "license_plate", length = 10, nullable = false)
     String licensePlate;
     @ManyToOne

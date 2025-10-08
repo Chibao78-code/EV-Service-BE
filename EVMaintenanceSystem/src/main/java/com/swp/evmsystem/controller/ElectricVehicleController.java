@@ -1,6 +1,6 @@
 package com.swp.evmsystem.controller;
 
-import com.swp.evmsystem.dto.response.ElectricVehicleDto;
+import com.swp.evmsystem.dto.response.ElectricVehicleDTO;
 import com.swp.evmsystem.entity.CustomerEntity;
 import com.swp.evmsystem.security.UserEntityDetails;
 import com.swp.evmsystem.service.ElectricVehicleService;
@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,37 +37,22 @@ public class ElectricVehicleController {
     })
     @GetMapping("/me/vehicles")
     @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<?> getMyVehicles() {
+    public ResponseEntity<?> getMyVehicles(@AuthenticationPrincipal UserEntityDetails userDetails) {
         try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (authentication == null || !authentication.isAuthenticated()) {
-                return ResponseEntity
-                        .status(401)
-                        .body("User not authenticated");
-            }
 
-            UserEntityDetails userDetails = (UserEntityDetails) authentication.getPrincipal();
-            if (!(userDetails.getUser() instanceof CustomerEntity)) {
+            if (!(userDetails.getUser() instanceof CustomerEntity customer)) {
 
                 throw new AccessDeniedException("Only customers can access vehicles");
             }
 
-            CustomerEntity customer = (CustomerEntity) userDetails.getUser();
-            List<ElectricVehicleDto> vehicles = electricVehicleService
-                    .findByOwner(customer)
-                    .stream()
-                    .map(ElectricVehicleDto::new)
-                    .toList();
-
+            List<ElectricVehicleDTO> vehicles = electricVehicleService.findByOwner(customer);
 
             return ResponseEntity.ok(vehicles);
         } catch (ClassCastException e) {
-
             return ResponseEntity
                     .status(401)
                     .body("Invalid authentication");
         } catch (Exception e) {
-
             return ResponseEntity
                     .internalServerError()
                     .body("Failed to retrieve vehicles");
