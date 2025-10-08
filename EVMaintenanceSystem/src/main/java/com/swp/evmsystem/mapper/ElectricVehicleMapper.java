@@ -1,7 +1,7 @@
 package com.swp.evmsystem.mapper;
 
 import com.swp.evmsystem.dto.response.ElectricVehicleDTO;
-import com.swp.evmsystem.entity.EVModelEntity;
+import com.swp.evmsystem.entity.EvModelEntity;
 import com.swp.evmsystem.entity.ElectricVehicleEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -15,7 +15,7 @@ public interface ElectricVehicleMapper {
     ElectricVehicleEntity toEntity(ElectricVehicleDTO dto);
 
     @Named("modelToString")
-    default String modelToString(EVModelEntity entity) {
+    default String modelToString(EvModelEntity entity) {
         return entity.getModelName();
     }
 }

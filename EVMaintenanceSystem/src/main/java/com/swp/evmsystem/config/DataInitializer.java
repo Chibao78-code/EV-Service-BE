@@ -15,7 +15,6 @@ import com.swp.evmsystem.service.address.WardEntityService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -54,7 +53,7 @@ public class DataInitializer implements CommandLineRunner {
     @Autowired
     AddressEntityService addressEntityService;
     @Autowired
-    EVModelService modelService;
+    EvModelService evModelService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -116,9 +115,9 @@ public class DataInitializer implements CommandLineRunner {
 
         // Setup EV Model
         for (String name : MODEL_NAMES) {
-            EVModelEntity evModelEntity = new EVModelEntity();
+            EvModelEntity evModelEntity = new EvModelEntity();
             evModelEntity.setModelName(name);
-            modelService.createEVModel(evModelEntity);
+            evModelService.createEVModel(evModelEntity);
         }
     }
 }

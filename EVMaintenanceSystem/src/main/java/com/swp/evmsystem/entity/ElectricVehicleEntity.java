@@ -24,7 +24,7 @@ public class ElectricVehicleEntity {
     int id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "model")
-    EVModelEntity model;
+    EvModelEntity model;
     @Column(name = "VIN", length = 17, unique = true, nullable = false)
     String vIN;
     @Column(name = "license_plate", length = 10, nullable = false)
