@@ -1,7 +1,7 @@
 package com.swp.evmsystem.controller;
 
 import com.swp.evmsystem.dto.request.BookingRequest;
-import com.swp.evmsystem.dto.response.AvaibleTimeSlotDto;
+import com.swp.evmsystem.dto.response.AvaibleTimeSlotDTO;
 import com.swp.evmsystem.entity.TimeSlotAvailability;
 import com.swp.evmsystem.service.BookingService;
 import com.swp.evmsystem.service.ServiceCenterService;
@@ -59,10 +59,10 @@ public class BookingController {
     public ResponseEntity<?> getAvailableTimeSlotByDate(@Valid
                                                         @PathVariable("date") LocalDate date) {
         List<TimeSlotAvailability> timeSlotStatusList = timeSlotAvailabilityService.getTimeSlotByDate(date);
-        List<AvaibleTimeSlotDto> avaibleTimeSlotDtoList = new ArrayList<>();
+        List<AvaibleTimeSlotDTO> avaibleTimeSlotDtoList = new ArrayList<>();
 
         for (TimeSlotAvailability timeSlotAvailability : timeSlotStatusList) {
-            avaibleTimeSlotDtoList.add(new AvaibleTimeSlotDto(timeSlotAvailability));
+            avaibleTimeSlotDtoList.add(new AvaibleTimeSlotDTO(timeSlotAvailability));
         }
 
         return ResponseEntity.ok(avaibleTimeSlotDtoList);

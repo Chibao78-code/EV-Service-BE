@@ -27,4 +27,9 @@ public class RoleEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "role_name", length = 50, unique = true, nullable = false)
     RoleName name;
+
+    @Override
+    public String toString() {
+        return name.toString();
+    }
 }

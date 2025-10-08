@@ -1,6 +1,6 @@
 package com.swp.evmsystem.controller;
 
-import com.swp.evmsystem.dto.response.ElectricVehicleDto;
+import com.swp.evmsystem.dto.response.ElectricVehicleDTO;
 import com.swp.evmsystem.entity.CustomerEntity;
 import com.swp.evmsystem.security.UserEntityDetails;
 import org.slf4j.Logger;
@@ -47,11 +47,7 @@ public class TestController {
             }
 
             CustomerEntity customer = (CustomerEntity) userDetails.getUser();
-            List<ElectricVehicleDto> vehicles = electricVehicleService
-                    .findByOwner(customer)
-                    .stream()
-                    .map(ElectricVehicleDto::new)
-                    .toList();
+            List<ElectricVehicleDTO> vehicles = null;
 
             logger.debug("Retrieved {} vehicles for customer {}", vehicles.size(), customer.getId());
             return ResponseEntity.ok(vehicles);

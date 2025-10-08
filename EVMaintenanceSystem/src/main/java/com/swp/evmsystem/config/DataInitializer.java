@@ -1,9 +1,6 @@
 package com.swp.evmsystem.config;
 
-import com.swp.evmsystem.entity.CustomerEntity;
-import com.swp.evmsystem.entity.RoleEntity;
-import com.swp.evmsystem.entity.ServiceCenterEntity;
-import com.swp.evmsystem.entity.UserEntity;
+import com.swp.evmsystem.entity.*;
 import com.swp.evmsystem.entity.address.AddressEntity;
 import com.swp.evmsystem.entity.address.DistrictEntity;
 import com.swp.evmsystem.entity.address.ProvinceEntity;
@@ -18,6 +15,7 @@ import com.swp.evmsystem.service.address.WardEntityService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -32,9 +30,10 @@ public class DataInitializer implements CommandLineRunner {
     final String[] PROVINCE_NAMES = {"TP. HCM"};
     final String[] DISTRICT_NAMES = {"Quận 1", "Quận 7", "TP. Thủ Đức", "Quận Gò Vấp", "Quận Bình Thạnh"};
     final String[] WARD_NAMES = {"Phường Bến Nghé", "Phường Tân Hưng", "Phường Linh Chiểu", "Phường 5", "Phường 25"};
-    final String[] ADDRESSLINES = {"123 Nguyễn Huệ", "456 Nguyễn Văn Linh", "789 Võ Văn Ngân", "321 Phan Văn Trị", "654 Xô Viết Nghệ Tĩnh"};
+    final String[] ADDRESS_LINES = {"123 Nguyễn Huệ", "456 Nguyễn Văn Linh", "789 Võ Văn Ngân", "321 Phan Văn Trị", "654 Xô Viết Nghệ Tĩnh"};
     final String[] CENTER_NAMES = {"VinFast Service Center Quận 1", "VinFast Service Center Quận 7", "VinFast Service Center Thủ Đức", "VinFast Service Center Gò Vấp", "VinFast Service Center Bình Thạnh"};
     final String[] CENTER_PHONES = {"02812345678", "02823456789", "02834567890", "02845678901", "02856789012"};
+    final String[] MODEL_NAMES = {"Evo200", "Evo200 Lite", "Feliz S", "Feliz Neo", "Vento S"};
 
     @Autowired
     RoleService roleService;
@@ -47,13 +46,15 @@ public class DataInitializer implements CommandLineRunner {
     @Autowired
     TimeSlotAvailabilityService timeSlotAvailabilityService;
     @Autowired
-    private ProvinceEntityService provinceEntityService;
+    ProvinceEntityService provinceEntityService;
     @Autowired
-    private DistrictEntityService districtEntityService;
+    DistrictEntityService districtEntityService;
     @Autowired
-    private WardEntityService wardEntityService;
+    WardEntityService wardEntityService;
     @Autowired
-    private AddressEntityService addressEntityService;
+    AddressEntityService addressEntityService;
+    @Autowired
+    EVModelService modelService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -79,37 +80,45 @@ public class DataInitializer implements CommandLineRunner {
             userService.createUser(user);
         }
 
-        // Setup Provinces - TP. HCM
-        ProvinceEntity provinceEntity = new ProvinceEntity();
-        provinceEntity.setProvinceName(PROVINCE_NAMES[0]);
-        provinceEntityService.createProvince(provinceEntity);
-
         // Setup Center
-        for (int i = 0; i <= 4; i++) {
-            // District
-            DistrictEntity districtEntity = new DistrictEntity();
-            districtEntity.setDistrictName(DISTRICT_NAMES[i]);
-            districtEntity.setProvince(provinceEntity);
-            districtEntityService.createDistrict(districtEntity);
+        {
+            ProvinceEntity provinceEntity = new ProvinceEntity();
+            provinceEntity.setProvinceName(PROVINCE_NAMES[0]);
+            provinceEntityService.createProvince(provinceEntity);
 
-            // Ward
-            WardEntity wardEntity = new WardEntity();
-            wardEntity.setWardName(WARD_NAMES[i]);
-            wardEntity.setDistrict(districtEntity);
-            wardEntityService.createWard(wardEntity);
+            for (int i = 0; i <= 4; i++) {
+                // District
+                DistrictEntity districtEntity = new DistrictEntity();
+                districtEntity.setDistrictName(DISTRICT_NAMES[i]);
+                districtEntity.setProvince(provinceEntity);
+                districtEntityService.createDistrict(districtEntity);
 
-            // Address
-            AddressEntity addressEntity = new AddressEntity();
-            addressEntity.setAddressLine(ADDRESSLINES[i]);
-            addressEntity.setWard(wardEntity);
-            addressEntityService.createAddress(addressEntity);
+                // Ward
+                WardEntity wardEntity = new WardEntity();
+                wardEntity.setWardName(WARD_NAMES[i]);
+                wardEntity.setDistrict(districtEntity);
+                wardEntityService.createWard(wardEntity);
 
-            // Center
-            ServiceCenterEntity serviceCenterEntity = new ServiceCenterEntity();
-            serviceCenterEntity.setCenterName(CENTER_NAMES[i]);
-            serviceCenterEntity.setCenterPhone(CENTER_PHONES[i]);
-            serviceCenterEntity.setCenterAddress(addressEntity);
-            serviceCenterService.create(serviceCenterEntity);
+                // Address
+                AddressEntity addressEntity = new AddressEntity();
+                addressEntity.setAddressLine(ADDRESS_LINES[i]);
+                addressEntity.setWard(wardEntity);
+                addressEntityService.createAddress(addressEntity);
+
+                // Center
+                ServiceCenterEntity serviceCenterEntity = new ServiceCenterEntity();
+                serviceCenterEntity.setCenterName(CENTER_NAMES[i]);
+                serviceCenterEntity.setCenterPhone(CENTER_PHONES[i]);
+                serviceCenterEntity.setCenterAddress(addressEntity);
+                serviceCenterService.create(serviceCenterEntity);
+            }
+        }
+
+        // Setup EV Model
+        for (String name : MODEL_NAMES) {
+            EVModelEntity evModelEntity = new EVModelEntity();
+            evModelEntity.setModelName(name);
+            modelService.createEVModel(evModelEntity);
         }
     }
 }

@@ -24,4 +24,9 @@ public class WardEntity {
     @JoinColumn(name = "district_id")
     @ManyToOne(fetch = FetchType.LAZY)
     DistrictEntity district;
+
+    @Override
+    public String toString() {
+        return  wardName + ", " + district.toString();
+    }
 }
