@@ -1,6 +1,7 @@
 package com.swp.evmsystem.service;
 
 import com.swp.evmsystem.entity.RoleEntity;
+import com.swp.evmsystem.enums.RoleName;
 import com.swp.evmsystem.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Integer getAllCount() {
         return roleRepository.findAll().size();
+    }
+
+    @Override
+    public RoleEntity getRoleByName(String name) {
+        return roleRepository.findByName(RoleName.valueOf(name));
     }
 }

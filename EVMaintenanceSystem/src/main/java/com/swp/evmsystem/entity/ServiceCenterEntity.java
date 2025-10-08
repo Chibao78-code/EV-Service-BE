@@ -1,14 +1,12 @@
 package com.swp.evmsystem.entity;
 
+import com.swp.evmsystem.entity.address.AddressEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "trung_tam")
@@ -22,14 +20,11 @@ public class ServiceCenterEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "center_id")
     int id;
-    @Column(name = "name", length = 100, nullable = false)
-    String name;
-    @Column(name = "address", length = 200, nullable = false)
-    String address;
-    @Column(name = "phone", length = 10, nullable = false)
-    String phone;
-    @Column(name = "email", length = 100, unique = true, nullable = false)
-    String email;
-    @OneToMany(mappedBy = "centerId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    List<EmployeeEntity> employees = new ArrayList<EmployeeEntity>();
+    @Column(name = "center_name", length = 100, nullable = false)
+    String centerName;
+    @Column(name = "center_phone", length = 12, nullable = false)
+    String centerPhone;
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "address_id")
+    AddressEntity centerAddress;
 }

@@ -1,29 +1,59 @@
 package com.swp.evmsystem.config;
 
-import com.swp.evmsystem.entity.*;
+import com.swp.evmsystem.entity.CustomerEntity;
+import com.swp.evmsystem.entity.RoleEntity;
+import com.swp.evmsystem.entity.ServiceCenterEntity;
+import com.swp.evmsystem.entity.UserEntity;
+import com.swp.evmsystem.entity.address.AddressEntity;
+import com.swp.evmsystem.entity.address.DistrictEntity;
+import com.swp.evmsystem.entity.address.ProvinceEntity;
+import com.swp.evmsystem.entity.address.WardEntity;
 import com.swp.evmsystem.enums.RoleName;
-import com.swp.evmsystem.enums.TimeSlot;
 import com.swp.evmsystem.enums.UserStatus;
-import com.swp.evmsystem.repository.ServiceCenterRepository;
 import com.swp.evmsystem.service.*;
+import com.swp.evmsystem.service.address.AddressEntityService;
+import com.swp.evmsystem.service.address.DistrictEntityService;
+import com.swp.evmsystem.service.address.ProvinceEntityService;
+import com.swp.evmsystem.service.address.WardEntityService;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-
 @Component
-public class DataInitializer  implements CommandLineRunner {
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class DataInitializer implements CommandLineRunner {
+    final String[] ROLE_NAMES = {"ADMIN", "STAFF", "TECHNICIAN", "CUSTOMER"};
+    final String[] CUSTOMER_NAMES = {"Customer 1", "Customer 2"};
+    final String[] CUSTOMER_PHONES = {"0905111111", "0905222222"};
+    final String[] CUSTOMER_PASSWORDS = {"user1@", "user2@"};
+    final String[] PROVINCE_NAMES = {"TP. HCM"};
+    final String[] DISTRICT_NAMES = {"Quận 1", "Quận 7", "TP. Thủ Đức", "Quận Gò Vấp", "Quận Bình Thạnh"};
+    final String[] WARD_NAMES = {"Phường Bến Nghé", "Phường Tân Hưng", "Phường Linh Chiểu", "Phường 5", "Phường 25"};
+    final String[] ADDRESSLINES = {"123 Nguyễn Huệ", "456 Nguyễn Văn Linh", "789 Võ Văn Ngân", "321 Phan Văn Trị", "654 Xô Viết Nghệ Tĩnh"};
+    final String[] CENTER_NAMES = {"VinFast Service Center Quận 1", "VinFast Service Center Quận 7", "VinFast Service Center Thủ Đức", "VinFast Service Center Gò Vấp", "VinFast Service Center Bình Thạnh"};
+    final String[] CENTER_PHONES = {"02812345678", "02823456789", "02834567890", "02845678901", "02856789012"};
+
     @Autowired
-    private RoleService roleService;
+    RoleService roleService;
     @Autowired
-    private UserService userService;
+    UserService userService;
     @Autowired
-    private ElectricVehicleService electricVehicleService;
+    ElectricVehicleService electricVehicleService;
     @Autowired
-    private ServiceCenterService serviceCenterService;
+    ServiceCenterService serviceCenterService;
     @Autowired
-    private TimeSlotAvailabilityService timeSlotAvailabilityService;
+    TimeSlotAvailabilityService timeSlotAvailabilityService;
+    @Autowired
+    private ProvinceEntityService provinceEntityService;
+    @Autowired
+    private DistrictEntityService districtEntityService;
+    @Autowired
+    private WardEntityService wardEntityService;
+    @Autowired
+    private AddressEntityService addressEntityService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -31,72 +61,55 @@ public class DataInitializer  implements CommandLineRunner {
             return;
         }
 
-        //Setup Role
-        RoleEntity role = new RoleEntity();
-        role.setName(RoleName.valueOf("ADMIN"));
-        roleService.createRole(role);
+        // Setup Role
+        for (int i = 0; i <= 3; i++) {
+            RoleEntity roleEntity = new RoleEntity();
+            roleEntity.setName(RoleName.valueOf(ROLE_NAMES[i]));
+            roleService.createRole(roleEntity);
+        }
 
-        RoleEntity role1 = new RoleEntity();
-        role1.setName(RoleName.valueOf("STAFF"));
-        roleService.createRole(role1);
+        // Setup Customer
+        for (int i = 0; i <= 1; i++) {
+            UserEntity user = new CustomerEntity();
+            user.setFullName(CUSTOMER_NAMES[i]);
+            user.setRole(roleService.getRoleByName(ROLE_NAMES[3]));
+            user.setPhone(CUSTOMER_PHONES[i]);
+            user.setPassword((new BCryptPasswordEncoder()).encode(CUSTOMER_PASSWORDS[i]));
+            user.setStatus(UserStatus.ACTIVE);
+            userService.createUser(user);
+        }
 
-        RoleEntity role2 = new RoleEntity();
-        role2.setName(RoleName.valueOf("TECHNICIAN"));
-        roleService.createRole(role2);
+        // Setup Provinces - TP. HCM
+        ProvinceEntity provinceEntity = new ProvinceEntity();
+        provinceEntity.setProvinceName(PROVINCE_NAMES[0]);
+        provinceEntityService.createProvince(provinceEntity);
 
-        RoleEntity role3 = new RoleEntity();
-        role3.setName(RoleName.valueOf("CUSTOMER"));
-        roleService.createRole(role3);
+        // Setup Center
+        for (int i = 0; i <= 4; i++) {
+            // District
+            DistrictEntity districtEntity = new DistrictEntity();
+            districtEntity.setDistrictName(DISTRICT_NAMES[i]);
+            districtEntity.setProvince(provinceEntity);
+            districtEntityService.createDistrict(districtEntity);
 
-        //Setup User
-        UserEntity user = new CustomerEntity();
-        user.setRole(role);
-        user.setPhone("0378523693");
-        user.setPassword("$2a$12$YDETcayOevvKoDns/qKiReBXk3kAbrwhgBpOqq.Biv/P4.RFxCxpi"); //"user12345"
-        user.setFullName("User Tai Nang");
-        user.setStatus(UserStatus.ACTIVE);
-        userService.createUser(user);
+            // Ward
+            WardEntity wardEntity = new WardEntity();
+            wardEntity.setWardName(WARD_NAMES[i]);
+            wardEntity.setDistrict(districtEntity);
+            wardEntityService.createWard(wardEntity);
 
-        //Setup EV
-        ElectricVehicleEntity ev = new ElectricVehicleEntity();
-        ev.setModel("Electric Vehicle");
-        ev.setVIN("12345687512");
-        ev.setOwner((CustomerEntity) user);
-        ev.setLicensePlate("12345678A");
-        electricVehicleService.create(ev);
+            // Address
+            AddressEntity addressEntity = new AddressEntity();
+            addressEntity.setAddressLine(ADDRESSLINES[i]);
+            addressEntity.setWard(wardEntity);
+            addressEntityService.createAddress(addressEntity);
 
-        ElectricVehicleEntity ev1 = new ElectricVehicleEntity();
-        ev1.setModel("Electric Vehicle 1");
-        ev1.setVIN("4568312afsa5462");
-        ev1.setOwner((CustomerEntity) user);
-        ev1.setLicensePlate("123456B8A");
-        electricVehicleService.create(ev1);
-
-        //Setup Center
-        ServiceCenterEntity svc = new ServiceCenterEntity();
-        svc.setName("Service Center");
-        svc.setPhone("123465852");
-        svc.setEmail("center@ev.com");
-        svc.setAddress("D9, High Tech, HCMC");
-        serviceCenterService.create(svc);
-
-        //Setup TimeSlot
-        TimeSlotAvailability tsav = new TimeSlotAvailability();
-        tsav.setDate(LocalDate.now());
-        tsav.setBookingNumbers(0);
-        tsav.setAvailableTechnician(10);
-        tsav.setServiceCenter(svc);
-        tsav.setTimeSlot(TimeSlot.SLOT_08_00);
-        tsav.setAvailable();
-        timeSlotAvailabilityService.addTimeSlotAvailabilityService(tsav);
-
-        TimeSlotAvailability tsav1 = new TimeSlotAvailability();
-        tsav1.setDate(LocalDate.now());
-        tsav1.setBookingNumbers(0);
-        tsav1.setAvailableTechnician(10);
-        tsav1.setServiceCenter(svc);
-        tsav1.setTimeSlot(TimeSlot.SLOT_09_00);
-        tsav1.setAvailable();
-        timeSlotAvailabilityService.addTimeSlotAvailabilityService(tsav1);
+            // Center
+            ServiceCenterEntity serviceCenterEntity = new ServiceCenterEntity();
+            serviceCenterEntity.setCenterName(CENTER_NAMES[i]);
+            serviceCenterEntity.setCenterPhone(CENTER_PHONES[i]);
+            serviceCenterEntity.setCenterAddress(addressEntity);
+            serviceCenterService.create(serviceCenterEntity);
+        }
     }
 }
