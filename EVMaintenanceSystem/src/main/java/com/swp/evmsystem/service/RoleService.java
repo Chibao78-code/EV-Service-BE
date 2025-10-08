@@ -8,5 +8,5 @@ public interface RoleService {
     boolean createRole(RoleEntity role);
     RoleEntity getRoleById(Integer roleId);
     Integer getAllCount();
-
+    RoleEntity getRoleByName(String name);
 }
