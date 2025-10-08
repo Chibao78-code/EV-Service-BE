@@ -117,7 +117,7 @@ public class DataInitializer implements CommandLineRunner {
         for (String name : MODEL_NAMES) {
             EvModelEntity evModelEntity = new EvModelEntity();
             evModelEntity.setModelName(name);
-            modelService.createEVModel(evModelEntity);
+            evModelService.createEVModel(evModelEntity);
         }
     }
 }
