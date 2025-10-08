@@ -11,5 +11,5 @@ public interface ServiceCenterService {
     ServiceCenterEntity getServiceCenterEntityById(int id);
     boolean create(ServiceCenterEntity sve);
     List<ServiceCenterEntity> getServiceCenterEntities();
-    public List<ServiceCenterDTO> getAllServiceCenters();
+    List<ServiceCenterDTO> getAllServiceCenters();
 }

@@ -1,5 +1,6 @@
 package com.swp.evmsystem.entity;
 
+import com.swp.evmsystem.enums.RoleName;
 import com.swp.evmsystem.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
