@@ -14,4 +14,9 @@ public class EvModelServiceImpl implements EvModelService {
     public void createEVModel(EvModelEntity entity) {
         repository.save(entity);
     }
+
+    @Override
+    public EvModelEntity getModelById(int i) {
+        return repository.findById(i).get();
+    }
 }

@@ -33,6 +33,8 @@ public class DataInitializer implements CommandLineRunner {
     final String[] CENTER_NAMES = {"VinFast Service Center Quận 1", "VinFast Service Center Quận 7", "VinFast Service Center Thủ Đức", "VinFast Service Center Gò Vấp", "VinFast Service Center Bình Thạnh"};
     final String[] CENTER_PHONES = {"02812345678", "02823456789", "02834567890", "02845678901", "02856789012"};
     final String[] MODEL_NAMES = {"Evo200", "Evo200 Lite", "Feliz S", "Feliz Neo", "Vento S"};
+    final String[] EV_VINS = {"FAKEVIN0000000000", "TESTVIN0000000000", "PLACEHOLDER000000"};
+    final String[] EV_LICENSE_PLATES = {"49MĐ685692", "59MĐ102563", "59MĐ155567"};
 
     @Autowired
     RoleService roleService;
@@ -54,6 +56,8 @@ public class DataInitializer implements CommandLineRunner {
     AddressEntityService addressEntityService;
     @Autowired
     EvModelService evModelService;
+    @Autowired
+    private CustomerService customerService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -118,6 +122,20 @@ public class DataInitializer implements CommandLineRunner {
             EvModelEntity evModelEntity = new EvModelEntity();
             evModelEntity.setModelName(name);
             evModelService.createEVModel(evModelEntity);
+        }
+
+        // Setup EV
+        for (int i = 0; i <= 2; i++) {
+            ElectricVehicleEntity electricVehicleEntity = new ElectricVehicleEntity();
+            electricVehicleEntity.setVin(EV_VINS[i]);
+            electricVehicleEntity.setLicensePlate(EV_LICENSE_PLATES[i]);
+            electricVehicleEntity.setModel(evModelService.getModelById(i + 2));
+            if (i > 0) {
+                electricVehicleEntity.setOwner(customerService.getCustomerById(2));
+            } else {
+                electricVehicleEntity.setOwner(customerService.getCustomerById(1));
+            }
+            electricVehicleService.create(electricVehicleEntity);
         }
     }
 }

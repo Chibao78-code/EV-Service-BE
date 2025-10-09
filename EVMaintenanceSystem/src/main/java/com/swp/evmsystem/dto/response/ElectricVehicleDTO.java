@@ -9,7 +9,7 @@ import lombok.experimental.FieldDefaults;
 @Setter
 public class ElectricVehicleDTO {
     int id;
-    String licensePlate;
     String model;
-    String VIN;
+    String vin;
+    String licensePlate;
 }
