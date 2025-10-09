@@ -6,4 +6,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface EvModelService {
     void createEVModel(EvModelEntity entity);
+
+    EvModelEntity getModelById(int i);
 }

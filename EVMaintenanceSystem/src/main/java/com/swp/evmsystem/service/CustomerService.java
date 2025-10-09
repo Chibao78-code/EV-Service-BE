@@ -7,4 +7,5 @@ import java.util.Optional;
 
 @Service
 public interface CustomerService {
+    CustomerEntity getCustomerById(Integer id);
 }

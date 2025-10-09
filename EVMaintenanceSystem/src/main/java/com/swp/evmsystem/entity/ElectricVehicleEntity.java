@@ -25,13 +25,11 @@ public class ElectricVehicleEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "model")
     EvModelEntity model;
-    @Column(name = "VIN", length = 17, unique = true, nullable = false)
-    String vIN;
+    @Column(name = "vin", length = 17, unique = true, nullable = false)
+    String vin;
     @Column(name = "license_plate", length = 10, nullable = false)
     String licensePlate;
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     CustomerEntity owner;
-    @OneToMany(mappedBy = "vehicle")
-    List<BookingEntity> bookings = new ArrayList<BookingEntity>();
 }
