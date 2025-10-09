@@ -4,8 +4,10 @@ import com.swp.evmsystem.entity.ServiceCenterEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface ServiceCenterRepository extends JpaRepository<ServiceCenterEntity, Integer> {
-    ServiceCenterEntity findById(int id);
+    Optional<ServiceCenterEntity> findById(int id);
     ServiceCenterEntity save(ServiceCenterEntity ev);
 }

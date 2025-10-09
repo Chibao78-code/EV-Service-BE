@@ -1,22 +1,23 @@
 package com.swp.evmsystem.dto.response;
 
-import com.swp.evmsystem.entity.TimeSlotAvailability;
-import com.swp.evmsystem.enums.TimeSlot;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
 @Setter
-public class AvaibleTimeSlotDTO {
+@Builder
+public class TimeSlotDTO {
+    Integer centerId;
     LocalDate date;
-    TimeSlot timeSlot;
-    boolean available;
-
-    public AvaibleTimeSlotDTO(TimeSlotAvailability timeSlotAvailability) {
-    }
+    LocalTime time;
+    Integer numOfBookings;
+    Integer maxCapacity;
+    Boolean available;
 }

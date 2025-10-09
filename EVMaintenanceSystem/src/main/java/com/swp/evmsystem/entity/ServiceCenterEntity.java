@@ -1,5 +1,6 @@
 package com.swp.evmsystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.swp.evmsystem.entity.address.AddressEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
+
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "trung_tam")
@@ -24,7 +27,15 @@ public class ServiceCenterEntity {
     String centerName;
     @Column(name = "center_phone", length = 12, nullable = false)
     String centerPhone;
-    @OneToOne(cascade = CascadeType.MERGE)
+    @Column(name = "start_time")
+    @JsonFormat(pattern = "HH:mm")
+    LocalTime startTime;
+    @Column(name = "end_time")
+    @JsonFormat(pattern = "HH:mm")
+    LocalTime endTime;
+    @Column(name = "max_capacity")
+    int maxCapacity;
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = true)
     @JoinColumn(name = "address_id")
     AddressEntity centerAddress;
 }

@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BookingRequest {
+public class BookingRequestDTO {
     Integer centerId;
     LocalDate bookingDate;
     TimeSlot timeSlot;

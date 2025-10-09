@@ -1,7 +1,7 @@
 package com.swp.evmsystem.controller;
 
-import com.swp.evmsystem.dto.request.LoginRequest;
-import com.swp.evmsystem.dto.response.LoginResponse;
+import com.swp.evmsystem.dto.request.LoginRequestDTO;
+import com.swp.evmsystem.dto.response.LoginResponseDTO;
 import com.swp.evmsystem.dto.response.UserDTO;
 import com.swp.evmsystem.security.JwtService;
 import com.swp.evmsystem.security.UserEntityDetails;
@@ -33,7 +33,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponseDTO> login(@Valid @RequestBody LoginRequestDTO request) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
         );
@@ -41,7 +41,7 @@ public class AuthController {
         UserEntityDetails userDetails = (UserEntityDetails) authentication.getPrincipal();
         String token = jwtTokenProvider.generateToken(userDetails);
         UserDTO userDto = userService.getUserByUserDetail(userDetails);
-        LoginResponse lg = new LoginResponse(token, userDto);
+        LoginResponseDTO lg = new LoginResponseDTO(token, userDto);
 
         return ResponseEntity.ok(lg);
     }
