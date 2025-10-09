@@ -1,6 +1,5 @@
 package com.swp.evmsystem.dto.response;
 
-import com.swp.evmsystem.entity.ElectricVehicleEntity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
