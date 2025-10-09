@@ -19,7 +19,7 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
 
     @Override
     public ServiceCenterEntity getServiceCenterEntityById(int id) {
-        return repository.findById(id);
+        return repository.findById(id).orElse(null);
     }
 
     @Override

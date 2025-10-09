@@ -19,6 +19,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalTime;
+
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DataInitializer implements CommandLineRunner {
@@ -31,6 +33,8 @@ public class DataInitializer implements CommandLineRunner {
     final String[] WARD_NAMES = {"Phường Bến Nghé", "Phường Tân Hưng", "Phường Linh Chiểu", "Phường 5", "Phường 25"};
     final String[] ADDRESS_LINES = {"123 Nguyễn Huệ", "456 Nguyễn Văn Linh", "789 Võ Văn Ngân", "321 Phan Văn Trị", "654 Xô Viết Nghệ Tĩnh"};
     final String[] CENTER_NAMES = {"VinFast Service Center Quận 1", "VinFast Service Center Quận 7", "VinFast Service Center Thủ Đức", "VinFast Service Center Gò Vấp", "VinFast Service Center Bình Thạnh"};
+    final LocalTime[] START_TIMES = {LocalTime.parse("08:00")};
+    final LocalTime[] END_TIMES = {LocalTime.parse("18:00")};
     final String[] CENTER_PHONES = {"02812345678", "02823456789", "02834567890", "02845678901", "02856789012"};
     final String[] MODEL_NAMES = {"Evo200", "Evo200 Lite", "Feliz S", "Feliz Neo", "Vento S"};
     final String[] EV_VINS = {"FAKEVIN0000000000", "TESTVIN0000000000", "PLACEHOLDER000000"};
@@ -44,8 +48,6 @@ public class DataInitializer implements CommandLineRunner {
     ElectricVehicleService electricVehicleService;
     @Autowired
     ServiceCenterService serviceCenterService;
-    @Autowired
-    TimeSlotAvailabilityService timeSlotAvailabilityService;
     @Autowired
     ProvinceEntityService provinceEntityService;
     @Autowired
@@ -113,6 +115,9 @@ public class DataInitializer implements CommandLineRunner {
                 serviceCenterEntity.setCenterName(CENTER_NAMES[i]);
                 serviceCenterEntity.setCenterPhone(CENTER_PHONES[i]);
                 serviceCenterEntity.setCenterAddress(addressEntity);
+                serviceCenterEntity.setStartTime(START_TIMES[0]);
+                serviceCenterEntity.setEndTime(END_TIMES[0]);
+                serviceCenterEntity.setMaxCapacity(10);
                 serviceCenterService.create(serviceCenterEntity);
             }
         }

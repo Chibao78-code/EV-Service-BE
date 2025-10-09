@@ -3,7 +3,6 @@ package com.swp.evmsystem.dto.request;
 import com.swp.evmsystem.validation.annotation.ValidUsername;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequest {
+public class LoginRequestDTO {
     @Schema(description = "số điện thoại hoặc email", example = "0123456789", required = true)
     @ValidUsername
     private String username;

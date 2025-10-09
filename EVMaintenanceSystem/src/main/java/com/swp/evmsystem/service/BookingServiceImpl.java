@@ -1,6 +1,6 @@
 package com.swp.evmsystem.service;
 
-import com.swp.evmsystem.dto.request.BookingRequest;
+import com.swp.evmsystem.dto.request.BookingRequestDTO;
 import com.swp.evmsystem.entity.BookingEntity;
 import com.swp.evmsystem.enums.BookingStatus;
 import com.swp.evmsystem.enums.TimeSlot;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -23,7 +22,7 @@ public class BookingServiceImpl implements BookingService {
     private ServiceCenterRepository serviceCenterRepository;
 
     @Override
-    public boolean createBooking(Integer id ,BookingRequest request) {
+    public boolean createBooking(Integer id , BookingRequestDTO request) {
         BookingEntity bookingEntity = new BookingEntity();
         bookingEntity.setBookingDate(request.getBookingDate());
         bookingEntity.setCenter(serviceCenterRepository.findById(request.getCenterId()).orElse(null));
@@ -41,5 +40,10 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public int getBookingsByDateAndTimeSlot(LocalDate bookingDate, TimeSlot timeSlot) {
         return bookingRepository.countAllByBookingDateAndTimeSlot( bookingDate,  timeSlot);
+    }
+
+    @Override
+    public int countBookingsByCenterAndDate(int centerId, LocalDate bookingDate) {
+        return bookingRepository.countBookingEntityByCenterIdAndBookingDate(centerId, bookingDate);
     }
 }
