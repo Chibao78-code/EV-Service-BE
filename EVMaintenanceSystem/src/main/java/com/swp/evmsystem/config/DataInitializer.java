@@ -39,6 +39,8 @@ public class DataInitializer implements CommandLineRunner {
     final String[] MODEL_NAMES = {"Evo200", "Evo200 Lite", "Feliz S", "Feliz Neo", "Vento S"};
     final String[] EV_VINS = {"FAKEVIN0000000000", "TESTVIN0000000000", "PLACEHOLDER000000"};
     final String[] EV_LICENSE_PLATES = {"49MĐ685692", "59MĐ102563", "59MĐ155567"};
+    final String[] OFFER_TYPE_NAMES = {"Bảo dưỡng định kỳ", "Thay thế phụ tùng", "Sửa chữa"};
+    final String[] OFFER_TYPE_DESCRIPTIONS = {"Bảo dưỡng toàn diện xe máy điện theo tiêu chuẩn VinFast" , "Thay thế phụ tùng chính hãng VinFast", "Sửa chữa các vấn đề kỹ thuật"};
 
     @Autowired
     RoleService roleService;
@@ -60,9 +62,12 @@ public class DataInitializer implements CommandLineRunner {
     EvModelService evModelService;
     @Autowired
     private CustomerService customerService;
+    @Autowired
+    private OfferTypeService offerTypeService;
 
     @Override
     public void run(String... args) throws Exception {
+
         if (roleService.getAllCount() > 0) {
             return;
         }
@@ -141,6 +146,14 @@ public class DataInitializer implements CommandLineRunner {
                 electricVehicleEntity.setOwner(customerService.getCustomerById(1));
             }
             electricVehicleService.create(electricVehicleEntity);
+        }
+
+        // Setup OfferType
+        for (int i = 0; i <= 2; i++) {
+            OfferTypeEntity offerTypeEntity = new OfferTypeEntity();
+            offerTypeEntity.setOfferTypeName(OFFER_TYPE_NAMES[i]);
+            offerTypeEntity.setOfferTypeDescription(OFFER_TYPE_DESCRIPTIONS[i]);
+            offerTypeService.createOfferType(offerTypeEntity);
         }
     }
 }

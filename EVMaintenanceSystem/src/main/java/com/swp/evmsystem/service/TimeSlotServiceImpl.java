@@ -48,7 +48,7 @@ public class TimeSlotServiceImpl implements TimeSlotService {
         // 3. Tạo TimeSlot objects
         LocalTime start = center.getStartTime();
         LocalTime end = center.getEndTime();
-        int slotMinutes = 60; // độ dài mỗi slot (1h)
+        int slotMinutes = 30; // độ dài mỗi slot (1h)
 
         List<TimeSlotDTO> slots = Stream
                 .iterate(start, time -> time.isBefore(end), time -> time.plusMinutes(slotMinutes))
