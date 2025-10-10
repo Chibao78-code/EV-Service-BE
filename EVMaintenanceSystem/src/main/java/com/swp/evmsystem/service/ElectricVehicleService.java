@@ -10,5 +10,8 @@ import java.util.List;
 @Service
 public interface ElectricVehicleService {
     List<ElectricVehicleDTO> findByOwner(CustomerEntity owner);
+
     boolean create(ElectricVehicleEntity ev);
+
+    boolean isEvAvailableForBooking(Integer evId);
 }

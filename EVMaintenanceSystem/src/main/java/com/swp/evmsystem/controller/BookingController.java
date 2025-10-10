@@ -5,9 +5,7 @@ import com.swp.evmsystem.dto.response.BookingResponseDTO;
 import com.swp.evmsystem.dto.response.OfferTypeDTO;
 import com.swp.evmsystem.dto.response.TimeSlotResponseDTO;
 import com.swp.evmsystem.security.UserEntityDetails;
-import com.swp.evmsystem.service.BookingService;
-import com.swp.evmsystem.service.OfferTypeService;
-import com.swp.evmsystem.service.TimeSlotService;
+import com.swp.evmsystem.service.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +27,8 @@ public class BookingController {
     private OfferTypeService offerTypeService;
     @Autowired
     private BookingService bookingService;
+    @Autowired
+    private ElectricVehicleService electricVehicleService;
 
     @PostMapping("/bookings")
     @PreAuthorize("hasRole('CUSTOMER')")
@@ -43,6 +43,10 @@ public class BookingController {
 
             if(!bookingService.isTimeBookingAvailable(request)) {
                 throw new AccessDeniedException("TimeSlot not available");
+            }
+
+            if(!electricVehicleService.isEvAvailableForBooking(request.getEVId())) {
+                throw new AccessDeniedException("ElectricVehicle not available");
             }
 
             BookingResponseDTO responseDTO = bookingService.createBooking(request);

@@ -11,6 +11,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 public class EvModelEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,9 +19,4 @@ public class EvModelEntity {
     Integer modelId;
     @Column(name = "model_name")
     String modelName;
-
-    @Override
-    public String toString() {
-        return modelName;
-    }
 }

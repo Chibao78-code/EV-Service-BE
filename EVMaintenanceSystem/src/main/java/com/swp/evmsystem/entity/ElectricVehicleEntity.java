@@ -1,5 +1,6 @@
 package com.swp.evmsystem.entity;
 
+import com.swp.evmsystem.enums.EvMaintenanceStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,4 +35,7 @@ public class ElectricVehicleEntity {
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     CustomerEntity owner;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "maintenance_status", length = 20, nullable = false)
+    private EvMaintenanceStatus maintenanceStatus = EvMaintenanceStatus.AVAILABLE;
 }

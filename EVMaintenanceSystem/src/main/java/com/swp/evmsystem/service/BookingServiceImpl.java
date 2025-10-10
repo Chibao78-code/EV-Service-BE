@@ -7,6 +7,7 @@ import com.swp.evmsystem.entity.CustomerEntity;
 import com.swp.evmsystem.entity.ElectricVehicleEntity;
 import com.swp.evmsystem.entity.ServiceCenterEntity;
 import com.swp.evmsystem.enums.BookingStatus;
+import com.swp.evmsystem.enums.EvMaintenanceStatus;
 import com.swp.evmsystem.repository.BookingRepository;
 import com.swp.evmsystem.repository.ElectricVehicleRepository;
 import com.swp.evmsystem.repository.ServiceCenterRepository;
@@ -41,7 +42,10 @@ public class BookingServiceImpl implements BookingService {
         be.setBookingDate(date);
         be.setBookingTime(bookingTime);
         be.setStatus(BookingStatus.PENDING);
-        BookingEntity bookingEntity = bookingRepository.save(be);
+        bookingRepository.save(be);
+
+        electricVehicle.setMaintenanceStatus(EvMaintenanceStatus.BOOKED);
+        vehicleRepository.save(electricVehicle);
 
         return BookingResponseDTO.builder()
                 .center(serviceCenter.getCenterName())
@@ -63,8 +67,6 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public boolean isTimeBookingAvailable(BookingRequestDTO request) {
         ServiceCenterEntity ct = centerRepository.findById(request.getCenterId()).get();
-        System.out.println(">>> bookingTime = " + request.getBookingTime()
-                + " (" + request.getBookingTime().getClass().getName() + ")");
 
         return bookingRepository.countBookingsAtTime(ct, request.getBookingDate(), request.getBookingTime()) < ct.getMaxCapacity();
     }

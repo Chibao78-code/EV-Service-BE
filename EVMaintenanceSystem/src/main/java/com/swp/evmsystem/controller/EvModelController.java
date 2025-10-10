@@ -19,6 +19,6 @@ public class EvModelController {
     @GetMapping("/api/ev-models")
     public ResponseEntity<?> getEvModels() {
         List<EvModelDTO> evModelDTOs = evModelService.getAllModels();
-        return new ResponseEntity<List<EvModelDTO>>(evModelDTOs, HttpStatus.OK);
+        return new ResponseEntity<>(evModelDTOs, HttpStatus.OK);
     }
 }
