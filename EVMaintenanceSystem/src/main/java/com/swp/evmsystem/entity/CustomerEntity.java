@@ -3,11 +3,9 @@ package com.swp.evmsystem.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
+@SuperBuilder
 public class CustomerEntity extends UserEntity {
     @OneToMany(mappedBy = "owner")
     List<ElectricVehicleEntity> vehicle = new ArrayList<ElectricVehicleEntity>();
