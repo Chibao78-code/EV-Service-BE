@@ -18,19 +18,8 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
     private ServiceCenterMapper mapper;
 
     @Override
-    public ServiceCenterEntity getServiceCenterEntityById(int id) {
-        return repository.findById(id).orElse(null);
-    }
-
-    @Override
     public boolean create(ServiceCenterEntity sve) {
         return repository.save(sve) != null;
-    }
-
-    @Override
-    public List<ServiceCenterEntity> getServiceCenterEntities() {
-        List<ServiceCenterEntity> serviceCenterEntities = repository.findAll();
-        return serviceCenterEntities;
     }
 
     @Override

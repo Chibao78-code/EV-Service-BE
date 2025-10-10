@@ -1,6 +1,5 @@
 package com.swp.evmsystem.service;
 
-import com.swp.evmsystem.dto.response.ServiceCenterDTO;
 import com.swp.evmsystem.dto.response.TimeSlotDTO;
 import com.swp.evmsystem.dto.response.TimeSlotResponseDTO;
 import com.swp.evmsystem.entity.ServiceCenterEntity;
@@ -27,6 +26,7 @@ public class TimeSlotServiceImpl implements TimeSlotService {
     @Autowired
     private ServiceCenterMapper serviceCenterMapper;
 
+    @Override
     public TimeSlotResponseDTO getTimeSlots(int centerId, LocalDate date) {
 
         // 1. Lấy thông tin center
@@ -48,7 +48,7 @@ public class TimeSlotServiceImpl implements TimeSlotService {
         // 3. Tạo TimeSlot objects
         LocalTime start = center.getStartTime();
         LocalTime end = center.getEndTime();
-        int slotMinutes = 30; // độ dài mỗi slot (1h)
+        int slotMinutes = 60; // độ dài mỗi slot (1h)
 
         List<TimeSlotDTO> slots = Stream
                 .iterate(start, time -> time.isBefore(end), time -> time.plusMinutes(slotMinutes))

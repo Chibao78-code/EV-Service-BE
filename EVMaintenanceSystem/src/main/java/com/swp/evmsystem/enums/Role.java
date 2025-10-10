@@ -3,6 +3,6 @@ package com.swp.evmsystem.enums;
 import lombok.Getter;
 
 @Getter
-public enum RoleName {
+public enum Role {
     ADMIN, STAFF, TECHNICIAN, CUSTOMER
 }

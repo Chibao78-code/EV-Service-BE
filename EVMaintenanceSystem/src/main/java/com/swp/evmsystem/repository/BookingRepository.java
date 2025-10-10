@@ -2,7 +2,6 @@ package com.swp.evmsystem.repository;
 
 import com.swp.evmsystem.entity.BookingEntity;
 import com.swp.evmsystem.entity.ServiceCenterEntity;
-import com.swp.evmsystem.enums.TimeSlot;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,9 +15,19 @@ import java.util.List;
 public interface BookingRepository extends JpaRepository<BookingEntity, Integer> {
     BookingEntity save(BookingEntity bookingEntity);
 
-    int countAllByBookingDateAndTimeSlot(LocalDate bookingDate, TimeSlot timeSlot);
+    @Query("""
+                SELECT COUNT(b)
+                FROM BookingEntity b
+                WHERE b.center = :center
+                  AND b.bookingDate = :date
+                  AND CAST(b.bookingTime AS time) = :time
+            """)
+    long countBookingsAtTime(
+            @Param("center") ServiceCenterEntity center,
+            @Param("date") LocalDate date,
+            @Param("time") LocalTime time
+    );
 
-    int countBookingEntityByCenterIdAndBookingDate(Integer centerId, LocalDate bookingDate);
 
     interface BookingCountProjection {
         LocalTime getTime();
@@ -27,10 +36,10 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Integer>
     }
 
     @Query("""
-                SELECT b.timeSlot AS timeSlot, COUNT(b.id) AS count
+                SELECT b.bookingTime AS time, COUNT(b.bookingId) AS count
                 FROM BookingEntity b
                 WHERE b.center = :center AND b.bookingDate = :date
-                GROUP BY b.timeSlot
+                GROUP BY b.bookingTime
             """)
     List<BookingCountProjection> findByCenterAndBookingDate(
             @Param("center") ServiceCenterEntity center,

@@ -11,7 +11,10 @@ import java.util.Optional;
 @Repository
 public interface ElectricVehicleRepository extends JpaRepository<ElectricVehicleEntity, Integer> {
     List<ElectricVehicleEntity> findByOwner(CustomerEntity owner);
+
     Optional<ElectricVehicleEntity> findById(Integer vehicleId);
+
     ElectricVehicleEntity save(ElectricVehicleEntity ev);
-    Boolean existsElectricVehicleEntityByIdAndOwner(Integer vehicleId, CustomerEntity owner);
+
+    boolean existsElectricVehicleEntityByIdAndOwner_Id(int id, int ownerId);
 }

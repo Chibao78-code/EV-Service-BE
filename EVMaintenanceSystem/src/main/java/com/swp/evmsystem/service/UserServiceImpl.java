@@ -15,17 +15,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper mapper;
     @Override
-    public boolean isCustomer(Integer userId) {
-        return repository.getRoleNameById(userId).equals("CUSTOMER");
-    }
-
-    @Override
     public boolean createUser(UserEntity user) {
         return repository.save(user) != null;
     }
 
     @Override
     public UserDTO getUserByUserDetail(UserEntityDetails userDetail) {
-        return  mapper.toDTO(userDetail.getUser());
+        return  mapper.toDTO(userDetail.getUserEntity());
+    }
+
+    @Override
+    public int getAllCount() {
+        return repository.findAll().size();
     }
 }

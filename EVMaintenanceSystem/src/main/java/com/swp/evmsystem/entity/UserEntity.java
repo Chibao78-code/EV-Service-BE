@@ -1,6 +1,6 @@
 package com.swp.evmsystem.entity;
 
-import com.swp.evmsystem.enums.RoleName;
+import com.swp.evmsystem.enums.Role;
 import com.swp.evmsystem.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,9 +30,9 @@ public abstract class UserEntity {
     String fullName;
     @Column(name = "password", length = 100, nullable = false)
     String password;
-    @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
-    RoleEntity role;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    Role role;
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
     UserStatus status;

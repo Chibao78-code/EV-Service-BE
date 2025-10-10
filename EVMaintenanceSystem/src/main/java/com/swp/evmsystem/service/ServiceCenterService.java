@@ -8,8 +8,6 @@ import java.util.List;
 
 @Service
 public interface ServiceCenterService {
-    ServiceCenterEntity getServiceCenterEntityById(int id);
     boolean create(ServiceCenterEntity sve);
-    List<ServiceCenterEntity> getServiceCenterEntities();
     List<ServiceCenterDTO> getAllServiceCenters();
 }

@@ -10,5 +10,5 @@ import lombok.experimental.FieldDefaults;
 public class UserDTO {
     int userId;
     String fullName;
-    String roleName;
+    String role;
 }
