@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface UserService {
-    boolean isCustomer(Integer userId);
-
     boolean createUser(UserEntity user);
 
     UserDTO getUserByUserDetail(UserEntityDetails userDetail);
+
+    int getAllCount();
 }

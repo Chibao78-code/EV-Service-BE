@@ -1,7 +1,6 @@
 package com.swp.evmsystem.dto.request;
 
-import com.swp.evmsystem.enums.TimeSlot;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,14 +8,16 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookingRequestDTO {
+    @JsonProperty("eVId")
     Integer eVId;
     Integer centerId;
     LocalDate bookingDate;
-    TimeSlot timeSlot;
+    LocalTime bookingTime;
 }

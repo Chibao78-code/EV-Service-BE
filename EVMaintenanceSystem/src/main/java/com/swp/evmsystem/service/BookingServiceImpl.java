@@ -4,7 +4,9 @@ import com.swp.evmsystem.dto.request.BookingRequestDTO;
 import com.swp.evmsystem.dto.response.BookingResponseDTO;
 import com.swp.evmsystem.entity.BookingEntity;
 import com.swp.evmsystem.entity.CustomerEntity;
-import com.swp.evmsystem.enums.TimeSlot;
+import com.swp.evmsystem.entity.ElectricVehicleEntity;
+import com.swp.evmsystem.entity.ServiceCenterEntity;
+import com.swp.evmsystem.enums.BookingStatus;
 import com.swp.evmsystem.repository.BookingRepository;
 import com.swp.evmsystem.repository.ElectricVehicleRepository;
 import com.swp.evmsystem.repository.ServiceCenterRepository;
@@ -12,8 +14,9 @@ import com.swp.evmsystem.security.UserEntityDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.AccessDeniedException;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 
 @Service
@@ -25,27 +28,46 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     private ServiceCenterRepository centerRepository;
 
-
     @Override
     public BookingResponseDTO createBooking(BookingRequestDTO request) {
-        Integer eVId = request.getEVId();
-        Integer centerId = request.getCenterId();
+        ElectricVehicleEntity electricVehicle = vehicleRepository.findById(request.getEVId()).get();
+        ServiceCenterEntity serviceCenter = centerRepository.findById(request.getCenterId()).get();
         LocalDate date = request.getBookingDate();
-        TimeSlot timeSlot = request.getTimeSlot();
+        LocalTime bookingTime = request.getBookingTime();
 
         BookingEntity be = new BookingEntity();
-        be.setVehicle(vehicleRepository.getOne(eVId));
-        be.setCenter(centerRepository.getOne(centerId));
+        be.setVehicle(electricVehicle);
+        be.setCenter(serviceCenter);
         be.setBookingDate(date);
-        be.setTimeSlot(timeSlot);
+        be.setBookingTime(bookingTime);
+        be.setStatus(BookingStatus.PENDING);
         BookingEntity bookingEntity = bookingRepository.save(be);
-        
+
+        return BookingResponseDTO.builder()
+                .center(serviceCenter.getCenterName())
+                .address(serviceCenter.getCenterAddress().toString())
+                .date(date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))
+                .time(bookingTime.format(DateTimeFormatter.ofPattern("HH:mm")))
+                .eVModel(electricVehicle.getModel().getModelName())
+                .build();
+
     }
 
     @Override
     public boolean isEVBelongToCustomer(BookingRequestDTO request, UserEntityDetails user) {
         Integer eVId = request.getEVId();
-        CustomerEntity owner = (CustomerEntity) user.getUser();
-        return vehicleRepository.existsElectricVehicleEntityByIdAndOwner(eVId, owner);
+        CustomerEntity owner = (CustomerEntity) user.getUserEntity();
+        return vehicleRepository.existsElectricVehicleEntityByIdAndOwner_Id(eVId, owner.getId());
     } // Kiểm tra xe có thuộc về người đặt lịch
+
+    @Override
+    public boolean isTimeBookingAvailable(BookingRequestDTO request) {
+        ServiceCenterEntity ct = centerRepository.findById(request.getCenterId()).get();
+        System.out.println(">>> bookingTime = " + request.getBookingTime()
+                + " (" + request.getBookingTime().getClass().getName() + ")");
+
+        return bookingRepository.countBookingsAtTime(ct, request.getBookingDate(), request.getBookingTime()) < ct.getMaxCapacity();
+    }
+
+
 }

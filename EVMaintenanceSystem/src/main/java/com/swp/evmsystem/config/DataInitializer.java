@@ -5,7 +5,7 @@ import com.swp.evmsystem.entity.address.AddressEntity;
 import com.swp.evmsystem.entity.address.DistrictEntity;
 import com.swp.evmsystem.entity.address.ProvinceEntity;
 import com.swp.evmsystem.entity.address.WardEntity;
-import com.swp.evmsystem.enums.RoleName;
+import com.swp.evmsystem.enums.Role;
 import com.swp.evmsystem.enums.UserStatus;
 import com.swp.evmsystem.service.*;
 import com.swp.evmsystem.service.address.AddressEntityService;
@@ -24,7 +24,6 @@ import java.time.LocalTime;
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DataInitializer implements CommandLineRunner {
-    final String[] ROLE_NAMES = {"ADMIN", "STAFF", "TECHNICIAN", "CUSTOMER"};
     final String[] CUSTOMER_NAMES = {"Customer 1", "Customer 2"};
     final String[] CUSTOMER_PHONES = {"0905111111", "0905222222"};
     final String[] CUSTOMER_PASSWORDS = {"user1@", "user2@"};
@@ -42,8 +41,6 @@ public class DataInitializer implements CommandLineRunner {
     final String[] OFFER_TYPE_NAMES = {"Bảo dưỡng định kỳ", "Thay thế phụ tùng", "Sửa chữa"};
     final String[] OFFER_TYPE_DESCRIPTIONS = {"Bảo dưỡng toàn diện xe máy điện theo tiêu chuẩn VinFast" , "Thay thế phụ tùng chính hãng VinFast", "Sửa chữa các vấn đề kỹ thuật"};
 
-    @Autowired
-    RoleService roleService;
     @Autowired
     UserService userService;
     @Autowired
@@ -68,22 +65,15 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        if (roleService.getAllCount() > 0) {
+        if (userService.getAllCount() > 0) {
             return;
-        }
-
-        // Setup Role
-        for (int i = 0; i <= 3; i++) {
-            RoleEntity roleEntity = new RoleEntity();
-            roleEntity.setName(RoleName.valueOf(ROLE_NAMES[i]));
-            roleService.createRole(roleEntity);
         }
 
         // Setup Customer
         for (int i = 0; i <= 1; i++) {
             UserEntity user = new CustomerEntity();
             user.setFullName(CUSTOMER_NAMES[i]);
-            user.setRole(roleService.getRoleByName(ROLE_NAMES[3]));
+            user.setRole(Role.CUSTOMER);
             user.setPhone(CUSTOMER_PHONES[i]);
             user.setPassword((new BCryptPasswordEncoder()).encode(CUSTOMER_PASSWORDS[i]));
             user.setStatus(UserStatus.ACTIVE);

@@ -1,7 +1,6 @@
 package com.swp.evmsystem.entity;
 
 import com.swp.evmsystem.enums.BookingStatus;
-import com.swp.evmsystem.enums.TimeSlot;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +9,7 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "lich_hen")
@@ -22,18 +22,17 @@ public class BookingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "booking_id")
-    int id;
+    int bookingId;
     @ManyToOne
     @JoinColumn(name = "vehicle_id", referencedColumnName = "vehicle_id")
     ElectricVehicleEntity vehicle;
     @ManyToOne
     @JoinColumn(name = "center_id", referencedColumnName = "center_id")
     ServiceCenterEntity center;
-    @Column(name = "booking_date", nullable = false)
+    @Column(name = "booking_date", nullable = false, columnDefinition = "DATE")
     LocalDate bookingDate;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "time_slot", length = 20, nullable = false)
-    TimeSlot timeSlot;
+    @Column(name = "booking_time", nullable = false, columnDefinition = "TIME")
+    LocalTime bookingTime;
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 20, nullable = false)
     BookingStatus status;
