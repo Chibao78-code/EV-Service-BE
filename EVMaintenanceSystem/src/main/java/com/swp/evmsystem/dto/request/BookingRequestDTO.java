@@ -1,6 +1,7 @@
 package com.swp.evmsystem.dto.request;
 
 import com.swp.evmsystem.enums.TimeSlot;
+import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +15,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookingRequestDTO {
+    Integer eVId;
+    Integer centerId;
     LocalDate bookingDate;
     TimeSlot timeSlot;
-
 }

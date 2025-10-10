@@ -29,6 +29,8 @@ public class ElectricVehicleEntity {
     String vin;
     @Column(name = "license_plate", length = 10, nullable = false)
     String licensePlate;
+    @Column(name = "warrently")
+    Boolean w = false;
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     CustomerEntity owner;

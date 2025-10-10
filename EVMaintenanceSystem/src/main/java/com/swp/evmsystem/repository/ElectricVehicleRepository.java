@@ -13,4 +13,5 @@ public interface ElectricVehicleRepository extends JpaRepository<ElectricVehicle
     List<ElectricVehicleEntity> findByOwner(CustomerEntity owner);
     Optional<ElectricVehicleEntity> findById(Integer vehicleId);
     ElectricVehicleEntity save(ElectricVehicleEntity ev);
+    Boolean existsElectricVehicleEntityByIdAndOwner(Integer vehicleId, CustomerEntity owner);
 }
