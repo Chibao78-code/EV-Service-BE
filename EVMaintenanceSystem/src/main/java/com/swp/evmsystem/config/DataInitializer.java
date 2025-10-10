@@ -72,12 +72,13 @@ public class DataInitializer implements CommandLineRunner {
 
         // Setup Customer
         for (int i = 0; i <= 1; i++) {
-            UserEntity user = new CustomerEntity();
-            user.setFullName(CUSTOMER_NAMES[i]);
-            user.setRole(Role.CUSTOMER);
-            user.setPhone(CUSTOMER_PHONES[i]);
-            user.setPassword((new BCryptPasswordEncoder()).encode(CUSTOMER_PASSWORDS[i]));
-            user.setStatus(UserStatus.ACTIVE);
+            UserEntity user = CustomerEntity.builder()
+                    .fullName(CUSTOMER_NAMES[i])
+                    .role(Role.CUSTOMER)
+                    .phone(CUSTOMER_PHONES[i])
+                    .password((new BCryptPasswordEncoder()).encode(CUSTOMER_PASSWORDS[i]))
+                    .status(UserStatus.ACTIVE)
+                    .build();
             userService.createUser(user);
         }
 
@@ -89,25 +90,28 @@ public class DataInitializer implements CommandLineRunner {
 
             for (int i = 0; i <= 4; i++) {
                 // District
-                DistrictEntity districtEntity = new DistrictEntity();
-                districtEntity.setDistrictName(DISTRICT_NAMES[i]);
-                districtEntity.setProvince(provinceEntity);
+                DistrictEntity districtEntity = DistrictEntity.builder()
+                        .districtName(DISTRICT_NAMES[i])
+                        .province(provinceEntity)
+                        .build();
                 districtEntityService.createDistrict(districtEntity);
 
                 // Ward
-                WardEntity wardEntity = new WardEntity();
-                wardEntity.setWardName(WARD_NAMES[i]);
-                wardEntity.setDistrict(districtEntity);
+                WardEntity wardEntity = WardEntity.builder()
+                        .wardName(WARD_NAMES[i])
+                        .district(districtEntity)
+                        .build();
                 wardEntityService.createWard(wardEntity);
 
                 // Address
-                AddressEntity addressEntity = new AddressEntity();
-                addressEntity.setAddressLine(ADDRESS_LINES[i]);
-                addressEntity.setWard(wardEntity);
+                AddressEntity addressEntity = AddressEntity.builder()
+                        .addressLine(ADDRESS_LINES[i])
+                        .ward(wardEntity)
+                        .build();
                 addressEntityService.createAddress(addressEntity);
 
                 // Center
-                ServiceCenterEntity serviceCenterEntity = new ServiceCenterEntity().builder()
+                ServiceCenterEntity serviceCenterEntity = ServiceCenterEntity.builder()
                         .centerName(CENTER_NAMES[i])
                         .centerPhone(CENTER_PHONES[i])
                         .centerAddress(addressEntity)
@@ -121,7 +125,7 @@ public class DataInitializer implements CommandLineRunner {
 
         // Setup EV Model
         for (String name : MODEL_NAMES) {
-            EvModelEntity evModelEntity = new EvModelEntity().builder()
+            EvModelEntity evModelEntity = EvModelEntity.builder()
                     .modelName(name)
                     .build();
             evModelService.createEVModel(evModelEntity);
@@ -129,22 +133,19 @@ public class DataInitializer implements CommandLineRunner {
 
         // Setup EV
         for (int i = 0; i <= 2; i++) {
-            ElectricVehicleEntity electricVehicleEntity = new ElectricVehicleEntity();
-            electricVehicleEntity.setVin(EV_VINS[i]);
-            electricVehicleEntity.setLicensePlate(EV_LICENSE_PLATES[i]);
-            electricVehicleEntity.setMaintenanceStatus(EvMaintenanceStatus.AVAILABLE);
-            electricVehicleEntity.setModel(evModelService.getModelById(i + 2));
-            if (i > 0) {
-                electricVehicleEntity.setOwner(customerService.getCustomerById(2));
-            } else {
-                electricVehicleEntity.setOwner(customerService.getCustomerById(1));
-            }
+            ElectricVehicleEntity electricVehicleEntity = ElectricVehicleEntity.builder()
+                    .vin(EV_VINS[i])
+                    .licensePlate(EV_LICENSE_PLATES[i])
+                    .maintenanceStatus(EvMaintenanceStatus.AVAILABLE)
+                    .model(evModelService.getModelById(i+2))
+                    .owner(i > 0 ? customerService.getCustomerById(2) : customerService.getCustomerById(1))
+                    .build();
             electricVehicleService.create(electricVehicleEntity);
         }
 
         // Setup OfferType
         for (int i = 0; i <= 2; i++) {
-            OfferTypeEntity offerTypeEntity = new OfferTypeEntity().builder()
+            OfferTypeEntity offerTypeEntity = OfferTypeEntity.builder()
                     .offerTypeName(OFFER_TYPE_NAMES[i])
                     .offerTypeDescription(OFFER_TYPE_DESCRIPTIONS[i])
                     .build();

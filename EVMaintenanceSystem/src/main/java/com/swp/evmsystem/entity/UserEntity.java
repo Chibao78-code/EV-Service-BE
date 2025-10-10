@@ -3,11 +3,9 @@ package com.swp.evmsystem.entity;
 import com.swp.evmsystem.enums.Role;
 import com.swp.evmsystem.enums.UserStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
@@ -15,6 +13,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 @Entity
+@SuperBuilder
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "nguoi_dung")
 public abstract class UserEntity {

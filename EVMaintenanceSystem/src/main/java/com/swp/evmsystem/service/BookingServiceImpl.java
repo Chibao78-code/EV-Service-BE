@@ -33,15 +33,16 @@ public class BookingServiceImpl implements BookingService {
     public BookingResponseDTO createBooking(BookingRequestDTO request) {
         ElectricVehicleEntity electricVehicle = vehicleRepository.findById(request.getEVId()).get();
         ServiceCenterEntity serviceCenter = centerRepository.findById(request.getCenterId()).get();
-        LocalDate date = request.getBookingDate();
+        LocalDate bookingDate = request.getBookingDate();
         LocalTime bookingTime = request.getBookingTime();
 
-        BookingEntity be = new BookingEntity();
-        be.setVehicle(electricVehicle);
-        be.setCenter(serviceCenter);
-        be.setBookingDate(date);
-        be.setBookingTime(bookingTime);
-        be.setStatus(BookingStatus.PENDING);
+        BookingEntity be = BookingEntity.builder()
+                .vehicle(electricVehicle)
+                .center(serviceCenter)
+                .bookingDate(bookingDate)
+                .bookingTime(bookingTime)
+                .status(BookingStatus.PENDING)
+                .build();
         bookingRepository.save(be);
 
         electricVehicle.setMaintenanceStatus(EvMaintenanceStatus.BOOKED);
@@ -50,7 +51,7 @@ public class BookingServiceImpl implements BookingService {
         return BookingResponseDTO.builder()
                 .center(serviceCenter.getCenterName())
                 .address(serviceCenter.getCenterAddress().toString())
-                .date(date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))
+                .date(bookingDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))
                 .time(bookingTime.format(DateTimeFormatter.ofPattern("HH:mm")))
                 .eVModel(electricVehicle.getModel().getModelName())
                 .build();
@@ -61,6 +62,7 @@ public class BookingServiceImpl implements BookingService {
     public boolean isEVBelongToCustomer(BookingRequestDTO request, UserEntityDetails user) {
         Integer eVId = request.getEVId();
         CustomerEntity owner = (CustomerEntity) user.getUserEntity();
+
         return vehicleRepository.existsElectricVehicleEntityByIdAndOwner_Id(eVId, owner.getId());
     } // Kiểm tra xe có thuộc về người đặt lịch
 

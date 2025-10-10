@@ -2,10 +2,7 @@ package com.swp.evmsystem.entity;
 
 import com.swp.evmsystem.enums.BookingStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
@@ -24,6 +21,7 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
+@Builder
 public class BookingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
