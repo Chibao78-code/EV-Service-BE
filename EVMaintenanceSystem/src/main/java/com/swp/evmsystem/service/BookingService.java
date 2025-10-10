@@ -1,16 +1,16 @@
 package com.swp.evmsystem.service;
 
 import com.swp.evmsystem.dto.request.BookingRequestDTO;
+import com.swp.evmsystem.dto.response.BookingResponseDTO;
 import com.swp.evmsystem.entity.BookingEntity;
 import com.swp.evmsystem.enums.TimeSlot;
+import com.swp.evmsystem.security.UserEntityDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
 @Service
 public interface BookingService {
-    boolean createBooking(Integer vehicleId , BookingRequestDTO request);
-    BookingEntity getBookingById(Integer bookingId);
-    int getBookingsByDateAndTimeSlot(LocalDate bookingDate, TimeSlot timeSlot);
-    int countBookingsByCenterAndDate(int centerId, LocalDate bookingDate);
+    BookingResponseDTO createBooking(BookingRequestDTO bookingRequestDTO);
+    boolean isEVBelongToCustomer(BookingRequestDTO request, UserEntityDetails user);
 }
