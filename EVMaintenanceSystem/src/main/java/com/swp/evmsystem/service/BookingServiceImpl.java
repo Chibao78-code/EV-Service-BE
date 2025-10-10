@@ -25,7 +25,7 @@ public class BookingServiceImpl implements BookingService {
     public boolean createBooking(Integer id , BookingRequestDTO request) {
         BookingEntity bookingEntity = new BookingEntity();
         bookingEntity.setBookingDate(request.getBookingDate());
-        bookingEntity.setCenter(serviceCenterRepository.findById(request.getCenterId()).orElse(null));
+        //bookingEntity.setCenter(serviceCenterRepository.findById(request.getCenterId()).orElse(null));
         bookingEntity.setVehicle(vehicleService.findById(id).orElse(null));
         bookingEntity.setStatus(BookingStatus.PENDING);
         bookingEntity.setTimeSlot(request.getTimeSlot());

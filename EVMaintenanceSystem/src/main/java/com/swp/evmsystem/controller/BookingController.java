@@ -26,7 +26,7 @@ public class BookingController {
     @PostMapping("bookings")
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<?> addBooking(@AuthenticationPrincipal UserEntityDetails userDetails) {
-
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("bookings/{centerId}/{date}")
@@ -35,7 +35,6 @@ public class BookingController {
                                                         @PathVariable("date") LocalDate date,
                                                         @PathVariable("centerId") Integer centerId) {
         TimeSlotResponseDTO timeSlotResponseDTO = timeSlotService.getTimeSlots(centerId, date);
-
         return ResponseEntity.ok(timeSlotResponseDTO);
     }
 
