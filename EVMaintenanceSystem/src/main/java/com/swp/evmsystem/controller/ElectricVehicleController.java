@@ -25,7 +25,6 @@ public class ElectricVehicleController {
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<?> getMyVehicles(@AuthenticationPrincipal UserEntityDetails userDetails) {
         try {
-
             if (!(userDetails.getUser() instanceof CustomerEntity customer)) {
                 throw new AccessDeniedException("Only customers can access vehicles");
             }

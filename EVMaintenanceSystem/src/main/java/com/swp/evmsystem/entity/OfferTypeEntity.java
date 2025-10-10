@@ -1,4 +1,4 @@
-package com.swp.evmsystem.entity.offertype;
+package com.swp.evmsystem.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,11 +15,13 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "loai_dich_vu")
-public abstract class OfferType {
+public class OfferTypeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "offer_id")
-    int offerId;
+    int offerTypeId;
     @Column(name = "offer_name",length = 100)
-    String offerName;
+    String offerTypeName;
+    @Column(name = "offer_description",length = 100)
+    String offerTypeDescription;
 }
