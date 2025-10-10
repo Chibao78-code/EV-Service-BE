@@ -5,6 +5,7 @@ import com.swp.evmsystem.entity.address.AddressEntity;
 import com.swp.evmsystem.entity.address.DistrictEntity;
 import com.swp.evmsystem.entity.address.ProvinceEntity;
 import com.swp.evmsystem.entity.address.WardEntity;
+import com.swp.evmsystem.enums.EvMaintenanceStatus;
 import com.swp.evmsystem.enums.Role;
 import com.swp.evmsystem.enums.UserStatus;
 import com.swp.evmsystem.service.*;
@@ -106,21 +107,23 @@ public class DataInitializer implements CommandLineRunner {
                 addressEntityService.createAddress(addressEntity);
 
                 // Center
-                ServiceCenterEntity serviceCenterEntity = new ServiceCenterEntity();
-                serviceCenterEntity.setCenterName(CENTER_NAMES[i]);
-                serviceCenterEntity.setCenterPhone(CENTER_PHONES[i]);
-                serviceCenterEntity.setCenterAddress(addressEntity);
-                serviceCenterEntity.setStartTime(START_TIMES[0]);
-                serviceCenterEntity.setEndTime(END_TIMES[0]);
-                serviceCenterEntity.setMaxCapacity(10);
+                ServiceCenterEntity serviceCenterEntity = new ServiceCenterEntity().builder()
+                        .centerName(CENTER_NAMES[i])
+                        .centerPhone(CENTER_PHONES[i])
+                        .centerAddress(addressEntity)
+                        .startTime(START_TIMES[0])
+                        .endTime(END_TIMES[0])
+                        .maxCapacity(10)
+                        .build();
                 serviceCenterService.create(serviceCenterEntity);
             }
         }
 
         // Setup EV Model
         for (String name : MODEL_NAMES) {
-            EvModelEntity evModelEntity = new EvModelEntity();
-            evModelEntity.setModelName(name);
+            EvModelEntity evModelEntity = new EvModelEntity().builder()
+                    .modelName(name)
+                    .build();
             evModelService.createEVModel(evModelEntity);
         }
 
@@ -129,6 +132,7 @@ public class DataInitializer implements CommandLineRunner {
             ElectricVehicleEntity electricVehicleEntity = new ElectricVehicleEntity();
             electricVehicleEntity.setVin(EV_VINS[i]);
             electricVehicleEntity.setLicensePlate(EV_LICENSE_PLATES[i]);
+            electricVehicleEntity.setMaintenanceStatus(EvMaintenanceStatus.AVAILABLE);
             electricVehicleEntity.setModel(evModelService.getModelById(i + 2));
             if (i > 0) {
                 electricVehicleEntity.setOwner(customerService.getCustomerById(2));
@@ -140,9 +144,10 @@ public class DataInitializer implements CommandLineRunner {
 
         // Setup OfferType
         for (int i = 0; i <= 2; i++) {
-            OfferTypeEntity offerTypeEntity = new OfferTypeEntity();
-            offerTypeEntity.setOfferTypeName(OFFER_TYPE_NAMES[i]);
-            offerTypeEntity.setOfferTypeDescription(OFFER_TYPE_DESCRIPTIONS[i]);
+            OfferTypeEntity offerTypeEntity = new OfferTypeEntity().builder()
+                    .offerTypeName(OFFER_TYPE_NAMES[i])
+                    .offerTypeDescription(OFFER_TYPE_DESCRIPTIONS[i])
+                    .build();
             offerTypeService.createOfferType(offerTypeEntity);
         }
     }

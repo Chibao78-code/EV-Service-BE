@@ -12,7 +12,13 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "lich_hen")
+@Table(name = "lich_hen",
+        uniqueConstraints = {@UniqueConstraint(
+                name = "uk_vehicle_date_time",
+                columnNames = {"vehicle_id", "booking_date", "booking_time"}
+        )
+        }
+)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

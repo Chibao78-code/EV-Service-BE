@@ -1,10 +1,7 @@
 package com.swp.evmsystem.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Getter
@@ -15,6 +12,7 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "loai_dich_vu")
+@Builder
 public class OfferTypeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
