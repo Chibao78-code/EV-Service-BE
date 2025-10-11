@@ -28,6 +28,14 @@ public class DataInitializer implements CommandLineRunner {
     final String[] CUSTOMER_NAMES = {"Customer 1", "Customer 2"};
     final String[] CUSTOMER_PHONES = {"0905111111", "0905222222"};
     final String[] CUSTOMER_PASSWORDS = {"user1@", "user2@"};
+    
+    // Admin, Staff, Technician users
+    final String ADMIN_PHONE = "0123456789";
+    final String ADMIN_PASSWORD = "admin123";
+    final String STAFF_PHONE = "0987654321";
+    final String STAFF_PASSWORD = "staff123";
+    final String TECH_PHONE = "0111222333";
+    final String TECH_PASSWORD = "tech123";
     final String[] PROVINCE_NAMES = {"TP. HCM"};
     final String[] DISTRICT_NAMES = {"Quận 1", "Quận 7", "TP. Thủ Đức", "Quận Gò Vấp", "Quận Bình Thạnh"};
     final String[] WARD_NAMES = {"Phường Bến Nghé", "Phường Tân Hưng", "Phường Linh Chiểu", "Phường 5", "Phường 25"};
@@ -70,17 +78,61 @@ public class DataInitializer implements CommandLineRunner {
             return;
         }
 
-        // Setup Customer
-        for (int i = 0; i <= 1; i++) {
-            UserEntity user = CustomerEntity.builder()
-                    .fullName(CUSTOMER_NAMES[i])
-                    .role(Role.CUSTOMER)
-                    .phone(CUSTOMER_PHONES[i])
-                    .password((new BCryptPasswordEncoder()).encode(CUSTOMER_PASSWORDS[i]))
-                    .status(UserStatus.ACTIVE)
-                    .build();
-            userService.createUser(user);
-        }
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        
+        // Setup Admin
+        UserEntity admin = EmployeeEntity.builder()
+                .fullName("Admin User")
+                .role(Role.ADMIN)
+                .phone(ADMIN_PHONE)
+                .email("dinhdinhchibao@gmail.com")
+                .password(passwordEncoder.encode(ADMIN_PASSWORD))
+                .status(UserStatus.ACTIVE)
+                .build();
+        userService.createUser(admin);
+        
+        // Setup Staff
+        UserEntity staff = EmployeeEntity.builder()
+                .fullName("Staff User")
+                .role(Role.STAFF)
+                .phone(STAFF_PHONE)
+                .email("ddinhchibao@gmail.com")
+                .password(passwordEncoder.encode(STAFF_PASSWORD))
+                .status(UserStatus.ACTIVE)
+                .build();
+        userService.createUser(staff);
+        
+        // Setup Technician
+        UserEntity technician = EmployeeEntity.builder()
+                .fullName("Technician User")
+                .role(Role.TECHNICIAN)
+                .phone(TECH_PHONE)
+                .email("zzz.dinhchibao.15@gmail.com")
+                .password(passwordEncoder.encode(TECH_PASSWORD))
+                .status(UserStatus.ACTIVE)
+                .build();
+        userService.createUser(technician);
+        
+        // Setup Customer 1
+        UserEntity customer1 = CustomerEntity.builder()
+                .fullName("Customer 1")
+                .role(Role.CUSTOMER)
+                .phone(CUSTOMER_PHONES[0])
+                .email("quangphap931@gmail.com")
+                .password(passwordEncoder.encode(CUSTOMER_PASSWORDS[0]))
+                .status(UserStatus.ACTIVE)
+                .build();
+        userService.createUser(customer1);
+        
+        // Setup Customer 2
+        UserEntity customer2 = CustomerEntity.builder()
+                .fullName("Customer 2")
+                .role(Role.CUSTOMER)
+                .phone(CUSTOMER_PHONES[1])
+                .password(passwordEncoder.encode(CUSTOMER_PASSWORDS[1]))
+                .status(UserStatus.ACTIVE)
+                .build();
+        userService.createUser(customer2);
 
         // Setup Center
         {
@@ -131,17 +183,6 @@ public class DataInitializer implements CommandLineRunner {
             evModelService.createEVModel(evModelEntity);
         }
 
-        // Setup EV
-        for (int i = 0; i <= 2; i++) {
-            ElectricVehicleEntity electricVehicleEntity = ElectricVehicleEntity.builder()
-                    .vin(EV_VINS[i])
-                    .licensePlate(EV_LICENSE_PLATES[i])
-                    .maintenanceStatus(EvMaintenanceStatus.AVAILABLE)
-                    .model(evModelService.getModelById(i+2))
-                    .owner(i > 0 ? customerService.getCustomerById(2) : customerService.getCustomerById(1))
-                    .build();
-            electricVehicleService.create(electricVehicleEntity);
-        }
 
         // Setup OfferType
         for (int i = 0; i <= 2; i++) {
