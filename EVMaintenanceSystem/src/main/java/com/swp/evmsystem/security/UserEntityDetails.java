@@ -43,7 +43,7 @@ public class UserEntityDetails implements UserDetails {
     }
 
     public int getId() {
-        return userEntity.getId();
+        return userEntity != null ? userEntity.getId() : -1;
     }
 
     public UserEntity getUser() {
