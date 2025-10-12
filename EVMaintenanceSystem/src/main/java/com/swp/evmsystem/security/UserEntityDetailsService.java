@@ -33,12 +33,10 @@ public class UserEntityDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with this phone or email: " + username));
     }
 
-
     public UserEntityDetails loadUserById(Integer id) throws UsernameNotFoundException {
-        Optional<UserEntity> user = userRepository.findById(id);
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException("User not found with this id: " + id);
-        }
-        return new UserEntityDetails(user.get());
+        // Use orElseThrow for concise error handling and to avoid explicit Optional checks.
+        UserEntity user = userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with this id: " + id));
+        return new UserEntityDetails(user);
     }
 }
