@@ -24,7 +24,7 @@ public class EvModelServiceImpl implements EvModelService {
 
     @Override
     public EvModelEntity getModelById(int i) {
-        return repository.findById(i).get();
+        return repository.findById(i).orElse(null);
     }
 
     @Override
