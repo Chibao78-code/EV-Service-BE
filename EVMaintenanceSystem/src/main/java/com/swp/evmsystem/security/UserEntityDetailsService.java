@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -29,6 +30,6 @@ public class UserEntityDetailsService implements UserDetailsService {
     }
 
     public UserDTO getUserByUserDetail(UserEntityDetails userDetail) {
-        return mapper.toDTO(userDetail.getUserEntity());
+        return  mapper.toDTO(userDetail.getUserEntity());
     }
 }

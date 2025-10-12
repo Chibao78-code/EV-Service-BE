@@ -18,7 +18,6 @@ public class UserServiceImpl implements UserService {
         repository.save(user);
     }
 
-    @Override
     public int getAllCount() {
         return repository.findAll().size();
     }
