@@ -28,6 +28,9 @@ public class ElectricVehicleServiceImpl implements ElectricVehicleService {
 
     @Override
     public boolean create(ElectricVehicleEntity ev) {
+        if (ev == null) {
+            return false;
+        }
         return electricVehicleRepository.save(ev) != null;
     }
 }
