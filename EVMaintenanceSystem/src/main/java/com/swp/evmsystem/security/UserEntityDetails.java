@@ -18,8 +18,13 @@ public class UserEntityDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (userEntity == null || userEntity.getRole() == null) {
+            return List.of();
+        }
+        // role name provided by entity (keeps original behavior)
         return List.of(new SimpleGrantedAuthority("ROLE_" + userEntity.getRole().getName()));
     }
+
 
     @Override
     public String getPassword() {
