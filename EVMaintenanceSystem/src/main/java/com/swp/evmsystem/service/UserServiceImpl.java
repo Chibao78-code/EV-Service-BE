@@ -20,11 +20,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUserByUserDetail(UserEntityDetails userDetail) {
-        return  mapper.toDTO(userDetail.getUserEntity());
-    }
-
-    @Override
     public int getAllCount() {
         return repository.findAll().size();
     }
