@@ -25,10 +25,9 @@ public class UserEntityDetails implements UserDetails {
         return List.of(new SimpleGrantedAuthority("ROLE_" + userEntity.getRole().getName()));
     }
 
-
     @Override
     public String getPassword() {
-        return userEntity.getPassword();
+        return userEntity != null ? userEntity.getPassword() : null;
     }
 
     @Override
