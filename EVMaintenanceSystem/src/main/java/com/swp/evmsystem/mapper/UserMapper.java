@@ -17,6 +17,10 @@ public interface UserMapper {
     @Mapping(source = "id", target = "userId")
     UserDTO toDTO(UserEntity entity);
 
+    // DTO -> Entity
+    @Mapping(source = "userId", target = "id")
+
+
     UserEntity toEntity(UserDTO dto);
 
     @Named("roleToString")
