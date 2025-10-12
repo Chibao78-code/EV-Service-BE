@@ -21,12 +21,18 @@ public class UserEntityDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserEntity> user = userRepository.findByPhone(username).isEmpty() ? userRepository.findByEmail(username) : userRepository.findByPhone(username);
+        // Attempt lookup by phone first to minimize calls.
+        Optional<UserEntity> user = userRepository.findByPhone(username);
         if (user.isEmpty()) {
-            throw new UsernameNotFoundException("User not found with this phone or email: " + username);
+            // Fallback: try lookup by email if phone lookup failed.
+            user = userRepository.findByEmail(username);
         }
-        return new UserEntityDetails(user.get());
+
+        // Convert found entity to UserDetails or throw if not present.
+        return user.map(UserEntityDetails::new)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with this phone or email: " + username));
     }
+
 
     public UserEntityDetails loadUserById(Integer id) throws UsernameNotFoundException {
         Optional<UserEntity> user = userRepository.findById(id);
