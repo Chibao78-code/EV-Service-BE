@@ -5,6 +5,7 @@ import com.swp.evmsystem.dto.response.LoginResponseDTO;
 import com.swp.evmsystem.dto.response.UserDTO;
 import com.swp.evmsystem.security.JwtService;
 import com.swp.evmsystem.security.UserEntityDetails;
+import com.swp.evmsystem.security.UserEntityDetailsService;
 import com.swp.evmsystem.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class AuthController {
     @Autowired
     private final JwtService jwtTokenProvider;
     @Autowired
-    private UserService userService;
+    private UserEntityDetailsService userService;
 
     public AuthController(AuthenticationManager authenticationManager, JwtService jwtTokenProvider) {
         this.authenticationManager = authenticationManager;
