@@ -32,7 +32,10 @@ public class UserEntityDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        if (userEntity.getPhone() != null) {
+        if (userEntity == null) {
+            return null;
+        }
+        if (userEntity.getPhone() != null && !userEntity.getPhone().isBlank()) {
             return userEntity.getPhone();
         } else {
             return userEntity.getEmail();
