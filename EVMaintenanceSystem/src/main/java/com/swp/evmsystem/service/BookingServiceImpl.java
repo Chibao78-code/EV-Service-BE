@@ -32,6 +32,23 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepository.save(bookingEntity) != null;
     }
 
+    // Build booking entity
+    BookingEntity bookingEntity = new BookingEntity();
+        bookingEntity.setBookingDate(request.getBookingDate());
+        bookingEntity.setVehicle(vehicleOpt.get()); // safe because of the isEmpty check above
+        bookingEntity.setStatus(BookingStatus.PENDING);
+        bookingEntity.setTimeSlot(request.getTimeSlot());
+
+    // If a center id was provided, set the center when it exists
+        if (request.getCenterId() != null) {
+        serviceCenterRepository.findById(request.getCenterId())
+                .ifPresent(bookingEntity::setCenter);
+    }
+
+    // Persist booking; return true when saved (non-null)
+        return bookingRepository.save(bookingEntity) != null;
+}
+
     @Override
     public BookingEntity getBookingById(Integer bookingId) {
         return bookingRepository.findById(bookingId).orElse(null);
