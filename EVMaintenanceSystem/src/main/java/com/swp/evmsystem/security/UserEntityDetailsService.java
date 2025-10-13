@@ -1,14 +1,14 @@
 package com.swp.evmsystem.security;
 
-import com.swp.evmsystem.dto.response.UserDTO;
+import com.swp.evmsystem.dto.response.UserInforDTO;
+import com.swp.evmsystem.entity.CustomerEntity;
+import com.swp.evmsystem.entity.EmployeeEntity;
 import com.swp.evmsystem.entity.UserEntity;
-import com.swp.evmsystem.mapper.UserMapper;
 import com.swp.evmsystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,8 +17,7 @@ import java.util.Optional;
 public class UserEntityDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private UserMapper mapper;
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -29,7 +28,16 @@ public class UserEntityDetailsService implements UserDetailsService {
         return new UserEntityDetails(user.get());
     }
 
-    public UserDTO getUserByUserDetail(UserEntityDetails userDetail) {
-        return  mapper.toDTO(userDetail.getUserEntity());
+    public UserInforDTO getUserByUserDetail(UserEntityDetails userDetail) {
+        UserEntity user = userDetail.getUserEntity();
+        UserInforDTO.UserInforDTOBuilder builder = UserInforDTO.builder().role(user.getRole().name());
+
+        if(user instanceof CustomerEntity customer) {
+            builder.fullName(customer.getFullName());
+        } else if (user instanceof EmployeeEntity employee) {
+            builder.fullName(employee.getFullName());
+        }
+
+        return builder.build();
     }
 }

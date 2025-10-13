@@ -2,11 +2,10 @@ package com.swp.evmsystem.controller;
 
 import com.swp.evmsystem.dto.request.LoginRequestDTO;
 import com.swp.evmsystem.dto.response.LoginResponseDTO;
-import com.swp.evmsystem.dto.response.UserDTO;
+import com.swp.evmsystem.dto.response.UserInforDTO;
 import com.swp.evmsystem.security.JwtService;
 import com.swp.evmsystem.security.UserEntityDetails;
 import com.swp.evmsystem.security.UserEntityDetailsService;
-import com.swp.evmsystem.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +40,7 @@ public class AuthController {
         
         UserEntityDetails userDetails = (UserEntityDetails) authentication.getPrincipal();
         String token = jwtTokenProvider.generateToken(userDetails);
-        UserDTO userDto = userService.getUserByUserDetail(userDetails);
+        UserInforDTO userDto = userService.getUserByUserDetail(userDetails);
         LoginResponseDTO lg = new LoginResponseDTO(token, userDto);
 
         return ResponseEntity.ok(lg);

@@ -1,12 +1,16 @@
 package com.swp.evmsystem.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import lombok.*;
+import com.swp.evmsystem.entity.address.AddressEntity;
+import com.swp.evmsystem.enums.Gender;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +23,16 @@ import java.util.List;
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 @SuperBuilder
 public class CustomerEntity extends UserEntity {
+    @Column(name = "full_name", length = 100)
+    String fullName;
+    @Column(name = "gender", length = 10)
+    @Enumerated(EnumType.STRING)
+    Gender gender;
+    @Column(name = "dob")
+    LocalDate dob;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
+    AddressEntity address;
     @OneToMany(mappedBy = "owner")
     List<ElectricVehicleEntity> vehicle = new ArrayList<ElectricVehicleEntity>();
 }

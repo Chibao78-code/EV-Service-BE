@@ -25,8 +25,6 @@ public abstract class UserEntity {
     String email;
     @Column(name = "phone", length = 10, unique = true, nullable = false)
     String phone;
-    @Column(name = "full_name", length = 100, nullable = false)
-    String fullName;
     @Column(name = "password", length = 100, nullable = false)
     String password;
     @Enumerated(EnumType.STRING)
