@@ -1,4 +1,3 @@
-/*
 package com.swp.evmsystem.controller;
 
 import com.swp.evmsystem.service.CustomerService;
@@ -52,4 +51,3 @@ public class CustomerController {
         return removed ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 }
-*/
