@@ -1,9 +1,6 @@
 package com.swp.evmsystem.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +17,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 public class EmployeeEntity extends UserEntity {
+    @Column(name = "full_name", length = 100, nullable = false)
+    String fullName;
     @ManyToOne
     @JoinColumn(name = "center_id")
     ServiceCenterEntity centerId;

@@ -25,7 +25,7 @@ import java.time.LocalTime;
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DataInitializer implements CommandLineRunner {
-    final String[] CUSTOMER_NAMES = {"Customer 1", "Customer 2"};
+    final String[] CUSTOMER_NAMES = {"Nguyễn Văn An", "Trần Văn Bình"};
     final String[] CUSTOMER_PHONES = {"0905111111", "0905222222"};
     final String[] CUSTOMER_PASSWORDS = {"user1@", "user2@"};
     
