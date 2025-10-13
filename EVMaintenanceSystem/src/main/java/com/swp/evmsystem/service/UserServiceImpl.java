@@ -16,7 +16,8 @@ public class UserServiceImpl implements UserService {
     private UserMapper mapper;
     @Override
     public boolean isCustomer(Integer userId) {
-        return repository.getRoleNameById(userId).equals("CUSTOMER");
+        String roleName = repository.getRoleNameById(userId);
+        return "CUSTOMER".equals(roleName);
     }
 
     @Override
@@ -26,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserByUserDetail(UserEntityDetails userDetail) {
-        return  mapper.toDTO(userDetail.getUser());
+        if (userDetail == null || userDetail.getUser() == null) {
+            return null;
+        }
+        return mapper.toDTO(userDetail.getUser());
     }
 }
