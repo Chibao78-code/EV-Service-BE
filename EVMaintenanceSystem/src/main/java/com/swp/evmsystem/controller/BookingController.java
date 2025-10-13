@@ -35,30 +35,9 @@ public class BookingController {
     public ResponseEntity<?> addBooking(
             @AuthenticationPrincipal UserEntityDetails userDetails,
             @Valid @RequestBody BookingRequestDTO request) {
-
-        try {
-            if (!bookingService.isEVBelongToCustomer(request, userDetails)) {
-                throw new AccessDeniedException("EV not belong to Customer");
-            }
-
-            if(!bookingService.isTimeBookingAvailable(request)) {
-                throw new AccessDeniedException("TimeSlot not available");
-            }
-
-            if(!electricVehicleService.isEvAvailableForBooking(request.getEVId())) {
-                throw new AccessDeniedException("ElectricVehicle not available");
-            }
-
-            BookingResponseDTO responseDTO = bookingService.createBooking(request);
-
-            return ResponseEntity.ok(responseDTO);
-        } catch (AccessDeniedException ex) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
-        }
+        BookingResponseDTO response = bookingService.createBooking(request, userDetails);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-
 
     @GetMapping("/bookings/{centerId}/{date}")
     @PreAuthorize("hasRole('CUSTOMER')")

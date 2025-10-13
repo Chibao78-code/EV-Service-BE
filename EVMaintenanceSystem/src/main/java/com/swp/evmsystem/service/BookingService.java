@@ -2,15 +2,18 @@ package com.swp.evmsystem.service;
 
 import com.swp.evmsystem.dto.request.BookingRequestDTO;
 import com.swp.evmsystem.dto.response.BookingResponseDTO;
+import com.swp.evmsystem.entity.ElectricVehicleEntity;
 import com.swp.evmsystem.security.UserEntityDetails;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public interface BookingService {
-    BookingResponseDTO createBooking(BookingRequestDTO bookingRequestDTO);
+    BookingResponseDTO createBooking(BookingRequestDTO bookingRequestDTO, UserEntityDetails user);
 
-    boolean isEVBelongToCustomer(BookingRequestDTO request, UserEntityDetails user);
+    ElectricVehicleEntity findElectricVehicleById(Integer evId);
 
-    boolean isTimeBookingAvailable(BookingRequestDTO request);
+    void validateOwnership(ElectricVehicleEntity ev, UserEntityDetails userDetails);
+
+    void validateTimeBookingAvailable(BookingRequestDTO request);
 }

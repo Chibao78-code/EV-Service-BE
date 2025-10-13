@@ -2,22 +2,23 @@ package com.swp.evmsystem.service;
 
 import com.swp.evmsystem.dto.request.BookingRequestDTO;
 import com.swp.evmsystem.dto.response.BookingResponseDTO;
-import com.swp.evmsystem.entity.BookingEntity;
-import com.swp.evmsystem.entity.CustomerEntity;
-import com.swp.evmsystem.entity.ElectricVehicleEntity;
-import com.swp.evmsystem.entity.ServiceCenterEntity;
+import com.swp.evmsystem.entity.*;
 import com.swp.evmsystem.enums.BookingStatus;
 import com.swp.evmsystem.enums.EvMaintenanceStatus;
+import com.swp.evmsystem.exception.BusinessException;
 import com.swp.evmsystem.repository.BookingRepository;
 import com.swp.evmsystem.repository.ElectricVehicleRepository;
 import com.swp.evmsystem.repository.ServiceCenterRepository;
 import com.swp.evmsystem.security.UserEntityDetails;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 
 @Service
@@ -30,8 +31,70 @@ public class BookingServiceImpl implements BookingService {
     private ServiceCenterRepository centerRepository;
 
     @Override
-    public BookingResponseDTO createBooking(BookingRequestDTO request) {
-        ElectricVehicleEntity electricVehicle = vehicleRepository.findById(request.getEVId()).get();
+    public ElectricVehicleEntity findElectricVehicleById(Integer evId) {
+        if (evId == null) {
+            throw new IllegalArgumentException("EVId must not be null");
+        }
+
+        return vehicleRepository.findById(evId)
+                .orElseThrow(() -> new EntityNotFoundException("Electric vehicle not found"));
+    } // Tìm xe theo Id, nếu không có thì quăng lỗi
+
+    @Override
+    public void validateOwnership(ElectricVehicleEntity ev, UserEntityDetails userDetails) {
+        if (userDetails == null || userDetails.getUserEntity() == null) {
+            throw new AccessDeniedException("Unauthenticated user");
+        }
+
+        UserEntity entity = userDetails.getUserEntity();
+
+        if (!(entity instanceof CustomerEntity customer)) {
+            throw new AccessDeniedException("Current user is not a customer");
+        }
+
+        if (ev.getOwner() == null || !Objects.equals(ev.getOwner().getId(), customer.getId())) {
+            throw new AccessDeniedException("Vehicle does not belong to current user");
+        }
+    } // Method dùng để kiểm tra ownership giữa xe và người.
+
+    public void validateTimeBookingAvailable(BookingRequestDTO request) {
+        if (request == null) {
+            throw new IllegalArgumentException("Booking request must not be null");
+        }
+
+        if (request.getCenterId() == null || request.getBookingDate() == null || request.getBookingTime() == null) {
+            throw new BusinessException("CenterId, BookingDate and BookingTime must not be null");
+        }
+
+        ServiceCenterEntity center = centerRepository.findById(request.getCenterId())
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Service Center not found with id = " + request.getCenterId()
+                ));
+
+        long currentBookings = bookingRepository.countBookingsAtTime(
+                center,
+                request.getBookingDate(),
+                request.getBookingTime()
+        );
+
+        if (currentBookings >= center.getMaxCapacity()) {
+            throw new BusinessException("Time slot is already full at " +
+                    center.getCenterName() + " (" + request.getBookingDate() + " " + request.getBookingTime() + ")");
+        }
+    }
+
+
+    @Override
+    public BookingResponseDTO createBooking(BookingRequestDTO request, UserEntityDetails user) {
+        ElectricVehicleEntity electricVehicle = findElectricVehicleById(request.getEVId());
+        validateOwnership(electricVehicle, user);
+
+        if (!(electricVehicle.getMaintenanceStatus() == EvMaintenanceStatus.AVAILABLE)) {
+            throw new BusinessException("Maintenance is not available");
+        }
+
+        validateTimeBookingAvailable(request);
+
         ServiceCenterEntity serviceCenter = centerRepository.findById(request.getCenterId()).get();
         LocalDate bookingDate = request.getBookingDate();
         LocalTime bookingTime = request.getBookingTime();
@@ -55,23 +118,5 @@ public class BookingServiceImpl implements BookingService {
                 .time(bookingTime.format(DateTimeFormatter.ofPattern("HH:mm")))
                 .eVModel(electricVehicle.getModel().getModelName())
                 .build();
-
     }
-
-    @Override
-    public boolean isEVBelongToCustomer(BookingRequestDTO request, UserEntityDetails user) {
-        Integer eVId = request.getEVId();
-        CustomerEntity owner = (CustomerEntity) user.getUserEntity();
-
-        return vehicleRepository.existsElectricVehicleEntityByIdAndOwner_Id(eVId, owner.getId());
-    } // Kiểm tra xe có thuộc về người đặt lịch
-
-    @Override
-    public boolean isTimeBookingAvailable(BookingRequestDTO request) {
-        ServiceCenterEntity ct = centerRepository.findById(request.getCenterId()).get();
-
-        return bookingRepository.countBookingsAtTime(ct, request.getBookingDate(), request.getBookingTime()) < ct.getMaxCapacity();
-    }
-
-
 }
