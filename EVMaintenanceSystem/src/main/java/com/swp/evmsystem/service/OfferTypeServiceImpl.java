@@ -12,10 +12,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class OfferTypeServiceImpl implements  OfferTypeService {
+    private final OfferTypeRepository repository;
+    private final OfferTypeMapper offerTypeMapper;
+
     @Autowired
-    private OfferTypeRepository repository;
-    @Autowired
-    private OfferTypeMapper offerTypeMapper;
+    public OfferTypeServiceImpl(OfferTypeRepository repository, OfferTypeMapper offerTypeMapper) {
+        this.repository = repository;
+        this.offerTypeMapper = offerTypeMapper;
+    }
 
     @Override
     public List<OfferTypeDTO> findAll() {
