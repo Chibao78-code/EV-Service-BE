@@ -2,6 +2,7 @@ package com.swp.evmsystem.repository;
 
 import com.swp.evmsystem.entity.CustomerEntity;
 import com.swp.evmsystem.entity.ElectricVehicleEntity;
+import com.swp.evmsystem.enums.BookingStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,5 +19,6 @@ public interface ElectricVehicleRepository extends JpaRepository<ElectricVehicle
 
     boolean existsElectricVehicleEntityByIdAndOwner_Id(int id, int ownerId);
 
-    boolean getElectricVehicleEntityById(int id);
+    boolean existsById(Integer id);
+
 }
