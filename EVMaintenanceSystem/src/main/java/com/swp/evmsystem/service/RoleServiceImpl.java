@@ -26,8 +26,13 @@ public class RoleServiceImpl implements RoleService {
         return roleRepository.findAll().size();
     }
 
+
     @Override
     public RoleEntity getRoleByName(String name) {
-        return roleRepository.findByName(RoleName.valueOf(name));
-    }
+        try {
+            RoleName roleName = RoleName.valueOf(name);
+            return roleRepository.findByName(roleName);
+        } catch (IllegalArgumentException | NullPointerException ex) {
+            return null;
+        }
 }
