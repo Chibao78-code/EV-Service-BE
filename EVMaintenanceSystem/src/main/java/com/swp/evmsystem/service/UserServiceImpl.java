@@ -16,8 +16,7 @@ public class UserServiceImpl implements UserService {
     private UserMapper mapper;
     @Override
     public boolean isCustomer(Integer userId) {
-        String roleName = repository.getRoleNameById(userId);
-        return "CUSTOMER".equals(roleName);
+        return repository.getRoleNameById(userId).equals("CUSTOMER");
     }
 
     @Override
