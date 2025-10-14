@@ -142,7 +142,7 @@ public class DataInitializer implements CommandLineRunner {
             provinceEntityService.createProvince(provinceEntity);
 
             for (int i = 0; i <= 4; i++) {
-                // dia chỉ
+                // Quận
                 DistrictEntity districtEntity = DistrictEntity.builder()
                         .districtName(DISTRICT_NAMES[i])
                         .province(provinceEntity)
@@ -163,7 +163,7 @@ public class DataInitializer implements CommandLineRunner {
                         .build();
                 addressEntityService.createAddress(addressEntity);
 
-                // trung tâm
+                // Trung tâm
                 ServiceCenterEntity serviceCenterEntity = ServiceCenterEntity.builder()
                         .centerName(CENTER_NAMES[i])
                         .centerPhone(CENTER_PHONES[i])
@@ -176,7 +176,6 @@ public class DataInitializer implements CommandLineRunner {
             }
         }
 
-        // Xe
         for (String name : MODEL_NAMES) {
             EvModelEntity evModelEntity = EvModelEntity.builder()
                     .modelName(name)
@@ -184,8 +183,17 @@ public class DataInitializer implements CommandLineRunner {
             evModelService.createEVModel(evModelEntity);
         }
 
+        for (int i = 0; i <= 2; i++) {
+            ElectricVehicleEntity electricVehicleEntity = ElectricVehicleEntity.builder()
+                    .vin(EV_VINS[i])
+                    .licensePlate(EV_LICENSE_PLATES[i])
+                    .maintenanceStatus(EvMaintenanceStatus.AVAILABLE)
+                    .model(evModelService.getModelById(i+2))
+                    .owner(i > 0 ? customerService.getCustomerById(2) : customerService.getCustomerById(1))
+                    .build();
+            electricVehicleService.create(electricVehicleEntity);
+        }
 
-        // Xe
         for (int i = 0; i <= 2; i++) {
             OfferTypeEntity offerTypeEntity = OfferTypeEntity.builder()
                     .offerTypeName(OFFER_TYPE_NAMES[i])

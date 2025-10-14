@@ -1,4 +1,5 @@
-packageswp.evmsystem.controller;
+/*
+package swp.evmsystem.controller;
 
 import com.swp.evmsystem.service.CustomerService;
 import org.springframework.http.ResponseEntity;
@@ -52,3 +53,4 @@ public class CustomerController {
     }
 }
 
+*/
