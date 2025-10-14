@@ -17,7 +17,7 @@ public class ServiceCenterController {
     private ServiceCenterService serviceCenterService;
 
     @GetMapping("/centers")
-    public ResponseEntity<List<ServiceCenterDTO>> getAllServiceCenters() {
+    public ResponseEntity<?> getAllServiceCenters() {
         List<ServiceCenterDTO> centers = serviceCenterService.getAllServiceCenters();
         return ResponseEntity.ok(centers);
     }
