@@ -25,9 +25,9 @@ public class JwtService {
     @Value("${jwt.expiration}")
     private long jwtExpiration;
 
-    /**
-     * Extract username (email) from JWT token
-     */
+        /**
+         * Extract username (email) from JWT token
+         */
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -115,6 +115,7 @@ public class JwtService {
      * Get signing key from secret
      */
     private Key getSignInKey() {
+        //luu y base64
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }

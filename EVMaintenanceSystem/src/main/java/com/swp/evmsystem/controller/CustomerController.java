@@ -1,4 +1,4 @@
-package com.swp.evmsystem.controller;
+packageswp.evmsystem.controller;
 
 import com.swp.evmsystem.service.CustomerService;
 import org.springframework.http.ResponseEntity;
@@ -51,3 +51,4 @@ public class CustomerController {
         return removed ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 }
+
