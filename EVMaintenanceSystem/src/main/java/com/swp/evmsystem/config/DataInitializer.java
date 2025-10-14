@@ -25,31 +25,34 @@ import java.time.LocalTime;
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DataInitializer implements CommandLineRunner {
-    final String[] CUSTOMER_NAMES = {"Nguyễn Văn An", "Trần Văn Bình"};
-    final String[] CUSTOMER_PHONES = {"0905111111", "0905222222"};
-    final String[] CUSTOMER_PASSWORDS = {"user1@", "user2@"};
-    
-    // admin, staff, technician users
-    final String ADMIN_PHONE = "0123456789";
-    final String ADMIN_PASSWORD = "admin123";
-    final String STAFF_PHONE = "0987654321";
-    final String STAFF_PASSWORD = "staff123";
-    final String TECH_PHONE = "0111222333";
-    final String TECH_PASSWORD = "tech123";
-    //data
+    // Data for Customer
+    final String[] CUSTOMER_NAMES = {"Nguyễn Văn An", "Trần Văn Bình", "Chí Bảo 1", "Chí Bảo 2"};
+    final String[] CUSTOMER_PHONES = {"0905111111", "0905222222", "0905333333", "0905444444"};
+    final String[] CUSTOMER_PASSWORDS = {"user1111", "user2222", "user3333", "user4444"};
+    final String[] CUSTOMER_EMAILS = {"user1@kafe.com", "user2@kafe.com", "quangphap931@gmail.com", "chibao1@gmail.com"};
+    // Data for Employee
+    final String[] EMPLOYEE_NAMES = {"Admin Số 1", "Staff Số 1", "Technician Số 1"};
+    final String[] EMPLOYEE_PHONES = {"0123456789", "0987654321", "0111222333"};
+    final String[] EMPLOYEE_PASSWORDS = {"admin123", "staff123", "tech123"};
+    final String[] EMPLOYEE_EMAILS = {"dinhdinhchibao@gmail.com", "ddinhchibao@gmail.com", "zzz.dinhchibao.15@gmail.com"};
+    final Role[] EMPLOYEE_ROLES = {Role.ADMIN, Role.STAFF, Role.TECHNICIAN};
+    // Data for Address
     final String[] PROVINCE_NAMES = {"TP. HCM"};
     final String[] DISTRICT_NAMES = {"Quận 1", "Quận 7", "TP. Thủ Đức", "Quận Gò Vấp", "Quận Bình Thạnh"};
     final String[] WARD_NAMES = {"Phường Bến Nghé", "Phường Tân Hưng", "Phường Linh Chiểu", "Phường 5", "Phường 25"};
     final String[] ADDRESS_LINES = {"123 Nguyễn Huệ", "456 Nguyễn Văn Linh", "789 Võ Văn Ngân", "321 Phan Văn Trị", "654 Xô Viết Nghệ Tĩnh"};
+    // Data for Center
     final String[] CENTER_NAMES = {"VinFast Service Center Quận 1", "VinFast Service Center Quận 7", "VinFast Service Center Thủ Đức", "VinFast Service Center Gò Vấp", "VinFast Service Center Bình Thạnh"};
     final LocalTime[] START_TIMES = {LocalTime.parse("08:00")};
     final LocalTime[] END_TIMES = {LocalTime.parse("18:00")};
     final String[] CENTER_PHONES = {"02812345678", "02823456789", "02834567890", "02845678901", "02856789012"};
+    // Data for Vehicle
     final String[] MODEL_NAMES = {"Evo200", "Evo200 Lite", "Feliz S", "Feliz Neo", "Vento S"};
     final String[] EV_VINS = {"FAKEVIN0000000000", "TESTVIN0000000000", "PLACEHOLDER000000"};
     final String[] EV_LICENSE_PLATES = {"49MĐ685692", "59MĐ102563", "59MĐ155567"};
+    // Data for Type of Service
     final String[] OFFER_TYPE_NAMES = {"Bảo dưỡng định kỳ", "Thay thế phụ tùng", "Sửa chữa"};
-    final String[] OFFER_TYPE_DESCRIPTIONS = {"Bảo dưỡng toàn diện xe máy điện theo tiêu chuẩn VinFast" , "Thay thế phụ tùng chính hãng VinFast", "Sửa chữa các vấn đề kỹ thuật"};
+    final String[] OFFER_TYPE_DESCRIPTIONS = {"Bảo dưỡng toàn diện xe máy điện theo tiêu chuẩn VinFast", "Thay thế phụ tùng chính hãng VinFast", "Sửa chữa các vấn đề kỹ thuật"};
 
     @Autowired
     UserService userService;
@@ -68,74 +71,44 @@ public class DataInitializer implements CommandLineRunner {
     @Autowired
     EvModelService evModelService;
     @Autowired
-    private CustomerService customerService;
+    CustomerService customerService;
     @Autowired
-    private OfferTypeService offerTypeService;
+    OfferTypeService offerTypeService;
 
+
+    // WANT TO ADD SOMETHING? CALL ME!
     @Override
     public void run(String... args) throws Exception {
-
+        // This condition checks the databases and provides if nothing in it
         if (userService.getAllCount() > 0) {
             return;
         }
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        
-        // admin
-        UserEntity admin = EmployeeEntity.builder()
-                .fullName("Admin User")
-                .role(Role.ADMIN)
-                .phone(ADMIN_PHONE)
-                .email("dinhdinhchibao@gmail.com")
-                .password(passwordEncoder.encode(ADMIN_PASSWORD))
-                .status(UserStatus.ACTIVE)
-                .build();
-        userService.createUser(admin);
-        
-        // Staff
-        UserEntity staff = EmployeeEntity.builder()
-                .fullName("Staff User")
-                .role(Role.STAFF)
-                .phone(STAFF_PHONE)
-                .email("ddinhchibao@gmail.com")
-                .password(passwordEncoder.encode(STAFF_PASSWORD))
-                .status(UserStatus.ACTIVE)
-                .build();
-        userService.createUser(staff);
-        
-        // technicial
-        UserEntity technician = EmployeeEntity.builder()
-                .fullName("Technician User")
-                .role(Role.TECHNICIAN)
-                .phone(TECH_PHONE)
-                .email("zzz.dinhchibao.15@gmail.com")
-                .password(passwordEncoder.encode(TECH_PASSWORD))
-                .status(UserStatus.ACTIVE)
-                .build();
-        userService.createUser(technician);
-        
-        // khach hàng 1
-        UserEntity customer1 = CustomerEntity.builder()
-                .fullName("Customer 1")
-                .role(Role.CUSTOMER)
-                .phone(CUSTOMER_PHONES[0])
-                .email("quangphap931@gmail.com")
-                .password(passwordEncoder.encode(CUSTOMER_PASSWORDS[0]))
-                .status(UserStatus.ACTIVE)
-                .build();
-        userService.createUser(customer1);
-        
-        // khach hang 2
-        UserEntity customer2 = CustomerEntity.builder()
-                .fullName("Customer 2")
-                .role(Role.CUSTOMER)
-                .phone(CUSTOMER_PHONES[1])
-                .password(passwordEncoder.encode(CUSTOMER_PASSWORDS[1]))
-                .status(UserStatus.ACTIVE)
-                .build();
-        userService.createUser(customer2);
+        for (int i = 0; i <= 2; i++) {
+            UserEntity emp = EmployeeEntity.builder()
+                    .fullName(EMPLOYEE_NAMES[i])
+                    .role(EMPLOYEE_ROLES[i])
+                    .phone(EMPLOYEE_PHONES[i])
+                    .email(EMPLOYEE_EMAILS[i])
+                    .password(passwordEncoder.encode(EMPLOYEE_PASSWORDS[i]))
+                    .status(UserStatus.ACTIVE)
+                    .build();
+            userService.createUser(emp);
+        }
 
-        // trung tam
+        for (int i = 0; i <= 3; i++) {
+            UserEntity user = CustomerEntity.builder()
+                    .fullName(CUSTOMER_NAMES[i])
+                    .role(Role.CUSTOMER)
+                    .phone(CUSTOMER_PHONES[i])
+                    .email(CUSTOMER_EMAILS[i])
+                    .password((new BCryptPasswordEncoder()).encode(CUSTOMER_PASSWORDS[i]))
+                    .status(UserStatus.ACTIVE)
+                    .build();
+            userService.createUser(user);
+        }
+
         {
             ProvinceEntity provinceEntity = new ProvinceEntity();
             provinceEntity.setProvinceName(PROVINCE_NAMES[0]);
@@ -188,8 +161,8 @@ public class DataInitializer implements CommandLineRunner {
                     .vin(EV_VINS[i])
                     .licensePlate(EV_LICENSE_PLATES[i])
                     .maintenanceStatus(EvMaintenanceStatus.AVAILABLE)
-                    .model(evModelService.getModelById(i+2))
-                    .owner(i > 0 ? customerService.getCustomerById(2) : customerService.getCustomerById(1))
+                    .model(evModelService.getModelById(i + 2))
+                    .owner(i > 0 ? customerService.getCustomerById(4) : customerService.getCustomerById(5))
                     .build();
             electricVehicleService.create(electricVehicleEntity);
         }
