@@ -14,5 +14,12 @@ public interface DistrictEntityService {
 
     void deleteAll();
 
-    
+    void deleteById(Integer id);
+
+    void updateDistrict(DistrictEntity districtEntity);
+    boolean existsById(Integer id);
+    boolean existsByName(String name);
+    boolean existsByProvince_ProvinceId(Integer provinceId);
+
+
 }
