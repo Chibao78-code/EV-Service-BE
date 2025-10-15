@@ -29,5 +29,9 @@ public class AddressEntityServiceImpl implements AddressEntityService {
         return addressEntityRepository.findAll();
     }
 
-    
+    @Override
+    public void deleteById(Long id) {
+        addressEntityRepository.deleteById(id);
+    }
+
 }
