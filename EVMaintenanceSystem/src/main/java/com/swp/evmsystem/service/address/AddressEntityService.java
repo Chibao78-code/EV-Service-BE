@@ -1,14 +1,13 @@
-java
 package com.swp.evmsystem.service.address;
 
 import com.swp.evmsystem.entity.address.AddressEntity;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
+@Service
 public interface AddressEntityService {
-    AddressEntity createAddress(AddressEntity addressEntity);
-    Optional<AddressEntity> findById(Long id);
-    List<AddressEntity> findAll();
-    void deleteById(Long id);
+    void createAddress(AddressEntity addressEntity);
+    AddressEntity getAddressById(Integer id);
+    AddressEntity updateAddress(AddressEntity addressEntity);
+    void deleteAddress(Integer id);
+
 }

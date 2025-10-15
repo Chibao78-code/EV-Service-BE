@@ -12,6 +12,14 @@ public class AddressEntityServiceImpl implements AddressEntityService {
 
     @Override
     public void createAddress(AddressEntity addressEntity) {
+
         addressEntityRepository.save(addressEntity);
     }
+
+    @Override
+    public AddressEntity getAddressById(int id) {
+        return addressEntityRepository.findById(id).orElse(null);
+
+    }
+
 }
