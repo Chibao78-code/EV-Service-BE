@@ -10,12 +10,9 @@ public interface DistrictEntityService {
     DistrictEntity findDistrictEntityByName(String districtName);
 
     DistrictEntity findDistrictEntityById(Integer id);
-
-
+    Iterable<DistrictEntity> findAll();
     void deleteAll();
-
     void deleteById(Integer id);
-
     void updateDistrict(DistrictEntity districtEntity);
     boolean existsById(Integer id);
     boolean existsByName(String name);
