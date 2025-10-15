@@ -74,19 +74,20 @@ public class SecurityConfig {
     }
 
     // Bean mã hóa mật khẩu bằng BCrypt
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
+    // Cấu hình CORS (cho phép frontend truy cập API từ domain khác)
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://127.0.0.1:5500/")); // Thay đổi theo domain của frontend
+        // Danh sách domain frontend được phép truy cập
+        configuration.setAllowedOrigins(Arrays.asList("http://127.0.0.1:5500/")); // Thay bằng domain thực tế
+        // Các phương thức HTTP được phép
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+        // Các header được phép gửi lên server
         configuration.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
+        // Cho phép gửi cookie hoặc token
         configuration.setAllowCredentials(true);
 
+        // Áp dụng cấu hình cho tất cả các endpoint
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
 
