@@ -26,4 +26,9 @@ public class DistrictEntityServiceImpl implements  DistrictEntityService {
         return districtEntityRepository.findById(id).orElse(null);
     }
 
+    @Override
+    public DistrictEntity findDistrictEntityByCode(String code) {
+        return districtEntityRepository.findDistrictEntitiesByDistrictCode(code);
+    }
+
 }
