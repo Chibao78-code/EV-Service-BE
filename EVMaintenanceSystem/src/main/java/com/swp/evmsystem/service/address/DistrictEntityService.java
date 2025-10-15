@@ -12,4 +12,7 @@ public interface DistrictEntityService {
     DistrictEntity findDistrictEntityById(Integer id);
 
 
+    void deleteAll();
+
+    
 }
