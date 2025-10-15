@@ -24,6 +24,10 @@ public class AddressEntityServiceImpl implements AddressEntityService {
         return addressEntityRepository.findById(id);
     }
 
-    
+    @Override
+    public List<AddressEntity> findAll() {
+        return addressEntityRepository.findAll();
+    }
 
+    
 }
