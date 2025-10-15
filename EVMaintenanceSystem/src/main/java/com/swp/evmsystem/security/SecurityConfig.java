@@ -35,19 +35,27 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                // Cấu hình CORS (cho phép frontend truy cập API)
                 .cors(Customizer.withDefaults())
+                // Tắt CSRF vì ta dùng JWT (không lưu session)
                 .csrf(csrf -> csrf.disable())
+                // Cấu hình quyền truy cập cho các endpoint
                 .authorizeHttpRequests(auth -> auth
+                        // Cho phép truy cập không cần đăng nhập với các đường dẫn sau
                         .requestMatchers("/api/auth/**", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                        // Các request khác bắt buộc phải xác thực
                         .anyRequest().authenticated()
                 )
+                // Cấu hình chế độ session: STATELESS => không lưu session giữa các request
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
+                // Đăng ký AuthenticationProvider (để xác thực người dùng)
                 .authenticationProvider(authenticationProvider())
+                // Thêm bộ lọc JWT trước bộ lọc xác thực mặc định
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
+        return http.build(); // Xây dựng cấu hình Security
     }
 
     @Bean
