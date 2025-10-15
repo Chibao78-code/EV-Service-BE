@@ -24,7 +24,7 @@ public class BookingController {
     private OfferTypeService offerTypeService;
 
     @PostMapping("bookings")
-    @PreAuthorize("hasRole('CUSTOMER')")
+    @PreAuthorize("hasRole('CUSTOMER')")// chỉ người dùng có role CUSTOMER mới được phép gọi
     public ResponseEntity<?> addBooking(@AuthenticationPrincipal UserEntityDetails userDetails) {
         return ResponseEntity.ok().build();
     }
@@ -34,11 +34,12 @@ public class BookingController {
     public ResponseEntity<?> getAvailableTimeSlotByDate(@Valid
                                                         @PathVariable("date") LocalDate date,
                                                         @PathVariable("centerId") Integer centerId) {
+        // Gọi service để lấy danh sách khung giờ trống của trung tâm trong ngày
         TimeSlotResponseDTO timeSlotResponseDTO = timeSlotService.getTimeSlots(centerId, date);
         return ResponseEntity.ok(timeSlotResponseDTO);
     }
 
-    @GetMapping("/offer-types")
+    @GetMapping("/offer-types") //Lấy danh sách tất cả loại dịch vụ (bảo dưỡng, thay phụ tùng, sửa chữa, ...)
     public ResponseEntity<List<OfferTypeDTO>> getAllOfferTypes(){
         return ResponseEntity.ok(offerTypeService.findAll());
     }
