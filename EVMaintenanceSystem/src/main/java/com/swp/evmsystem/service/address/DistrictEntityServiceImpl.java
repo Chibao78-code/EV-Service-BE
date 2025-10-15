@@ -20,4 +20,10 @@ public class DistrictEntityServiceImpl implements  DistrictEntityService {
     public DistrictEntity findDistrictEntityByName(String districtName) {
         return districtEntityRepository.findDistrictEntitiesByDistrictName(districtName);
     }
+
+    @Override
+    public DistrictEntity findDistrictEntityById(int id) {
+        return districtEntityRepository.findById(id).orElse(null);
+    }
+
 }

@@ -8,4 +8,8 @@ public interface DistrictEntityService {
     void createDistrict(DistrictEntity districtEntity);
 
     DistrictEntity findDistrictEntityByName(String districtName);
+
+    DistrictEntity findDistrictEntityById(Integer id);
+
+
 }
