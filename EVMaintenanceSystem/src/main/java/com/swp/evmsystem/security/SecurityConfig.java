@@ -58,19 +58,22 @@ public class SecurityConfig {
         return http.build(); // Xây dựng cấu hình Security
     }
 
+    // Định nghĩa AuthenticationProvider để Spring Security biết cách xác thực người dùng
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
+        authProvider.setUserDetailsService(userDetailsService); // Sử dụng custom UserDetailsService
+        authProvider.setPasswordEncoder(passwordEncoder()); // Dùng BCrypt để mã hóa mật khẩu
         return authProvider;
     }
 
+    // Trả về AuthenticationManager (quản lý xác thực)
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
+    // Bean mã hóa mật khẩu bằng BCrypt
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
