@@ -36,13 +36,16 @@ public class AuthController {
     public ResponseEntity<LoginResponseDTO> login(@Valid @RequestBody LoginRequestDTO request) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
-        );
-        
+        );    // Bước 1: Xác thực username/password qua AuthenticationManager
+        // Bước 2: Nếu xác thực thành công → lấy thông tin người dùng
         UserEntityDetails userDetails = (UserEntityDetails) authentication.getPrincipal();
+        // Bước 3: Sinh JWT token cho người dùng
         String token = jwtTokenProvider.generateToken(userDetails);
+        // Bước 4: Lấy thông tin người dùng ở dạng DTO để trả về client
         UserDTO userDto = userService.getUserByUserDetail(userDetails);
+        // Bước 5: Gộp token và thông tin người dùng vào LoginResponseDTO
         LoginResponseDTO lg = new LoginResponseDTO(token, userDto);
-
+        // Bước 6: Trả về response 200 OK cùng với token và user info
         return ResponseEntity.ok(lg);
     }
 }
