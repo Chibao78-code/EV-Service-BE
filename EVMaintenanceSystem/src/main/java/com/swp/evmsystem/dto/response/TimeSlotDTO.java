@@ -1,5 +1,6 @@
 package com.swp.evmsystem.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,6 +17,7 @@ import java.time.LocalTime;
 public class TimeSlotDTO {
     Integer centerId;
     LocalDate date;
+    @JsonFormat(pattern = "HH:mm")
     LocalTime time;
     Integer numOfBookings;
     Integer maxCapacity;
