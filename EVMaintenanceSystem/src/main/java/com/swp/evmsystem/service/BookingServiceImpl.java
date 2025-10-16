@@ -99,14 +99,14 @@ public class BookingServiceImpl implements BookingService {
         LocalDate bookingDate = request.getBookingDate();
         LocalTime bookingTime = request.getBookingTime();
 
-        BookingEntity be = BookingEntity.builder()
+        BookingEntity bookingEntity = BookingEntity.builder()
                 .vehicle(electricVehicle)
                 .center(serviceCenter)
                 .bookingDate(bookingDate)
                 .bookingTime(bookingTime)
                 .status(BookingStatus.PENDING)
                 .build();
-        bookingRepository.save(be);
+        bookingRepository.save(bookingEntity);
 
         electricVehicle.setMaintenanceStatus(EvMaintenanceStatus.BOOKED);
         vehicleRepository.save(electricVehicle);
