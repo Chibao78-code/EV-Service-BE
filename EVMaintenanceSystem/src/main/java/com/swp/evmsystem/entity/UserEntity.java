@@ -3,6 +3,8 @@ package com.swp.evmsystem.entity;
 import com.swp.evmsystem.enums.Role;
 import com.swp.evmsystem.enums.UserStatus;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -25,6 +27,7 @@ public abstract class UserEntity {
     String email;
     @Column(name = "phone", length = 10, unique = true, nullable = false)
     String phone;
+    @Size(min = 8)
     @Column(name = "password", length = 100, nullable = false)
     String password;
     @Enumerated(EnumType.STRING)

@@ -3,23 +3,27 @@ package com.swp.evmsystem.exception;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationErrors(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
+    public ResponseEntity<Map<String, Object>> handleValidationErrors(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new LinkedHashMap<>();
         ex.getBindingResult().getFieldErrors()
                 .forEach(err -> errors.put(err.getField(), err.getDefaultMessage()));
-        return ResponseEntity.badRequest().body(errors);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(buildError(HttpStatus.BAD_REQUEST, errors));
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
@@ -36,20 +40,28 @@ public class GlobalExceptionHandler {
         );
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleGeneral(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                buildError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage())
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<?> handleGeneral(BadCredentialsException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+                buildError(HttpStatus.UNAUTHORIZED, ex.getMessage())
         );
     }
 
-    private Map<String, Object> buildError(HttpStatus status, String message) {
-        return Map.of(
-                "timestamp", LocalDateTime.now(),
-                "status", status.value(),
-                "error", status.getReasonPhrase(),
-                "message", message
-        );
+    private Map<String, Object> buildError(HttpStatus status, Object message) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("title", status.getReasonPhrase());
+        body.put("status", status.value());
+        body.put("message", message);
+        body.put("timestamp", LocalDateTime.now());
+
+        return body;
+    }
+
+    @ExceptionHandler(HttpClientErrorException.Forbidden.class)
+    public ResponseEntity<?> handle403(HttpClientErrorException.Forbidden ex) {
+        System.out.println("Lỗi 403: " + ex.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(buildError(HttpStatus.FORBIDDEN, ex.getMessage()));
     }
 
     private ResponseEntity<ErrorResponse> buildResponse(HttpStatus status, String message) {
@@ -62,5 +74,4 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(status).body(error);
     }
-
 }
