@@ -16,4 +16,5 @@ public interface BookingService {
     void validateOwnership(ElectricVehicleEntity ev, UserEntityDetails userDetails);
 
     void validateTimeBookingAvailable(BookingRequestDTO request);
+
 }
