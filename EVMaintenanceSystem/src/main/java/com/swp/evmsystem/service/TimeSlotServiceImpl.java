@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
@@ -55,13 +56,15 @@ public class TimeSlotServiceImpl implements TimeSlotService {
                 .map(time -> {
                     int numOfBookings = bookingCountMap.getOrDefault(time, 0);
 
+                    LocalDateTime bookingDateTime = LocalDateTime.of(date, time);
+
                     return TimeSlotDTO.builder()
                             .date(date)
                             .time(time)
                             .centerId(centerId)
                             .numOfBookings(numOfBookings)
                             .maxCapacity(center.getMaxCapacity())
-                            .available(numOfBookings < center.getMaxCapacity())
+                            .available(numOfBookings < center.getMaxCapacity() && bookingDateTime.isAfter(LocalDateTime.now().plusMinutes(30)))
                             .build();
                 })
                 .collect(Collectors.toList());
