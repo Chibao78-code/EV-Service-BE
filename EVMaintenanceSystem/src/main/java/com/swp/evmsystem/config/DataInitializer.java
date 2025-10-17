@@ -47,7 +47,7 @@ public class DataInitializer implements CommandLineRunner {
     final LocalTime[] END_TIMES = {LocalTime.parse("18:00")};
     final String[] CENTER_PHONES = {"02812345678", "02823456789", "02834567890", "02845678901", "02856789012"};
     // Data for Vehicle
-    final String[] MODEL_NAMES = {"Evo200", "Evo200 Lite", "Feliz S", "Feliz Neo", "Vento S"};
+    final String[] MODEL_NAMES = {"Klara S (3.5 kWh)", "Feliz S (3.5 kWh)", "Vento S (3.5 kWh)", "Theon S (3.5 kWh)", "Evo 200 (2.5 kWh)", "Evo 200 Lite (2.5 kWh)", "Impes (2.0 kWh)", "Ludo (1.8 kWh)", "Klara A2 (2.5 kWh)"};
     final String[] EV_VINS = {"FAKEVIN0000000000", "TESTVIN0000000000", "PLACEHOLDER000000"};
     final String[] EV_LICENSE_PLATES = {"49MĐ685692", "59MĐ102563", "59MĐ155567"};
     // Data for Type of Service
