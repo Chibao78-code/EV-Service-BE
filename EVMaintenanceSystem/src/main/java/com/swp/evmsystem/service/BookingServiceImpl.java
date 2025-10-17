@@ -83,7 +83,6 @@ public class BookingServiceImpl implements BookingService {
         }
     }
 
-
     @Override
     public BookingResponseDTO createBooking(BookingRequestDTO request, UserEntityDetails user) {
         ElectricVehicleEntity electricVehicle = findElectricVehicleById(request.getEVId());
