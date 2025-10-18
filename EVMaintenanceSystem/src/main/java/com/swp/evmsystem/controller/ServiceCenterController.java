@@ -18,7 +18,9 @@ public class ServiceCenterController {
 
     @GetMapping("/centers")
     public ResponseEntity<List<ServiceCenterDTO>> getAllServiceCenters() {
+        // Lấy danh sách tất cả trung tâm dịch vụ từ service
         List<ServiceCenterDTO> centers = serviceCenterService.getAllServiceCenters();
+        // Trả về danh sách trung tâm dịch vụ với mã trạng thái 200 OK
         return ResponseEntity.ok(centers);
     }
 }
