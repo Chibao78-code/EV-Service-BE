@@ -39,6 +39,14 @@ java
                         throw new AccessDeniedException("Only customers can access vehicles");
                     }
                     // lấy danh sách xe điện của khách hàng
-                    
+                    List<ElectricVehicleDTO> vehicles = electricVehicleService.findByOwner(customer);
+                    // trả về danh sách xe điện
+                    return ResponseEntity.ok(vehicles);
+                } catch (AccessDeniedException e) {
+                    // nếu không có quyền truy cập
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+                } catch (Exception e) {
+                    return ResponseEntity.internalServerError().body("Failed to retrieve vehicles");
+                }
             }
         }
