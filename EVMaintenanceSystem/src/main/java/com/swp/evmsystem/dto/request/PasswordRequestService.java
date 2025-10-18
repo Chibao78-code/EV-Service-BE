@@ -27,4 +27,10 @@ public class PasswordRequestService implements Serializable {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+    public String getCurrentPassword() {
+        return currentPassword;
+    }
+    public void setCurrentPassword(String currentPassword) {
+        this.currentPassword = currentPassword;
+    }
 }
