@@ -15,10 +15,16 @@ import java.util.List;
 public class EvModelController {
     @Autowired
     private EvModelService evModelService;
-
+    // Gọi constructor của EvModelController
+    public EvModelController(EvModelService evModelService) {
+        this.evModelService = evModelService;
+    }
+    // Lấy danh sách các mẫu xe điện
     @GetMapping("/api/ev-models")
     public ResponseEntity<?> getEvModels() {
+        // Gọi phương thức từ service để lấy danh sách mẫu xe điện
         List<EvModelDTO> evModelDTOs = evModelService.getAllModels();
+        // Trả về danh sách mẫu xe điện với mã trạng thái 200 OK
         return new ResponseEntity<List<EvModelDTO>>(evModelDTOs, HttpStatus.OK);
     }
 }
