@@ -17,8 +17,8 @@ public class OfferTypeServiceImpl implements  OfferTypeService {
 
     @Autowired
     public OfferTypeServiceImpl(OfferTypeRepository repository, OfferTypeMapper offerTypeMapper) {
-        this.repository = repository;
-        this.offerTypeMapper = offerTypeMapper;
+        this.repository = repository; // Injecting OfferTypeRepository
+        this.offerTypeMapper = offerTypeMapper; // Injecting OfferTypeMapper
     }
 
     @Override
