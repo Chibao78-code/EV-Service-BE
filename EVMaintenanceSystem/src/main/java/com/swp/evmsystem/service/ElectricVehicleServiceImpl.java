@@ -19,18 +19,18 @@ public class ElectricVehicleServiceImpl implements ElectricVehicleService {
     ElectricVehicleMapper mapper;
 
     @Override
-    public List<ElectricVehicleDTO> findByOwner(CustomerEntity owner) {
+    public List<ElectricVehicleDTO> findByOwner(CustomerEntity owner) { // Lấy danh sách xe điện của chủ sở hữu
         return electricVehicleRepository.findByOwner(owner)
                 .stream()
                 .map(mapper::toDTO)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()); // Chuyển đổi danh sách thực thể xe điện thành DTO và trả về
     }
 
     @Override
     public boolean create(ElectricVehicleEntity ev) {
-        if (ev == null) {
-            return false;
+        if (ev == null) { // Kiểm tra nếu đối tượng xe điện là null
+            return false; // Trả về false nếu không thể tạo
         }
-        return electricVehicleRepository.save(ev) != null;
+        return electricVehicleRepository.save(ev) != null; // Lưu xe điện vào cơ sở dữ liệu và trả về true nếu thành công
     }
 }

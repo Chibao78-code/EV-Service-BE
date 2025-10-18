@@ -23,15 +23,15 @@ public class EvModelServiceImpl implements EvModelService {
     }
 
     @Override
-    public EvModelEntity getModelById(int i) {
-        return repository.findById(i).orElse(null);
+    public EvModelEntity getModelById(int i) { // Retrieve an EV model by its ID
+        return repository.findById(i).orElse(null); // Find the EV model entity by its ID and return it, or return null if not found
     }
 
     @Override
     public List<EvModelDTO> getAllModels() {
-        return repository.findAll()
+        return repository.findAll()// Retrieve all EV model entities from the repository
                 .stream()
                 .map(mapper::toDTO)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()); // Convert each entity to a DTO and collect them into a list
     }
 }
