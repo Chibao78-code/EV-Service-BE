@@ -18,6 +18,7 @@ public class UserEntityDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        // provide role as authority
         if (userEntity == null || userEntity.getRole() == null) {
             return List.of();
         }
@@ -35,6 +36,7 @@ public class UserEntityDetails implements UserDetails {
         if (userEntity == null) {
             return null;
         }
+        // prioritize phone number as username if available
         if (userEntity.getPhone() != null && !userEntity.getPhone().isBlank()) {
             return userEntity.getPhone();
         } else {
