@@ -25,7 +25,7 @@ public class OfferTypeServiceImpl implements  OfferTypeService {
     public List<OfferTypeDTO> findAll() {
         return repository.findAll().stream()
                 .map(offerTypeMapper::toDTO)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()); // Convert entities to DTOs
     }
 
     @Override

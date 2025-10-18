@@ -30,9 +30,9 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleEntity getRoleByName(String name) {
         try {
-            RoleName roleName = RoleName.valueOf(name);
-            return roleRepository.findByName(roleName);
+            RoleName roleName = RoleName.valueOf(name); // Convert String to RoleName enum
+            return roleRepository.findByName(roleName); // Fetch RoleEntity by RoleName
         } catch (IllegalArgumentException | NullPointerException ex) {
-            return null;
+            return null; // Return null if the name is invalid or null
         }
 }
