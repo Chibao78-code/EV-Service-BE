@@ -28,14 +28,14 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
     }
 
     @Override
-    public List<ServiceCenterEntity> getServiceCenterEntities() {
-        List<ServiceCenterEntity> serviceCenterEntities = repository.findAll();
-        return serviceCenterEntities;
+    public List<ServiceCenterEntity> getServiceCenterEntities() { // Lấy tất cả ServiceCenterEntity
+        List<ServiceCenterEntity> serviceCenterEntities = repository.findAll(); // Lấy tất cả các thực thể từ repository
+        return serviceCenterEntities; // Trả về danh sách các thực thể
     }
 
     @Override
-    public List<ServiceCenterDTO> getAllServiceCenters() {
-        return repository.findAll()
+    public List<ServiceCenterDTO> getAllServiceCenters() { // Lấy tất cả ServiceCenter và chuyển đổi sang DTO
+        return repository.findAll() // Lấy tất cả các thực thể từ repository
                 .stream()
                 .map(mapper::toDTO)   // chuyển từng Entity → DTO
                 .collect(Collectors.toList());
