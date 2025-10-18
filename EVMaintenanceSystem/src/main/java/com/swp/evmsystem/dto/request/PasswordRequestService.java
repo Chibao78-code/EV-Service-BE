@@ -39,4 +39,11 @@ public class PasswordRequestService implements Serializable {
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
     }
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+    
 }
