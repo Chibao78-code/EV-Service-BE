@@ -25,10 +25,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUserByUserDetail(UserEntityDetails userDetail) {
-        if (userDetail == null || userDetail.getUser() == null) {
+    public UserDTO getUserByUserDetail(UserEntityDetails userDetail) { // Get user information from UserEntityDetails
+        if (userDetail == null || userDetail.getUser() == null) { // Check if userDetail or user is null
             return null;
         }
-        return mapper.toDTO(userDetail.getUser());
+        return mapper.toDTO(userDetail.getUser()); // Convert UserEntity to UserDTO and return it
     }
 }
