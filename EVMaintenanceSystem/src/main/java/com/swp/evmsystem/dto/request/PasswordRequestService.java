@@ -18,5 +18,13 @@ public class PasswordRequestService implements Serializable {
     private String newPassword;
 
     @NotBlank(message = "Confirm password is required")
+    @JsonIgnore
+    private String confirmPassword;
+    public Long getUserId() {
+        return userId;
+    }
 
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 }
