@@ -27,7 +27,6 @@ public class UserEntityDetailsService implements UserDetailsService {
             // Fallback: try lookup by email if phone lookup failed.
             user = userRepository.findByEmail(username);
         }
-
         // Convert found entity to UserDetails or throw if not present.
         return user.map(UserEntityDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with this phone or email: " + username));
@@ -35,8 +34,8 @@ public class UserEntityDetailsService implements UserDetailsService {
 
     public UserEntityDetails loadUserById(Integer id) throws UsernameNotFoundException {
         // Use orElseThrow for concise error handling and to avoid explicit Optional checks.
-        UserEntity user = userRepository.findById(id)
+        UserEntity user = userRepository.findById(id) // Find user by ID
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with this id: " + id));
-        return new UserEntityDetails(user);
+        return new UserEntityDetails(user); // Convert to UserDetails
     }
 }
