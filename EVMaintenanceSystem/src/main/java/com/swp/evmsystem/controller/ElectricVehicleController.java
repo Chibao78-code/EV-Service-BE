@@ -34,6 +34,11 @@ java
                     if (userDetails == null) {
                         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication required");
                     }
+                    // kiểm tra nếu người dùng không phải là CustomerEntity
+                    if (!(userDetails.getUser() instanceof CustomerEntity customer)) {
+                        throw new AccessDeniedException("Only customers can access vehicles");
+                    }
+                    // lấy danh sách xe điện của khách hàng
                     
             }
         }
