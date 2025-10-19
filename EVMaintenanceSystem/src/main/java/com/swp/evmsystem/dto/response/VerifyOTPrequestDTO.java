@@ -31,4 +31,23 @@ public class VerifyOTPrequestDTO {
     public String getOtp() {
         return otp;
     }
+    public void setOtp(String otp) {
+        this.otp = otp;
+    }
+    @Override
+    public String toString() {
+        return "VerifyOTPrequestDTO{" +
+                "email='" + email + '\'' +
+                ", otp='" + otp + '\'' +
+                '}';
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true; // Check for reference equality
+        if (o == null || getClass() != o.getClass()) return false; // Check for null and class type
+
+        VerifyOTPrequestDTO that = (VerifyOTPrequestDTO) o; // Cast to the correct type
+        return Objects.equals(email, that.email) && // Compare relevant fields
+               Objects.equals(otp, that.otp); // Compare relevant fields
+    }
 }
