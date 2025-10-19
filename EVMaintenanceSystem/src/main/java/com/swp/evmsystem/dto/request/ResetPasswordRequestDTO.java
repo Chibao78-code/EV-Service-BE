@@ -41,12 +41,12 @@ public class ResetPasswordRequestDTO {
     }
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) return true; // Check for reference equality
+        if (o == null || getClass() != o.getClass()) return false; // Check for null and class type
 
-        ResetPasswordRequestDTO that = (ResetPasswordRequestDTO) o;
-        return Objects.equals(token, that.token) &&
-               Objects.equals(newPassword, that.newPassword);
-        
+        ResetPasswordRequestDTO that = (ResetPasswordRequestDTO) o; // Cast to the correct type
+        return Objects.equals(token, that.token) && // Compare relevant fields
+               Objects.equals(newPassword, that.newPassword); // Compare relevant fields
+
     }
 }
