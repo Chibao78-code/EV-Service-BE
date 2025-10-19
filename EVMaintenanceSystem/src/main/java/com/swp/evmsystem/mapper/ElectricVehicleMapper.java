@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 @Mapper(componentModel = "spring")
-public interface ElectricVehicleMapper { // Mapper for ElectricVehicleEntity and ElectricVehicleDTO
+public interface   { // Mapper for ElectricVehicleEntity and ElectricVehicleDTO
     @Mapping(target = "model", qualifiedByName = "modelToString") // Convert EvModelEntity to String using custom method
     ElectricVehicleDTO toDTO(ElectricVehicleEntity entity); // Entity to DTO mapping
     @Mapping(target = "model", ignore = true) // Ignore model field when mapping from DTO to Entity
