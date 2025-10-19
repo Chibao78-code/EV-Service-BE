@@ -29,4 +29,24 @@ public class ResetPasswordRequestDTO {
     public String getNewPassword() {
         return newPassword;
     }
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+    @Override
+    public String toString() {
+        return "ResetPasswordRequestDTO{" +
+                "token='" + token + '\'' +
+                ", newPassword='" + newPassword + '\'' +
+                '}';
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ResetPasswordRequestDTO that = (ResetPasswordRequestDTO) o;
+        return Objects.equals(token, that.token) &&
+               Objects.equals(newPassword, that.newPassword);
+        
+    }
 }
