@@ -48,8 +48,8 @@ public class DataInitializer implements CommandLineRunner {
     final String[] CENTER_PHONES = {"02812345678", "02823456789", "02834567890", "02845678901", "02856789012"};
     // Data for Vehicle
     final String[] MODEL_NAMES = {"Klara S (3.5 kWh)", "Feliz S (3.5 kWh)", "Vento S (3.5 kWh)", "Theon S (3.5 kWh)", "Evo 200 (2.5 kWh)", "Evo 200 Lite (2.5 kWh)", "Impes (2.0 kWh)", "Ludo (1.8 kWh)", "Klara A2 (2.5 kWh)"};
-    final String[] EV_VINS = {"FAKEVIN0000000000", "TESTVIN0000000000", "PLACEHOLDER000000"};
-    final String[] EV_LICENSE_PLATES = {"49MĐ685692", "59MĐ102563", "59MĐ155567"};
+    final String[] EV_VINS = {"FAKEVIN0000000000", "TESTVIN0000000000", "PLACEHOLDER000000", "1HGBH41JXMN123456" ,"2HGCM82633A987654", "4T1BE46K47U112233"};
+    final String[] EV_LICENSE_PLATES = {"49MĐ685692", "59MĐ102563", "59MĐ155567", "59MĐ12365" , "59MĐ34352" , "59MĐ54678"};
     // Data for Type of Service
     final String[] OFFER_TYPE_NAMES = {"Bảo dưỡng định kỳ", "Thay thế phụ tùng", "Sửa chữa"};
     final String[] OFFER_TYPE_DESCRIPTIONS = {"Bảo dưỡng toàn diện xe máy điện theo tiêu chuẩn VinFast", "Thay thế phụ tùng chính hãng VinFast", "Sửa chữa các vấn đề kỹ thuật"};
@@ -156,13 +156,14 @@ public class DataInitializer implements CommandLineRunner {
             evModelService.createEVModel(evModelEntity);
         }
 
-        for (int i = 0; i <= 2; i++) {
+        for (int i = 0; i <= 5; i++) {
+            int customerId = 0;
             ElectricVehicleEntity electricVehicleEntity = ElectricVehicleEntity.builder()
                     .vin(EV_VINS[i])
                     .licensePlate(EV_LICENSE_PLATES[i])
                     .maintenanceStatus(EvMaintenanceStatus.AVAILABLE)
                     .model(evModelService.getModelById(i + 2))
-                    .owner(i > 0 ? customerService.getCustomerById(4) : customerService.getCustomerById(5))
+                    .owner(i > 0 ? customerService.getCustomerById(4) : customerService.getCustomerById(6))
                     .build();
             electricVehicleService.create(electricVehicleEntity);
         }
