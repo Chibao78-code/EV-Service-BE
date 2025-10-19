@@ -84,6 +84,15 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    public String bookingCodeGenerator(BookingRequestDTO request) {
+        LocalDate date = request.getBookingDate();
+        LocalTime time = request.getBookingTime();
+        Integer evId = request.getEVId();
+        Integer centerID = request.getCenterId();
+        return "BK" + evId + (date.getYear() - 2000) + date.getMonthValue() + date.getDayOfMonth() + time.getHour() + "CT" + centerID;
+    }
+
+    @Override
     public BookingResponseDTO createBooking(BookingRequestDTO request, UserEntityDetails user) {
         ElectricVehicleEntity electricVehicle = findElectricVehicleById(request.getEVId());
         validateOwnership(electricVehicle, user);
@@ -97,12 +106,14 @@ public class BookingServiceImpl implements BookingService {
         ServiceCenterEntity serviceCenter = centerRepository.findById(request.getCenterId()).get();
         LocalDate bookingDate = request.getBookingDate();
         LocalTime bookingTime = request.getBookingTime();
+        String bookingCode = bookingCodeGenerator(request);
 
         BookingEntity bookingEntity = BookingEntity.builder()
                 .vehicle(electricVehicle)
                 .center(serviceCenter)
                 .bookingDate(bookingDate)
                 .bookingTime(bookingTime)
+                .bookingCode(bookingCode)
                 .status(BookingStatus.PENDING)
                 .build();
         bookingRepository.save(bookingEntity);
@@ -111,6 +122,7 @@ public class BookingServiceImpl implements BookingService {
         vehicleRepository.save(electricVehicle);
 
         return BookingResponseDTO.builder()
+                .code(bookingCode)
                 .center(serviceCenter.getCenterName())
                 .address(serviceCenter.getCenterAddress().toString())
                 .date(bookingDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))

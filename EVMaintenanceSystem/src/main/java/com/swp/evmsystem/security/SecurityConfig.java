@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -77,35 +76,36 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        
+
         // cho phep origin neu frontend o dia chi nay goi nhiều locohost
         //chay nhieu loco cho chắc
         configuration.setAllowedOrigins(Arrays.asList(
-            "http://localhost:5173",      // Vite dev server (default)
-            "http://127.0.0.1:5173",
-            "http://localhost:3000",      // Alternative port
-            "http://127.0.0.1:3000",
-            "http://localhost:3001",      // Alternative port 2
-            "http://127.0.0.1:3001",
-            "http://localhost:3002",      // Alternative port 3
-            "http://127.0.0.1:3002",
-            "http://localhost:5174",
-            "http://127.0.0.1:5174"
+                "http://localhost:5173",      // Vite dev server (default)
+                "http://127.0.0.1:5173",
+                "http://localhost:3000",      // Alternative port
+                "http://127.0.0.1:3000",
+                "http://localhost:3001",      // Alternative port 2
+                "http://127.0.0.1:3001",
+                "http://localhost:3002",      // Alternative port 3
+                "http://127.0.0.1:3002",
+                "http://localhost:5174",
+                "http://127.0.0.1:5174",
+                "https://test3-pink-omega.vercel.app/"
         ));
-        
+
         // chap nhan phuong thuc
         configuration.setAllowedMethods(Arrays.asList(
-            "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"
+                "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"
         ));
-        
+
         // gắn header
         configuration.setAllowedHeaders(Arrays.asList(
-            "Content-Type", 
-            "Authorization", 
-            "X-Requested-With",
-            "Accept"
+                "Content-Type",
+                "Authorization",
+                "X-Requested-With",
+                "Accept"
         ));
-        
+
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);
 

@@ -6,6 +6,8 @@ import com.swp.evmsystem.entity.ElectricVehicleEntity;
 import com.swp.evmsystem.security.UserEntityDetails;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 
 @Service
 public interface BookingService {
@@ -17,4 +19,5 @@ public interface BookingService {
 
     void validateTimeBookingAvailable(BookingRequestDTO request);
 
+    String bookingCodeGenerator(BookingRequestDTO request);
 }

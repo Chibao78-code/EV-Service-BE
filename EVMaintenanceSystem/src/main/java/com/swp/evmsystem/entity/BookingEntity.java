@@ -30,6 +30,8 @@ public class BookingEntity {
     @ManyToOne
     @JoinColumn(name = "vehicle_id", referencedColumnName = "vehicle_id")
     ElectricVehicleEntity vehicle;
+    @Column(name = "booking_code", length = 20, nullable = false, unique = true)
+    String bookingCode;
     @ManyToOne
     @JoinColumn(name = "center_id", referencedColumnName = "center_id")
     ServiceCenterEntity center;

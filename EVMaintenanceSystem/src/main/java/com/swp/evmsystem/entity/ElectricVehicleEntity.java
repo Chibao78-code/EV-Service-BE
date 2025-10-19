@@ -24,14 +24,12 @@ public class ElectricVehicleEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "model")
     EvModelEntity model;
-    @Column(name = "vin", length = 17, unique = true, nullable = false)
+    @Column(name = "vin", length = 17, unique = true)
     String vin;
-    @Column(name = "license_plate", length = 10, nullable = false)
+    @Column(name = "license_plate", length = 10, unique = true)
     String licensePlate;
-    @Column(name = "warrently")
-    Boolean w = false;
     @ManyToOne
-    @JoinColumn(name = "owner_id", nullable = false)
+    @JoinColumn(name = "owner_id")
     CustomerEntity owner;
     @Enumerated(EnumType.STRING)
     @Column(name = "maintenance_status", length = 20, nullable = false)
