@@ -15,5 +15,11 @@ public class VerifyOTPrequestDTO {
     @Size(min = 4, max = 8, message = "OTP should be between 4 and 8 characters")
     private String otp;
 
-    
+
+    public VerifyOTPrequestDTO() {
+    }
+    public VerifyOTPrequestDTO(String email, String otp) { // Constructor to initialize email and otp
+        this.email = email;
+        this.otp = otp;
+    }
 }
