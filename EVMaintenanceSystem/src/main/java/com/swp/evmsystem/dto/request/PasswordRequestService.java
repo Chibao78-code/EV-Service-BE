@@ -35,11 +35,11 @@ public class ForgotPasswordRequestDTO {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) return true; // Check for reference equality
+        if (o == null || getClass() != o.getClass()) return false; // Check for null and class type
 
-        ForgotPasswordRequestDTO that = (ForgotPasswordRequestDTO) o;
-        return Objects.equals(email, that.email);
+        ForgotPasswordRequestDTO that = (ForgotPasswordRequestDTO) o; // Cast to the correct type
+        return Objects.equals(email, that.email); // Compare relevant fields
     }
 
     @Override
