@@ -19,5 +19,14 @@ public class ResetPasswordRequestDTO {
         this.token = token; // Initialize token
         this.newPassword = newPassword; // Initialize new password
     }
-    
+
+    public String getToken() {
+        return token;
+    }
+    public void setToken(String token) {
+        this.token = token;
+    }
+    public String getNewPassword() {
+        return newPassword;
+    }
 }
