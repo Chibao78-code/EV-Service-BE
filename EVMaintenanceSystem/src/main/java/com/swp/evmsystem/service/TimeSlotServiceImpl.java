@@ -31,18 +31,18 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 
         // 1. Lấy thông tin center
         ServiceCenterEntity center = centerRepository.findById(centerId)
-                .orElseThrow(() -> new EntityNotFoundException("ServiceCenter not found with id: " + centerId));
+                .orElseThrow(() -> new EntityNotFoundException("ServiceCenter not found with id: " + centerId)); // Ném ngoại lệ nếu không tìm thấy
 
         // 2. Lấy số bookings cho từng slot
         List<BookingRepository.BookingCountProjection> bookingCounts =
-                bookingRepository.findByCenterAndBookingDate(center, date);
+                bookingRepository.findByCenterAndBookingDate(center, date); // Lấy số lượng booking theo từng khung giờ
 
 
         // Convert to Map để lookup nhanh
         Map<LocalTime, Integer> bookingCountMap = bookingCounts.stream()
-                .collect(Collectors.toMap(
-                        BookingRepository.BookingCountProjection::getTime,
-                        BookingRepository.BookingCountProjection::getCount
+                .collect(Collectors.toMap( // Chuyển đổi danh sách projection thành Map
+                        BookingRepository.BookingCountProjection::getTime, // Khóa: thời gian
+                        BookingRepository.BookingCountProjection::getCount // Giá trị: số lượng booking
                 ));
 
         // 3. Tạo TimeSlot objects
