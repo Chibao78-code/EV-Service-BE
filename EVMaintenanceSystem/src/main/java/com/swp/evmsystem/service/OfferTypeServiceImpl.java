@@ -16,19 +16,19 @@ public class OfferTypeServiceImpl implements  OfferTypeService {
     private final OfferTypeMapper offerTypeMapper;
 
     @Autowired
-    public OfferTypeServiceImpl(OfferTypeRepository repository, OfferTypeMapper offerTypeMapper) {
+    public OfferTypeServiceImpl(OfferTypeRepository repository, OfferTypeMapper offerTypeMapper) { // Constructor injection
         this.repository = repository; // Injecting OfferTypeRepository
         this.offerTypeMapper = offerTypeMapper; // Injecting OfferTypeMapper
     }
 
     @Override
-    public List<OfferTypeDTO> findAll() {
+    public List<OfferTypeDTO> findAll() { // Retrieve all offer types
         return repository.findAll().stream()
                 .map(offerTypeMapper::toDTO)
                 .collect(Collectors.toList()); // Convert entities to DTOs
     }
 
-    @Override
+    @Override // Create a new offer type
     public void createOfferType(OfferTypeEntity offerTypeEntity) {
         repository.save(offerTypeEntity);
     }
