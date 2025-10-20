@@ -56,11 +56,11 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public int getBookingsByDateAndTimeSlot(LocalDate bookingDate, TimeSlot timeSlot) { // Get bookings by date and time slot
-        return bookingRepository.countAllByBookingDateAndTimeSlot( bookingDate,  timeSlot);
+        return bookingRepository.countAllByBookingDateAndTimeSlot( bookingDate,  timeSlot); // Return count of bookings
     }
 
     @Override
-    public int countBookingsByCenterAndDate(int centerId, LocalDate bookingDate) {
-        return bookingRepository.countBookingEntityByCenterIdAndBookingDate(centerId, bookingDate);
+    public int countBookingsByCenterAndDate(int centerId, LocalDate bookingDate) { // Count bookings by center and date
+        return bookingRepository.countBookingEntityByCenterIdAndBookingDate(centerId, bookingDate); // Return count of bookings
     }
 }
