@@ -17,12 +17,12 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
     @Autowired
     private ServiceCenterMapper mapper;
 
-    @Override
+    @Override // Lấy ServiceCenterEntity theo ID
     public ServiceCenterEntity getServiceCenterEntityById(int id) {
         return repository.findById(id).orElse(null);
     }
 
-    @Override
+    @Override // Tạo mới ServiceCenterEntity
     public boolean create(ServiceCenterEntity sve) {
         return repository.save(sve) != null;
     }
@@ -33,7 +33,7 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
         return serviceCenterEntities; // Trả về danh sách các thực thể
     }
 
-    @Override
+    @Override // Lấy tất cả ServiceCenter và chuyển đổi sang DTO
     public List<ServiceCenterDTO> getAllServiceCenters() { // Lấy tất cả ServiceCenter và chuyển đổi sang DTO
         return repository.findAll() // Lấy tất cả các thực thể từ repository
                 .stream()
