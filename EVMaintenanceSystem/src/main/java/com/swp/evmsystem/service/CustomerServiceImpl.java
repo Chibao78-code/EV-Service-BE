@@ -19,8 +19,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerEntity getCustomerById(Integer id) {
+    public CustomerEntity getCustomerById(Integer id) { // Method to get customer by ID
         return repository.findById(id) // Find customer by ID
-                .orElseThrow(() -> new NoSuchElementException("Customer not found with id: " + id));
+                .orElseThrow(() -> new NoSuchElementException("Customer not found with id: " + id)); // Throw exception if not found
     }
 }
