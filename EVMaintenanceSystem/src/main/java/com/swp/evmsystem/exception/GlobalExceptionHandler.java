@@ -17,11 +17,11 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler(MethodArgumentNotValidException.class) // Xử lý lỗi xác thực đầu vào
     public ResponseEntity<Map<String, Object>> handleValidationErrors(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getFieldErrors()
-                .forEach(err -> errors.put(err.getField(), err.getDefaultMessage()));
+        Map<String, String> errors = new HashMap<>(); // Lưu trữ lỗi theo trường
+        ex.getBindingResult().getFieldErrors() // Lấy danh sách lỗi của các trường
+                .forEach(err -> errors.put(err.getField(), err.getDefaultMessage())); // Thêm lỗi vào bản đồ
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(buildError(HttpStatus.BAD_REQUEST, errors));
