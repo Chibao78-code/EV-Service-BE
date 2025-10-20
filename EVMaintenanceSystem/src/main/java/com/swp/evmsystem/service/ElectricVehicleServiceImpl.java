@@ -21,13 +21,13 @@ public class ElectricVehicleServiceImpl implements ElectricVehicleService {
     @Override
     public List<ElectricVehicleDTO> findByOwner(CustomerEntity owner) { // Lấy danh sách xe điện của chủ sở hữu
         return electricVehicleRepository.findByOwner(owner)
-                .stream()
-                .map(mapper::toDTO)
+                .stream() // Chuyển đổi danh sách thực thể xe điện thành luồng
+                .map(mapper::toDTO) // Ánh xạ mỗi thực thể xe điện thành DTO
                 .collect(Collectors.toList()); // Chuyển đổi danh sách thực thể xe điện thành DTO và trả về
     }
 
     @Override
-    public boolean create(ElectricVehicleEntity ev) {
+    public boolean create(ElectricVehicleEntity ev) { // Tạo một xe điện mới
         if (ev == null) { // Kiểm tra nếu đối tượng xe điện là null
             return false; // Trả về false nếu không thể tạo
         }
