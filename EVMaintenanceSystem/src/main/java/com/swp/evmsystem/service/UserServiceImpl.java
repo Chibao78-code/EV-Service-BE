@@ -14,17 +14,17 @@ public class UserServiceImpl implements UserService {
     private UserRepository repository;
     @Autowired
     private UserMapper mapper;
-    @Override
+    @Override // Check if the user with the given ID is a customer
     public boolean isCustomer(Integer userId) {
         return repository.getRoleNameById(userId).equals("CUSTOMER");
     }
 
-    @Override
+    @Override // Create a new user
     public boolean createUser(UserEntity user) {
         return repository.save(user) != null;
     }
 
-    @Override
+    @Override // Get user information from UserEntityDetails
     public UserDTO getUserByUserDetail(UserEntityDetails userDetail) { // Get user information from UserEntityDetails
         if (userDetail == null || userDetail.getUser() == null) { // Check if userDetail or user is null
             return null;
