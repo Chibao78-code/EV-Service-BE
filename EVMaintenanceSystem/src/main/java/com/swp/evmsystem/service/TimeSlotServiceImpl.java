@@ -46,14 +46,14 @@ public class TimeSlotServiceImpl implements TimeSlotService {
                 ));
 
         // 3. Tạo TimeSlot objects
-        LocalTime start = center.getStartTime();
-        LocalTime end = center.getEndTime();
+        LocalTime start = center.getStartTime(); // thời gian bắt đầu làm việc của trung tâm
+        LocalTime end = center.getEndTime(); // thời gian kết thúc làm việc của trung tâm
         int slotMinutes = 30; // độ dài mỗi slot (1h)
 
         List<TimeSlotDTO> slots = Stream
                 .iterate(start, time -> time.isBefore(end), time -> time.plusMinutes(slotMinutes))
-                .map(time -> {
-                    int numOfBookings = bookingCountMap.getOrDefault(time, 0);
+                .map(time -> { // Tạo TimeSlotDTO cho mỗi khung giờ
+                    int numOfBookings = bookingCountMap.getOrDefault(time, 0); // Lấy số lượng booking đã có cho khung giờ này
 
                     return TimeSlotDTO.builder()
                             .date(date)
