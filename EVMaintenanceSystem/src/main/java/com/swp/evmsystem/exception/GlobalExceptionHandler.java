@@ -22,15 +22,15 @@ public class GlobalExceptionHandler {
         Map<String, String> errors = new HashMap<>(); // Lưu trữ lỗi theo trường
         ex.getBindingResult().getFieldErrors() // Lấy danh sách lỗi của các trường
                 .forEach(err -> errors.put(err.getField(), err.getDefaultMessage())); // Thêm lỗi vào bản đồ
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(buildError(HttpStatus.BAD_REQUEST, errors));
+        return ResponseEntity  // Trả về phản hồi với mã trạng thái 400 và thông tin lỗi
+                .status(HttpStatus.BAD_REQUEST) // Mã trạng thái HTTP 400 Bad Request
+                .body(buildError(HttpStatus.BAD_REQUEST, errors)); // Xây dựng phản hồi lỗi
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<?> handleEntityNotFound(EntityNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                buildError(HttpStatus.NOT_FOUND, ex.getMessage())
+    @ExceptionHandler(EntityNotFoundException.class) // Xử lý lỗi khi thực thể không được tìm thấy
+    public ResponseEntity<?> handleEntityNotFound(EntityNotFoundException ex) { // Xử lý ngoại lệ
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body( // Trả về phản hồi với mã trạng thái 404
+                buildError(HttpStatus.NOT_FOUND, ex.getMessage()) // Xây dựng phản hồi lỗi
         );
     }
 
