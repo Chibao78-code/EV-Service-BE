@@ -50,12 +50,12 @@ public class BookingServiceImpl implements BookingService {
 }
 
     @Override
-    public BookingEntity getBookingById(Integer bookingId) {
-        return bookingRepository.findById(bookingId).orElse(null);
+    public BookingEntity getBookingById(Integer bookingId) { // Get booking by id
+        return bookingRepository.findById(bookingId).orElse(null); // Return booking or null if not found
     }
 
     @Override
-    public int getBookingsByDateAndTimeSlot(LocalDate bookingDate, TimeSlot timeSlot) {
+    public int getBookingsByDateAndTimeSlot(LocalDate bookingDate, TimeSlot timeSlot) { // Get bookings by date and time slot
         return bookingRepository.countAllByBookingDateAndTimeSlot( bookingDate,  timeSlot);
     }
 
