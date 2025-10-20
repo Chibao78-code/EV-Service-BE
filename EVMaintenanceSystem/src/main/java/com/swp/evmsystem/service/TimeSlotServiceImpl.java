@@ -62,9 +62,9 @@ public class TimeSlotServiceImpl implements TimeSlotService {
                             .numOfBookings(numOfBookings)
                             .maxCapacity(center.getMaxCapacity())
                             .available(numOfBookings < center.getMaxCapacity())
-                            .build();
+                            .build(); // Trả về đối tượng TimeSlotDTO
                 })
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()); // Thu thập tất cả các TimeSlotDTO vào danh sách
 
 
         // 4. Build response
@@ -72,6 +72,6 @@ public class TimeSlotServiceImpl implements TimeSlotService {
                 .date(date)
                 .center(serviceCenterMapper.toDTO(center))
                 .slots(slots)
-                .build();
+                .build(); // Trả về đối tượng TimeSlotResponseDTO
     }
 }
