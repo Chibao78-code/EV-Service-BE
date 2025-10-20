@@ -14,22 +14,22 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public boolean createRole(RoleEntity role) {
         return roleRepository.save(role) != null;
-    }
+    } // Create a new role and return true if successful
 
-    @Override
+    @Override // Retrieve a role by its ID
     public RoleEntity getRoleById(Integer roleId) {
         return roleRepository.findById(roleId).orElse(null);
     }
 
-    @Override
+    @Override // Get the total count of all roles
     public Integer getAllCount() {
         return roleRepository.findAll().size();
     }
 
 
-    @Override
+    @Override // Retrieve a role by its name
     public RoleEntity getRoleByName(String name) {
-        try {
+        try { // Try to convert the name to RoleName enum and fetch the role
             RoleName roleName = RoleName.valueOf(name); // Convert String to RoleName enum
             return roleRepository.findByName(roleName); // Fetch RoleEntity by RoleName
         } catch (IllegalArgumentException | NullPointerException ex) {
