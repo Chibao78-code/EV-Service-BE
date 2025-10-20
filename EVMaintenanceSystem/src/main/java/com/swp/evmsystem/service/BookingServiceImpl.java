@@ -22,13 +22,13 @@ public class BookingServiceImpl implements BookingService {
     private ServiceCenterRepository serviceCenterRepository;
 
     @Override
-    public boolean createBooking(Integer id , BookingRequestDTO request) {
-        BookingEntity bookingEntity = new BookingEntity();
-        bookingEntity.setBookingDate(request.getBookingDate());
+    public boolean createBooking(Integer id , BookingRequestDTO request) { // id is vehicle id
+        BookingEntity bookingEntity = new BookingEntity(); // Create new booking entity
+        bookingEntity.setBookingDate(request.getBookingDate()); // Set booking date
         //bookingEntity.setCenter(serviceCenterRepository.findById(request.getCenterId()).orElse(null));
-        bookingEntity.setVehicle(vehicleService.findById(id).orElse(null));
-        bookingEntity.setStatus(BookingStatus.PENDING);
-        bookingEntity.setTimeSlot(request.getTimeSlot());
+        bookingEntity.setVehicle(vehicleService.findById(id).orElse(null)); // Set vehicle
+        bookingEntity.setStatus(BookingStatus.PENDING); // Set status to PENDING
+        bookingEntity.setTimeSlot(request.getTimeSlot()); // Set time slot
         return bookingRepository.save(bookingEntity) != null;
     }
 
