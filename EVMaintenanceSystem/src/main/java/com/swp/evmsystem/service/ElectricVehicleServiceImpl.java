@@ -6,7 +6,9 @@ import com.swp.evmsystem.entity.ElectricVehicleEntity;
 import com.swp.evmsystem.enums.EvMaintenanceStatus;
 import com.swp.evmsystem.mapper.ElectricVehicleMapper;
 import com.swp.evmsystem.repository.ElectricVehicleRepository;
+import com.swp.evmsystem.security.UserEntityDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,14 +22,6 @@ public class ElectricVehicleServiceImpl implements ElectricVehicleService {
     ElectricVehicleMapper mapper;
 
     @Override
-    public List<ElectricVehicleDTO> findByOwner(CustomerEntity owner) {
-        return electricVehicleRepository.findByOwner(owner)
-                .stream()
-                .map(mapper::toDTO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public boolean create(ElectricVehicleEntity ev) {
         return electricVehicleRepository.save(ev) != null;
     }
@@ -35,5 +29,17 @@ public class ElectricVehicleServiceImpl implements ElectricVehicleService {
     @Override
     public boolean isEvAvailableForBooking(Integer evId) {
         return electricVehicleRepository.findById(evId).get().getMaintenanceStatus() == EvMaintenanceStatus.AVAILABLE;
+    }
+
+    @Override
+    public List<ElectricVehicleDTO> findByOwner(UserEntityDetails userDetails) {
+        if (!(userDetails.getUserEntity() instanceof CustomerEntity customer)) {
+            throw new AccessDeniedException("Only customers can access vehicles");
+        }
+
+        return electricVehicleRepository.findByOwner(customer)
+                .stream()
+                .map(mapper::toDTO)
+                .collect(Collectors.toList());
     }
 }
