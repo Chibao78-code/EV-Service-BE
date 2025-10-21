@@ -22,4 +22,5 @@ public class EmployeeEntity extends UserEntity {
     @ManyToOne
     @JoinColumn(name = "center_id")
     ServiceCenterEntity centerId;
+
 }

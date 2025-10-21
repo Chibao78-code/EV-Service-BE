@@ -42,4 +42,9 @@ public class AuthServiceImpl implements  AuthService {
 
         return new LoginResponseDTO(token, builder.build());
     }
+
+    @Override
+    public Boolean isCustomer(UserEntityDetails userDetails) {
+        return userDetails.getUserEntity() instanceof CustomerEntity;
+    }
 }

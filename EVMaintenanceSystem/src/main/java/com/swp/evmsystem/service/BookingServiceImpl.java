@@ -99,9 +99,10 @@ public class BookingServiceImpl implements BookingService {
 
         if (!(electricVehicle.getMaintenanceStatus() == EvMaintenanceStatus.AVAILABLE)) {
             throw new BusinessException("Maintenance is not available");
-        }
+        } // Checking if the EV had been booked before.
 
         validateTimeBookingAvailable(request);
+        // Check the Time is unable for booking.
 
         ServiceCenterEntity serviceCenter = centerRepository.findById(request.getCenterId()).get();
         LocalDate bookingDate = request.getBookingDate();
@@ -118,7 +119,7 @@ public class BookingServiceImpl implements BookingService {
                 .build();
         bookingRepository.save(bookingEntity);
 
-        electricVehicle.setMaintenanceStatus(EvMaintenanceStatus.BOOKED);
+        electricVehicle.setMaintenanceStatus(EvMaintenanceStatus.BOOKED); // Set status of EV to BOOKED
         vehicleRepository.save(electricVehicle);
 
         return BookingResponseDTO.builder()
