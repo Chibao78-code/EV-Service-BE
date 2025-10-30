@@ -95,7 +95,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<BookingEntity> getTodayBookings(UserEntityDetails userDetails) {
+    public List<BookingResponseDTO> getTodayBookings(UserEntityDetails userDetails) {
         if (userDetails == null || userDetails.getUserEntity() == null) {
             throw new AccessDeniedException("Unauthenticated user");
         }
@@ -112,17 +112,20 @@ public class BookingServiceImpl implements BookingService {
         List<BookingEntity> bookings = bookingRepository.findByCenter_IdAndBookingDate(centerId, today);
 
         List<BookingResponseDTO> bookingDtos = bookings.stream()
-                .map(booking -> new BookingResponseDTO(
-                        booking.getBookingCode(),
-                        booking.getCenter(),
-                        booking.getBookingDate(),
-                        booking.getBookingTime(),
-                        booking.getVehicle()
-                ))
-                .collect(Collectors.toList());
+                .map(booking -> BookingResponseDTO.builder()
+                        .code(booking.getBookingCode())
+                        .customerName(booking.getCustomerName())
+                        .customerPhone(booking.getCustomerPhone())
+                        .customerEmail(booking.getCustomerEmail())
+                        .center(booking.getCenter().getCenterName())
+                        .address(booking.getCenter().getCenterAddress().toString())
+                        .date(booking.getBookingDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))
+                        .time(booking.getBookingTime().format(DateTimeFormatter.ofPattern("HH:mm")))
+                        .eVModel(booking.getVehicle().getModel().getModelName())
+                        .build()
+                ).collect(Collectors.toList());
 
-
-        return bookingRepository.findByCenter_IdAndBookingDate(centerId, today);
+        return bookingDtos;
     }
 
     @Override

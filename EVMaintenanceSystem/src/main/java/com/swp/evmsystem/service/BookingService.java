@@ -19,5 +19,5 @@ public interface BookingService {
 
     String bookingCodeGenerator(BookingRequestDTO request);
 
-    List<BookingEntity> getTodayBookings(UserEntityDetails userDetails);
+    List<BookingResponseDTO> getTodayBookings(UserEntityDetails userDetails);
 }

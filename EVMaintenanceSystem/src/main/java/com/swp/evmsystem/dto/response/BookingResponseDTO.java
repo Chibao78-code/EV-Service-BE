@@ -15,7 +15,9 @@ public class BookingResponseDTO {
     String address;
     String date;
     String time;
+
     String eVModel;
+
     String offerType;
-    String Item;
+    String item;
 }
