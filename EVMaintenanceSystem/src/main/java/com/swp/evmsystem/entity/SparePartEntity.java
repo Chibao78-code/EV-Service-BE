@@ -27,11 +27,7 @@ public class SparePartEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "category")
     private PartCategory category;
-    @ManyToMany
-    @JoinTable(
-            name = "spare_part_model",
-            joinColumns = @JoinColumn(name = "spare_part_id"),
-            inverseJoinColumns = @JoinColumn(name = "model_id")
-    )
-    List<EvModelEntity> compatibleModels;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinTable(name = "model_id" )
+    EvModelEntity model;
 }
