@@ -27,6 +27,16 @@ public class BookingEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "booking_id")
     int bookingId;
+    @Column(name = "customer_name", length = 100, nullable = false)
+    String customerName;
+    @Column(name = "customer_phone", length = 13, nullable = false)
+    String customerPhone;
+    @Column(name = "customer_email", length = 100, nullable = false)
+    String customerEmail;
+    @Column(name = "customer_address", length = 200)
+    String customerAddress;
+    @Column(name = "customer_note", length = 500)
+    String customerNote;
     @ManyToOne
     @JoinColumn(name = "vehicle_id", referencedColumnName = "vehicle_id")
     ElectricVehicleEntity vehicle;

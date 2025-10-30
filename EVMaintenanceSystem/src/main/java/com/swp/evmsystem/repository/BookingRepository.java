@@ -2,6 +2,7 @@ package com.swp.evmsystem.repository;
 
 import com.swp.evmsystem.entity.BookingEntity;
 import com.swp.evmsystem.entity.ServiceCenterEntity;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -28,6 +29,8 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Integer>
             @Param("time") LocalTime time
     );
 
+    List<BookingEntity> findByCenter_IdAndBookingDate(Integer centerId, LocalDate bookingDate);
+
 
     interface BookingCountProjection {
         LocalTime getTime();
@@ -45,4 +48,6 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Integer>
             @Param("center") ServiceCenterEntity center,
             @Param("date") LocalDate date
     );
+
+
 }
