@@ -2,14 +2,12 @@ package com.swp.evmsystem.service;
 
 import com.swp.evmsystem.dto.request.BookingRequestDTO;
 import com.swp.evmsystem.dto.response.BookingResponseDTO;
+import com.swp.evmsystem.entity.BookingEntity;
 import com.swp.evmsystem.entity.ElectricVehicleEntity;
 import com.swp.evmsystem.security.UserEntityDetails;
-import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.util.List;
 
-
-@Service
 public interface BookingService {
     BookingResponseDTO createBooking(BookingRequestDTO bookingRequestDTO, UserEntityDetails user);
 
@@ -20,4 +18,6 @@ public interface BookingService {
     void validateTimeBookingAvailable(BookingRequestDTO request);
 
     String bookingCodeGenerator(BookingRequestDTO request);
+
+    List<BookingEntity> getTodayBookings(UserEntityDetails userDetails);
 }

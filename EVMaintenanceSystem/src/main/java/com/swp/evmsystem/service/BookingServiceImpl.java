@@ -18,7 +18,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -90,6 +92,37 @@ public class BookingServiceImpl implements BookingService {
         Integer evId = request.getEVId();
         Integer centerID = request.getCenterId();
         return "BK" + evId + (date.getYear() - 2000) + date.getMonthValue() + date.getDayOfMonth() + time.getHour() + "CT" + centerID;
+    }
+
+    @Override
+    public List<BookingEntity> getTodayBookings(UserEntityDetails userDetails) {
+        if (userDetails == null || userDetails.getUserEntity() == null) {
+            throw new AccessDeniedException("Unauthenticated user");
+        }
+
+        UserEntity entity = userDetails.getUserEntity();
+
+        if (!(entity instanceof EmployeeEntity staff)) {
+            throw new AccessDeniedException("Current user is not a service center staff");
+        }
+
+        Integer centerId = staff.getCenter().getId();
+        LocalDate today = LocalDate.now();
+
+        List<BookingEntity> bookings = bookingRepository.findByCenter_IdAndBookingDate(centerId, today);
+
+        List<BookingResponseDTO> bookingDtos = bookings.stream()
+                .map(booking -> new BookingResponseDTO(
+                        booking.getBookingCode(),
+                        booking.getCenter(),
+                        booking.getBookingDate(),
+                        booking.getBookingTime(),
+                        booking.getVehicle()
+                ))
+                .collect(Collectors.toList());
+
+
+        return bookingRepository.findByCenter_IdAndBookingDate(centerId, today);
     }
 
     @Override

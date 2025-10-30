@@ -21,6 +21,6 @@ public class EmployeeEntity extends UserEntity {
     String fullName;
     @ManyToOne
     @JoinColumn(name = "center_id")
-    ServiceCenterEntity centerId;
+    ServiceCenterEntity center;
 
 }

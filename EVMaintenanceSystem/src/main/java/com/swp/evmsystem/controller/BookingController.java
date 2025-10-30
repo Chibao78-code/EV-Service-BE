@@ -48,6 +48,14 @@ public class BookingController {
         return ResponseEntity.ok(timeSlotResponseDTO);
     }
 
+    @GetMapping("/bookings/today")
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
+    public ResponseEntity<?> getTodayBookings(
+            @AuthenticationPrincipal UserEntityDetails userDetails) throws AccessDeniedException {
+        List<BookingResponseDTO> bookings = bookingService.getTodayBookings(userDetails);
+        return ResponseEntity.ok(bookings);
+    }
+
     @GetMapping("/offer-types")
     public ResponseEntity<List<OfferTypeDTO>> getAllOfferTypes(){
         return ResponseEntity.ok(offerTypeService.findAll());
