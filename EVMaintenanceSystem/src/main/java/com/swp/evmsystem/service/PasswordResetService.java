@@ -98,4 +98,3 @@ public void cleanupExpiredTokens() {
     tokenRepository.deleteByExpiresAtBefore(LocalDateTime.now());
 }
 }
-        
