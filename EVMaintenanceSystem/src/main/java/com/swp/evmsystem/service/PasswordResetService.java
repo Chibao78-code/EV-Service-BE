@@ -66,4 +66,7 @@ public void resetPassword(String email, String otpCode, String newPassword) {
         throw new RuntimeException("Mã OTP đã hết hạn");
     }
 
+    // Tìm user theo email
+    UserEntity user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 }
