@@ -30,4 +30,8 @@ public class PasswordResetService {
             .build();
 
         tokenRepository.save(token);
+
+    // Gửi email chứa OTP
+        emailService.sendOTPEmail(email, otpCode);
+}
 }
