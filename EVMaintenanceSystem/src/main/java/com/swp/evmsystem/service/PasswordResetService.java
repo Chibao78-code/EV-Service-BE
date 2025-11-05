@@ -73,5 +73,9 @@ public void resetPassword(String email, String otpCode, String newPassword) {
     // Cập nhật mật khẩu mới (đã mã hóa)
     user.setPassword(passwordEncoder.encode(newPassword));
     userRepository.save(user);
+    // Đánh dấu OTP đã được sử dụng
+    // Đánh dấu token đã được sử dụng
+    token.setIsUsed(true);
+    token.setUsedAt(LocalDateTime.now());
+    tokenRepository.save(token);
 }
-
