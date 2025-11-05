@@ -12,7 +12,7 @@ public class PasswordResetController {
     public ResponseEntity<MessageResponseDTO> forgotPassword(
             @Valid @RequestBody ForgotPasswordRequestDTO request) {
         try {
-            passwordResetService.sendOTPToEmail(request.getEmail());
+            passwordResetService.sendOTPToEmail(request.getEmail()); // Gửi mã OTP đến email
 
             return ResponseEntity.ok(MessageResponseDTO.builder()
                     .success(true)
@@ -21,14 +21,14 @@ public class PasswordResetController {
 
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(MessageResponseDTO.builder()
+                    .body(MessageResponseDTO.builder() // lỗi không tìm thấy email
                             .success(false)
                             .message(e.getMessage())
                             .build());
 
         } catch (MessagingException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(MessageResponseDTO.builder()
+                    .body(MessageResponseDTO.builder() // lỗi gửi email
                             .success(false)
                             .message("Không thể gửi email. Vui lòng thử lại sau.")
                             .build());
