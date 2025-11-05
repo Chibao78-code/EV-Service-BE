@@ -40,4 +40,40 @@ public class VehicleReceptionEntity {
     @Column(name = "mileage")
     Integer mileage;
 
+
+    // Assigned technician
+    @ManyToOne
+    @JoinColumn(name = "technician_id", referencedColumnName = "user_id", nullable = false)
+    EmployeeEntity assignedTechnician;
+
+    // Notes
+    @Column(name = "notes", length = 1000)
+    String notes;
+
+    // Cost and status
+    @Column(name = "total_cost")
+    Double totalCost;
+
+    @Column(name = "status", length = 20, nullable = false)
+    String status;
+
+    @Column(name = "created_at")
+    LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    LocalDateTime updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+        if (status == null) {
+            status = "RECEIVED";
+        }
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 }
