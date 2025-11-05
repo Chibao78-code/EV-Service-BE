@@ -79,3 +79,15 @@ public void resetPassword(String email, String otpCode, String newPassword) {
     token.setUsedAt(LocalDateTime.now());
     tokenRepository.save(token);
 }
+
+//random otp
+private String generateOTP() {
+    Random random = new Random();
+    StringBuilder otp = new StringBuilder();
+
+    for (int i = 0; i < otpLength; i++) {
+        otp.append(random.nextInt(10));
+    }
+
+    return otp.toString();
+}
