@@ -69,4 +69,9 @@ public void resetPassword(String email, String otpCode, String newPassword) {
     // Tìm user theo email
     UserEntity user = userRepository.findByEmail(email)
             .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
+
+    // Cập nhật mật khẩu mới (đã mã hóa)
+    user.setPassword(passwordEncoder.encode(newPassword));
+    userRepository.save(user);
 }
+
