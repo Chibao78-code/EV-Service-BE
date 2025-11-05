@@ -17,20 +17,20 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler(MethodArgumentNotValidException.class) // Xử lý lỗi xác thực đầu vào
     public ResponseEntity<Map<String, Object>> handleValidationErrors(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getFieldErrors()
-                .forEach(err -> errors.put(err.getField(), err.getDefaultMessage()));
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(buildError(HttpStatus.BAD_REQUEST, errors));
+        Map<String, String> errors = new HashMap<>(); // Lưu trữ lỗi theo trường
+        ex.getBindingResult().getFieldErrors() // Lấy danh sách lỗi của các trường
+                .forEach(err -> errors.put(err.getField(), err.getDefaultMessage())); // Thêm lỗi vào bản đồ
+        return ResponseEntity  // Trả về phản hồi với mã trạng thái 400 và thông tin lỗi
+                .status(HttpStatus.BAD_REQUEST) // Mã trạng thái HTTP 400 Bad Request
+                .body(buildError(HttpStatus.BAD_REQUEST, errors)); // Xây dựng phản hồi lỗi
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<?> handleEntityNotFound(EntityNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                buildError(HttpStatus.NOT_FOUND, ex.getMessage())
+    @ExceptionHandler(EntityNotFoundException.class) // Xử lý lỗi khi thực thể không được tìm thấy
+    public ResponseEntity<?> handleEntityNotFound(EntityNotFoundException ex) { // Xử lý ngoại lệ
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body( // Trả về phản hồi với mã trạng thái 404
+                buildError(HttpStatus.NOT_FOUND, ex.getMessage()) // Xây dựng phản hồi lỗi
         );
     }
 
