@@ -17,4 +17,6 @@ public class PasswordResetService {
                 .orElseThrow(() -> new RuntimeException("Email không tồn tại trong hệ thống"));
 
     }
+    // Random otp
+    String otpCode = generateOTP();
 }
