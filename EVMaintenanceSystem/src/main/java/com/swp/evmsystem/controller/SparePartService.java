@@ -77,4 +77,29 @@ public class SparePartController {
                     .body(Map.of("error", e.getMessage()));
         }
     }
+
+    @DeleteMapping("/{id}")
+    // @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
+    public ResponseEntity<?> deleteSparePart(@PathVariable Integer id) {  // chức năng xóa phụ tùng
+        try {
+            System.out.println("=== DELETE SPARE PART START ===");
+            System.out.println("ID: " + id);
+
+            sparePartService.deleteSparePartById(id);
+
+            System.out.println("Spare part deleted successfully");
+            System.out.println("=== DELETE SPARE PART END ===");
+
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            System.err.println("ERROR: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("error", e.getMessage()));
+        } catch (Exception e) {
+            System.err.println("ERROR deleting spare part: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", e.getMessage()));
+        }
+    }
 }
