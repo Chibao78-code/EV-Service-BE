@@ -91,3 +91,11 @@ private String generateOTP() {
 
     return otp.toString();
 }
+
+//xat thuc otp
+@Transactional
+public void cleanupExpiredTokens() {
+    tokenRepository.deleteByExpiresAtBefore(LocalDateTime.now());
+}
+}
+        
