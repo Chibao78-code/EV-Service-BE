@@ -9,15 +9,12 @@ public class PasswordResetService {
     @Value("${otp.expiration.minutes:5}")
     private int otpExpirationMinutes;
 
-    @Value("${otp.length:6}")
-    private int otpLength;
-    public PasswordResetService(PasswordResetTokenRepository tokenRepository,
-                                UserRepository userRepository,
-                                EmailService emailService,
-                                PasswordEncoder passwordEncoder) {
-        this.tokenRepository = tokenRepository;
-        this.userRepository = userRepository;
-        this.emailService = emailService;
-        this.passwordEncoder = passwordEncoder;
+    //guiotp
+    @Transactional
+    public void sendOTPToEmail(String email) throws MessagingException {
+        // Kiểm tra email có tồn tại trong hệ thống không
+        UserEntity user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Email không tồn tại trong hệ thống"));
+
     }
 }
