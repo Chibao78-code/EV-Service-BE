@@ -11,5 +11,13 @@ public class PasswordResetService {
 
     @Value("${otp.length:6}")
     private int otpLength;
-    
+    public PasswordResetService(PasswordResetTokenRepository tokenRepository,
+                                UserRepository userRepository,
+                                EmailService emailService,
+                                PasswordEncoder passwordEncoder) {
+        this.tokenRepository = tokenRepository;
+        this.userRepository = userRepository;
+        this.emailService = emailService;
+        this.passwordEncoder = passwordEncoder;
+    }
 }
