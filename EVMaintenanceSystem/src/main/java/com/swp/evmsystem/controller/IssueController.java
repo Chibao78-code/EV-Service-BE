@@ -25,4 +25,12 @@ public class IssueController {
         List<IssueEntity> issues = issueService.getIssuesByOfferType(offerTypeId);
         return new ResponseEntity<>(issues, HttpStatus.OK);
     }
-    
+    @GetMapping("/{id}")
+    @PreAuthorize("permitAll()")
+    public ResponseEntity<IssueEntity> getIssueById(@PathVariable Integer id) {
+        IssueEntity issue = issueService.getIssueById(id);
+        if (issue == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(issue, HttpStatus.OK);
+    }
