@@ -80,4 +80,30 @@ public class SparePartService {
         sparePartRepository.deleteById(id); // Xóa phụ tùng khỏi cơ sở dữ liệu
     }
 
+    public SparePartStatsDTO getStatistics() { // chức năng thống kê phụ tùng
+        List<SparePartEntity> allParts = sparePartRepository.findAll();
+
+        long total = allParts.size(); // Tổng số phụ tùng
+        long inStock = allParts.stream() // phụ tùng còn trong kho
+                .filter(p -> p.getQuantity() > p.getMinimumStock())
+                .count(); // Đếm số phụ tùng có số lượng lớn hơn mức tồn kho tối thiểu
+        long lowStock = allParts.stream()
+                .filter(p -> p.getQuantity() > 0 && p.getQuantity() <= p.getMinimumStock())
+                .count(); // phụ tùng sắp hết kho
+        long outOfStock = allParts.stream()
+                .filter(p -> p.getQuantity() == 0)
+                .count(); // phụ tùng hết kho
+
+        double totalValue = allParts.stream()
+                .mapToDouble(p -> (p.getPrice() != null ? p.getPrice() : 0) * (p.getQuantity() != null ? p.getQuantity() : 0))
+                .sum(); // Tổng giá trị tồn kho
+
+        return SparePartStatsDTO.builder()
+                .totalParts(total)
+                .inStockCount(inStock)
+                .lowStockCount(lowStock)
+                .outOfStockCount(outOfStock)
+                .totalInventoryValue(totalValue)
+                .build(); // Trả về đối tượng DTO chứa các số liệu thống kê
+    }
 }
