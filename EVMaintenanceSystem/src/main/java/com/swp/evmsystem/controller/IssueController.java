@@ -19,3 +19,10 @@ public class IssueController {
         List<IssueEntity> issues = issueService.getAllIssues();
         return new ResponseEntity<>(issues, HttpStatus.OK);
     }
+    @GetMapping("/by-offer-type/{offerTypeId}")
+    @PreAuthorize("permitAll()")
+    public ResponseEntity<List<IssueEntity>> getIssuesByOfferType(@PathVariable Integer offerTypeId) {
+        List<IssueEntity> issues = issueService.getIssuesByOfferType(offerTypeId);
+        return new ResponseEntity<>(issues, HttpStatus.OK);
+    }
+    
