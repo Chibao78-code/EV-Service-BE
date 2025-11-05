@@ -53,5 +53,17 @@ public boolean verifyOTP(String email, String otpCode) {
 
     return true;
 }
+//dat lai mk
+@Transactional
+public void resetPassword(String email, String otpCode, String newPassword) {
+    // Xác thực OTP
+    PasswordResetTokenEntity token = tokenRepository
+            .findByEmailAndOtpCodeAndIsUsedFalse(email, otpCode)
+            .orElseThrow(() -> new RuntimeException("Mã OTP không hợp lệ hoặc đã được sử dụng"));
+
+    // Kiểm tra OTP có hết hạn không
+    if (token.isExpired()) {
+        throw new RuntimeException("Mã OTP đã hết hạn");
+    }
 
 }
