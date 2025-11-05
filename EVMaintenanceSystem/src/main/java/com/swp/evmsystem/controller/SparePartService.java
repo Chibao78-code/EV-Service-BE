@@ -29,4 +29,26 @@ public class SparePartController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    // Admin endpoints
+    @PostMapping
+    // @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
+    public ResponseEntity<?> createSparePart(@Valid @RequestBody SparePartRequestDTO request) { // chức năng tạo phụ tùng
+        try {
+            System.out.println("=== CREATE SPARE PART START ===");
+            System.out.println("Request: " + request);
+
+            SparePartResponseDTO created = sparePartService.createSparePartDTO(request);  // Implement this method in the service layer
+
+            System.out.println("Spare part created: " + created.getPartId()); // Log the ID of the created spare part
+            System.out.println("=== CREATE SPARE PART END ===");
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(created);
+        } catch (Exception e) {
+            System.err.println("ERROR creating spare part: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("error", e.getMessage()));
+        }
+    }
 }
