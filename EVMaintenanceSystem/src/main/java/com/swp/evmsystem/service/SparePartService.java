@@ -29,3 +29,12 @@ public class SparePartService {
     public void deleteSparePart(Integer id) {
         sparePartRepository.deleteById(id);
     }
+
+    // DTO-based methods
+    public List<SparePartResponseDTO> getAllSparePartsDTO() {
+        return sparePartRepository.findAll().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+    
+}
