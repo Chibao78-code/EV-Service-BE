@@ -9,10 +9,9 @@ public class MaintenancePackageController {
     private MaintenancePackageService maintenancePackageService;
 
     @GetMapping
-    public ResponseEntity<List<MaintenancePackageDTO>> getAllMaintenancePackages() {
-        List<MaintenancePackageDTO> packages = maintenancePackageService.getAllPackages();
-        return ResponseEntity.ok(packages);
+    @PreAuthorize("permitAll()")
+    public ResponseEntity<List<MaintenancePackageEntity>> getAllPackages() {
+        List<MaintenancePackageEntity> packages = maintenancePackageService.getAllPackages();
+        return new ResponseEntity<>(packages, HttpStatus.OK);
     }
-
-
 }
