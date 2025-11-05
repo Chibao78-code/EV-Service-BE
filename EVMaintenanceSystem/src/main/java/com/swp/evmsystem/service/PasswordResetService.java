@@ -34,4 +34,24 @@ public class PasswordResetService {
     // Gửi email chứa OTP
         emailService.sendOTPEmail(email, otpCode);
 }
+//xac thuc otp
+@Transactional(readOnly = true)
+public boolean verifyOTP(String email, String otpCode) {
+    // tim toekn
+    PasswordResetTokenEntity token = tokenRepository
+            .findByEmailAndOtpCodeAndIsUsedFalse(email, otpCode)
+            .orElse(null);
+
+    if (token == null) {
+        return false;
+    }
+
+    // Kiểm tra xem OTP đã hết hạn chưa
+    if (token.isExpired()) {
+        return false;
+    }
+
+    return true;
+}
+
 }
