@@ -19,4 +19,15 @@ public class PasswordResetService {
     }
     // Random otp
     String otpCode = generateOTP();
+
+    // Lưu OTP vào database
+    PasswordResetTokenEntity token = PasswordResetTokenEntity.builder()
+            .email(email)
+            .otpCode(otpCode)
+            .createdAt(LocalDateTime.now())
+            .expiresAt(LocalDateTime.now().plusMinutes(otpExpirationMinutes))
+            .isUsed(false)
+            .build();
+
+        tokenRepository.save(token);
 }
