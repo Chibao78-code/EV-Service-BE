@@ -64,4 +64,16 @@ public class VehicleReceptionServiceImpl {
                 .map(this::convertToResponseDTO)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional
+    public VehicleReceptionResponseDTO updateReceptionStatus(Integer receptionId, String status) {
+        VehicleReceptionEntity entity = receptionRepository.findById(receptionId)
+                .orElseThrow(() -> new ResourceNotFoundException("Reception not found with id: " + receptionId));
+
+        entity.setStatus(status);
+        VehicleReceptionEntity updatedEntity = receptionRepository.save(entity);
+
+        return convertToResponseDTO(updatedEntity);
+    }
     }
