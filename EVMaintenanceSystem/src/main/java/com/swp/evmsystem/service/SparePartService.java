@@ -106,4 +106,23 @@ public class SparePartService {
                 .totalInventoryValue(totalValue)
                 .build(); // Trả về đối tượng DTO chứa các số liệu thống kê
     }
+
+    private SparePartResponseDTO convertToDTO(SparePartEntity entity) {
+        int minStock = entity.getMinimumStock() != null ? entity.getMinimumStock() : 10;
+        String status = entity.getQuantity() <= minStock ? "low" : "in-stock";
+
+        return SparePartResponseDTO.builder()
+                .partId(entity.getSparePartId())
+                .partName(entity.getSparePartName())
+                .partNumber(entity.getPartNumber())
+                .category(entity.getCategory() != null ? entity.getCategory().name() : null)
+                .unitPrice(entity.getPrice() != null ? entity.getPrice().doubleValue() : 0.0)
+                .stockQuantity(entity.getQuantity())
+                .minStockLevel(minStock)
+                .supplier(entity.getSupplier())
+                .description(entity.getDescription())
+                .inStock(entity.getInStock())
+                .status(status)
+                .build();
+    }
 }
