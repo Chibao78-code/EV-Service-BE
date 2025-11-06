@@ -101,4 +101,26 @@ public class VehicleReceptionServiceImpl {
             }
         }
         return total;
+
+
+        private VehicleReceptionResponseDTO convertToResponseDTO(VehicleReceptionEntity entity) {
+            return VehicleReceptionResponseDTO.builder()
+                    .receptionId(entity.getReceptionId())
+                    .customerName(entity.getCustomerName())
+                    .customerPhone(entity.getCustomerPhone())
+                    .customerEmail(entity.getCustomerEmail())
+                    .vehicleModel(entity.getVehicleModel())
+                    .licensePlate(entity.getLicensePlate())
+                    .vehicleColor(entity.getVehicleColor())
+                    .vin(entity.getVin())
+                    .mileage(entity.getMileage())
+                    .services(Arrays.asList(entity.getServices().split(",")))
+                    .technicianName(entity.getAssignedTechnician().getFullName())
+                    .technicianId(entity.getAssignedTechnician().getId())
+                    .notes(entity.getNotes())
+                    .totalCost(entity.getTotalCost())
+                    .status(entity.getStatus())
+                    .createdAt(entity.getCreatedAt())
+                    .build();
+        }
     }
