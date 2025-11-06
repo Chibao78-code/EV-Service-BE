@@ -21,5 +21,28 @@ public class VehicleReceptionServiceImpl {
 
         // Convert services list to comma-separated string
         String servicesString = String.join(",", request.getServices());
+        // Create entity
+        VehicleReceptionEntity entity = VehicleReceptionEntity.builder()
+                .customerName(request.getCustomerName())
+                .customerPhone(request.getCustomerPhone())
+                .customerEmail(request.getCustomerEmail())
+                .vehicleModel(request.getVehicleModel())
+                .licensePlate(request.getLicensePlate())
+                .vehicleColor(request.getVehicleColor())
+                .vin(request.getVin())
+                .mileage(request.getMileage())
+                .services(servicesString)
+                .assignedTechnician(technician)
+                .notes(request.getNotes())
+                .totalCost(totalCost)
+                .status("RECEIVED")
+                .build();
+
+        // Save to database
+        VehicleReceptionEntity savedEntity = receptionRepository.save(entity);
+
+        // Convert to response DTO
+        return convertToResponseDTO(savedEntity);
+    }
 
     }
