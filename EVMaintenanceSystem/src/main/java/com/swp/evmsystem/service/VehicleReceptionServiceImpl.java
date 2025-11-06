@@ -76,4 +76,29 @@ public class VehicleReceptionServiceImpl {
 
         return convertToResponseDTO(updatedEntity);
     }
+
+    // Helper methods
+
+    private double calculateTotalCost(List<String> services) {
+        double total = 0.0;
+
+        for (String service : services) {
+            switch (service.toLowerCase()) {
+                case "regularmaintenance":
+                case "bao_duong_dinh_ky":
+                    total += REGULAR_MAINTENANCE_COST;
+                    break;
+                case "componentreplacement":
+                case "thay_the_phu_tung":
+                    total += COMPONENT_REPLACEMENT_COST;
+                    break;
+                case "technicalrepair":
+                case "sua_chua_ky_thuat":
+                    total += TECHNICAL_REPAIR_COST;
+                    break;
+                default:
+                    break;
+            }
+        }
+        return total;
     }
