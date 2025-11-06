@@ -44,5 +44,10 @@ public class VehicleReceptionServiceImpl {
         // Convert to response DTO
         return convertToResponseDTO(savedEntity);
     }
-
+    @Override
+    public VehicleReceptionResponseDTO getReceptionById(Integer receptionId) {
+        VehicleReceptionEntity entity = receptionRepository.findById(receptionId)
+                .orElseThrow(() -> new ResourceNotFoundException("Reception not found with id: " + receptionId));
+        return convertToResponseDTO(entity);
+    }
     }
