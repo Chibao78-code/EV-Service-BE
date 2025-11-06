@@ -57,4 +57,11 @@ public class VehicleReceptionServiceImpl {
                 .map(this::convertToResponseDTO)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<VehicleReceptionResponseDTO> getReceptionsByTechnician(Integer technicianId) {
+        return receptionRepository.findByAssignedTechnicianId(technicianId).stream()
+                .map(this::convertToResponseDTO)
+                .collect(Collectors.toList());
+    }
     }
