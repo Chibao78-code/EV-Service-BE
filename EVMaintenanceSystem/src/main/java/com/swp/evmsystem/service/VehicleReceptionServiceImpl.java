@@ -50,4 +50,11 @@ public class VehicleReceptionServiceImpl {
                 .orElseThrow(() -> new ResourceNotFoundException("Reception not found with id: " + receptionId));
         return convertToResponseDTO(entity);
     }
+
+    @Override
+    public List<VehicleReceptionResponseDTO> getAllReceptions() {
+        return receptionRepository.findAll().stream()
+                .map(this::convertToResponseDTO)
+                .collect(Collectors.toList());
+    }
     }
